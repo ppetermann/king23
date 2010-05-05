@@ -38,5 +38,10 @@ final class King23_CLI implements King23_Singleton
         King23_CLI_OutputWriter::write($message, King23_CLI_OutputWriter::TYPE_Heading);
     }
 
+    public function positive($message)
+    {
+        King23_CLI_OutputWriter::write($message, King23_CLI_OutputWriter::TYPE_Positive);
+    }
+
 
 }

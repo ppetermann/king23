@@ -5,6 +5,7 @@ class King23_CLI_OutputWriter
     const TYPE_Heading = 1;
     const TYPE_Warning = 2;
     const TYPE_Error = 3;
+    const TYPE_Positive = 4;
 
     const FONT_Bold = "\033[1m";
     const FONT_Underline = "\033[4m";
@@ -54,6 +55,10 @@ class King23_CLI_OutputWriter
                 break;
             case self::TYPE_Error:
                 $fg = self::COLOR_FG_Red;
+                $bg = self::COLOR_BG_Default;
+                break;
+            case self::TYPE_Positive:
+                $fg = self::COLOR_FG_Green;
                 $bg = self::COLOR_BG_Default;
                 break;
             case self::TYPE_Regular:

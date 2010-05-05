@@ -35,7 +35,7 @@ if($argc > 1)
     if(count($module_task) > 2)
     {
         $cli->error("Syntax Error: " .$argv[1]. " is not <module>[:<task>]");
-        return;
+        return 1;
     } elseif(count($module_task) == 1) {
         $cli->warning($module_task[0] ." called without task, assuming 'info' ");
         $module = $module_task[0];
@@ -48,13 +48,13 @@ if($argc > 1)
     if(!isset($modules[$module]))
     {
         $cli->error("Module: $module does not exist.");
-        return;
+        return 1;
     } else {
         $object= new $modules[$module]();
         if(!method_exists($object, $task))
         {
             $cli->error("Module: $module does not know a taks $task");
-            return;
+            return 1;
         }
         array_shift($argv); // remove script
         array_shift($argv); // remove module:task
@@ -67,12 +67,5 @@ if($argc > 1)
 
         $object = new King23_Task();
         $object->list_modules();
-
-
 }
-
-/*foreach($modules as $name => $class)
-{
-    $cli->message($name);
-}*/
-
+return 0;
