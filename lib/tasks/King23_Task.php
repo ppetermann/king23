@@ -11,7 +11,7 @@ class King23_Task extends King23_CLI_Task
     public function list_modules()
     {
         /* core tasks */
-        $tasks = glob(KING23_PATH . '/tasks/*_Task.php');
+        $tasks = glob(KING23_PATH . '/lib//tasks/*_Task.php');
 
         /* current project tasks */
         $tasks = array_merge($tasks, glob("./tasks/*_Task.php"));
