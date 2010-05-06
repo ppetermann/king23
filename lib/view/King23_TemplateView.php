@@ -9,7 +9,7 @@ abstract class King23_TemplateView
         $this->sith = King23_Registry::getInstance()->sith;
     }
 
-    protected function render($template, $context)
+    protected function render($template, $context = array())
     {
         $context = array_merge($this->_context, $context);
         echo $this->sith->cachedGet($template)->render($context, $this->sith);
