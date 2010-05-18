@@ -1,4 +1,8 @@
 <?php
+/**
+ * Class for old CLIView routing
+ * @deprecated
+ */
 class King23_CLIRouter implements King23_Singleton
 {
     private static $myInstance;

@@ -1,4 +1,7 @@
 <?php
+/**
+ * class simplifying the use of color codes on console
+ */
 class King23_CLI_OutputWriter
 {
     const TYPE_Regular = 0;
@@ -41,6 +44,11 @@ class King23_CLI_OutputWriter
     const COLOR_BG_LightGray ="\033[47m";
     const COLOR_BG_Default ="\033[49m";
 
+    /**
+     * write a string to output, with optional type
+     * @param String $message
+     * @param Integer $type
+     */
     public static function write($message, $type = King23_CLI_OutputWriter::TYPE_Regular)
     {
         switch($type)

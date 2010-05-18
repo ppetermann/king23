@@ -42,6 +42,11 @@ class King23_Task extends King23_CLI_Task
         }
     }
 
+    /**
+     * create a new project
+     * @param array $options should contain name as first option
+     * @return int
+     */
     public function create_project($options)
     {
         $this->cli->header("King23 (Version: " . King23::Version .") project creation");
@@ -88,6 +93,10 @@ class King23_Task extends King23_CLI_Task
         return 0;
     }
 
+    /**
+     * print out information
+     * @param array $options not used, only for compatibility
+     */
     public function info($options)
     {
         $this->cli->header("King23 Version: ");

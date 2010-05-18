@@ -1,4 +1,8 @@
 <?php
+/**
+ * Basis class for CLI Views
+ * @deprecated
+ */
 abstract class King23_CLIView
 {
     protected $log;
