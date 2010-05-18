@@ -86,6 +86,18 @@ class King23_Task extends King23_CLI_Task
         }
         $this->cli->positive("Project: " . King23_CLI_OutputWriter::FONT_Bold . $name . King23_CLI_OutputWriter::COLOR_FG_Green ." created");
         return 0;
+    }
+
+    public function info($options)
+    {
+        $this->cli->header("King23 Version: ");
+        $this->cli->message(King23::Version);
+        $this->cli->header("Description: ");
+        $this->cli->message(King23::Description);
+        $this->cli->header("Authors: ");
+        $this->cli->message(King23::Authors);
+        $this->cli->message();
+        parent::info();
 
     }
 
