@@ -1,4 +1,5 @@
 <?php
+require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/interfaces/King23_Singleton.php');
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/exceptions/King23_Exception.php');
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/exceptions/King23_PathNotFoundException.php');
 
