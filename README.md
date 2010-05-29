@@ -43,6 +43,13 @@ a basic example on usage
 - database layer (leaving the choice open atm)
 - add more cowbell
 
+## LINKS
+- [Github](http://github.com/ppetermann/king23)
+- [Twitter](http://twitter.com/King23Framework)
+
+## CONTACT
+- Peter Petermann <ppetermann80@googlemail.com> 
+
 ## ACKNOWLEDGEMENTS
 - King23 is making use of SithTemplate by Piotr Legnica, more information in lib/SithTemplate (bundled) or at http://piotrlegnica.one.pl/SithTemplate/
 - King23 is losely based on ideas of Frameworks like Ruby on Rails or Django (but does not use any code of those)
