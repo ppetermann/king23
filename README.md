@@ -5,6 +5,10 @@ All rights reserved.
 
 King23 is a small and simple MVC Framework for PHP
 
+## WARNING
+King23 is not having a stable release yet, usage on your own risk,
+compatibility might break!
+
 ## LICENSE
 King23 is licensed under a MIT style license, see LICENSE.txt 
 for further information
@@ -26,10 +30,11 @@ for further information
 2. add bin/king23 to your path (hint `sudo ln -s /path/to/king23/bin/king23 /bin/king23`)
 
 ## USAGE
-the king23 CLI comes with a simple way to create a project:
-(assuming bin/king23 is in path)
-`king23 King23:create_project myproject` this will create a folder "myproject" 
-in the current path with a minimal king23 application, that application includes
+the king23 CLI comes with a simple way to create a project: (assuming bin/king23 is in path)
+
+`king23 King23:create_project myproject` 
+
+this will create a folder "myproject" in the current path with a minimal king23 application, that application includes
 a basic example on usage
 
 ## TODO
