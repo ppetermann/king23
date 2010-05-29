@@ -46,6 +46,7 @@ a basic example on usage
 ## LINKS
 - [Github](http://github.com/ppetermann/king23)
 - [Twitter](http://twitter.com/King23Framework)
+- [IRC](http://irc.coldfront.net:6667/King23) bot will join and put in commit messages on commits there 
 
 ## CONTACT
 - Peter Petermann <ppetermann80@googlemail.com> 
