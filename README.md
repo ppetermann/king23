@@ -26,7 +26,7 @@ for further information
 - LINUX / MAC OS X (might run on windows, untested)
 
 ## INSTALLATION
-1. `git clone git@github.com:ppetermann/king23.git`
+1. `git clone git://github.com/ppetermann/king23.git`
 2. add bin/king23 to your path (hint `sudo ln -s /path/to/king23/bin/king23 /bin/king23`)
 
 ## USAGE
