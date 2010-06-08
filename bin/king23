@@ -80,7 +80,7 @@ if($argc > 1)
         $object= new $modules[$module]();
         if(!method_exists($object, $task))
         {
-            $cli->error("Module: $module does not know a taks $task");
+            $cli->error("Module: $module does not know a task $task");
             return 1;
         }
         array_shift($argv); // remove script
