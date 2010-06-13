@@ -1,6 +1,6 @@
 <?php
 /*
- MIT License
+ LICENSE
  Copyright (c) 2010 Peter Petermann
 
  Permission is hereby granted, free of charge, to any person
@@ -26,30 +26,33 @@
 
 */
 
-if(!defined("APP_PATH"))
-    define("APP_PATH", realpath(dirname(__FILE__) . "/.."));
 
-King23_Classloader::init(APP_PATH . "/lib/King23/lib");
-King23_Classloader::init(APP_PATH . "/views");
+/* 
+    THIS IS AN EXAMPLE! EDIT IT TO SUIT YOUR NEEDS!!! 
+    You will have to require/include this from your main config, in order to take effect!
+*/
 
+
+// ensure doctrine is loaded, depending on your doctrine installation (for example through pear) you have to modify this!
+require_once(APP_PATH . '/lib/Doctrine/lib/Doctrine.php');
+spl_autoload_register(array('Doctrine', 'autoload'));
+
+// registry object
 $reg = King23_Registry::getInstance();
 
-
-
-// Sith Template configuration
-require_once(APP_PATH ."/lib/SithTemplate/lib/SithTemplate.php");
-$reg->sith = new TemplateEnviron(array(
-    'inputPrefix'            => APP_PATH . "/templates/",
-    'outputPrefix'           => APP_PATH . "/templates_c/",
-    'loadPlugins'            => true,
-    'useDefaultPluginsPath'  => true,
-    'recompilationMode'      => 1,
-    'defaultIODriver'        => "file",
-    'autoEscape'             => false,
-));
-
-
-require_once("routes.php");
-
-// uncomment the next line if you have Doctrine installed, and configured in the doctrine.php
-//require_once("doctrine.php");
+// configuration of doctrine
+$reg->doctrine = array(
+  "manager" => Doctrine_Manager::getInstance(),
+  "connections" => array(
+    "connection1" => Doctrine_Manager::connection("sqlite:///" . APP_PATH . "/db/db1.sqlite") 
+   ),
+  "config" => array(
+    'data_fixtures_path'  =>  APP_PATH . '/db/data/fixtures',
+    'models_path'         =>  APP_PATH . '/db/models',
+    'migrations_path'     =>  APP_PATH . '/db/migrations',
+    'sql_path'            =>  APP_PATH . '/db/data/sql',
+    'yaml_schema_path'    =>  APP_PATH . '/db/schema'
+  )
+);
+// ensure doctrine models are loaded
+King23_Classloader::init(APP_PATH . "/db/models");
