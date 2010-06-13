@@ -42,7 +42,10 @@ class EXAMPLE_Task extends King23_CLI_Task
      */
     protected $name = "EXAMPLE";
 
-
+    /**
+     * public method resembling the actual task action "example"
+     * @param array $options 
+     */
     public function example(array $options)
     {
         $this->cli->message("example task call");

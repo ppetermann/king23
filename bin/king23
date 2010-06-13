@@ -44,6 +44,12 @@ King23_Classloader::init(KING23_PATH ."/lib/");
 if(file_exists("./tasks/"))
     King23_Classloader::init("./tasks/");
 
+// if exists read cli config
+if(file_exists("./conf/cli.php"))
+    require_once "./conf/cli.php";
+else if(file_exists("./conf/config.php")) // otherwise, if exists, read config.php
+    require_once "./conf/config.php";
+
 $cli = King23_CLI::getInstance();
 
 /* core tasks */
