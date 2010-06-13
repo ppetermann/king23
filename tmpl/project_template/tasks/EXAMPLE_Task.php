@@ -34,7 +34,7 @@ class EXAMPLE_Task extends King23_CLI_Task
      */
     protected $tasks = array(
         "info" => "General Informative Task",
-        "exmaple" => "example",
+        "example" => "example",
     );
 
     /**
