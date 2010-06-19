@@ -83,8 +83,6 @@ class King23_Router implements King23_Singleton
      */
     public function dispatch($request)
     {
-        if(strlen($request) < 1) $request = "/";
-        
         foreach($this->routes as $route => $info)
         {
             // check if route is matched
@@ -92,9 +90,13 @@ class King23_Router implements King23_Singleton
             {
                 // is this a sub router?
                 if(isset($info["router"]))
-                {
+                {   
                     if($paramstr = substr($request, strlen($route)))
+                    {  
                         $info["router"]->dispatch($paramstr);
+                    } else { // if after the match nothing is left, lets call default route..
+                        $info["router"]->dispatch("/");
+                    }
                 }
                 else // otherwise its a regular (direct) route
                 {
