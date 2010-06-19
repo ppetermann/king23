@@ -68,30 +68,50 @@ class King23_Router implements King23_Singleton
     }
 
     /**
-     * execute url request to method call
+     * Add a router for subroutes
+     * @param string $route the route used to trigger usage of subrouter
+     * @param King23_Router $router the router object
+     */
+    public function addRouter($route, King23_Router $router)
+    {
+        $this->routes[$route] = array("router" => $router);
+    }
+
+    /**
+     * execute url request to method or subouter call
      * @param string $request
      */
     public function dispatch($request)
     {
         foreach($this->routes as $route => $info)
         {
+            // check if route is matched
             if(substr($request, 0, strlen($route)) == $route)
             {
-                $class = $info["class"];
-                $parameters = array();
-                if($paramstr = substr($request, strlen($route)))
+                // is this a sub router?
+                if(isset($info["router"]))
                 {
-                    $params = explode("/", $paramstr);
-                    foreach($info["parameters"] as $key => $value)
-                    {
-                        if(isset($params[$key]))
-                            $parameters[$value] = $params[$key];
-                        else
-                            $parameters[$value] = null;
-                    }
+                    if($paramstr = substr($request, strlen($route)))
+                        $info["router"]->dispatch($paramstr);
                 }
-                $view = new $class();
-                $view->dispatch($info["action"], $parameters);
+                else // otherwise its a regular (direct) route
+                {
+                    $parameters = array();
+                    if($paramstr = substr($request, strlen($route)))
+                    {
+                        $params = explode("/", $paramstr);
+                        foreach($info["parameters"] as $key => $value)
+                        {
+                            if(isset($params[$key]))
+                                $parameters[$value] = $params[$key];
+                            else
+                                $parameters[$value] = null;
+                        }
+                    }
+                    $class = $info["class"];
+                    $view = new $class();
+                    $view->dispatch($info["action"], $parameters);                    
+                }
                 break;
             }
         }
