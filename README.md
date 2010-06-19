@@ -40,7 +40,7 @@ a basic example on usage
 ## TODO
 - more documentation
 - code generators 
-- database layer (leaving the choice open atm)
+- database layer (leaving the choice open atm, but comes with some help for doctrine)
 - add more cowbell
 
 ## LINKS
