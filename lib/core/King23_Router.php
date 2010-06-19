@@ -83,6 +83,8 @@ class King23_Router implements King23_Singleton
      */
     public function dispatch($request)
     {
+        if(strlen($request) < 1) $request = "/";
+        
         foreach($this->routes as $route => $info)
         {
             // check if route is matched
