@@ -30,7 +30,7 @@
  * Basic view for all views who need to use the SithTemplates
  * all templated views should be derived from this
  */
-abstract class King23_TemplateView
+abstract class King23_TemplateView extends King23_View
 {
     /**
      * Sith Object, pulled from registry->sith
