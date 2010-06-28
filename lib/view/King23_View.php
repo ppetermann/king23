@@ -31,5 +31,23 @@
  */
 abstract class King23_View
 {
+    /**
+     * Dispatch the action call to a method on the current view
+     * @abstract
+     * @param  $action
+     * @param  $request
+     * @return void
+     */
     abstract function dispatch($action, $request);
+
+    /**
+     * redirect by sending a http location header (and die afterwards to stop script execution on redirect)
+     * @param  $location
+     * @todo evaluate if this method should be moved to King23_Template_View
+     */
+    protected function redirect($location)
+    {
+        header("Location: $location");
+        die();
+    }
 }
