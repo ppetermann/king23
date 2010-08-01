@@ -30,10 +30,35 @@ abstract class King23_MongoObject implements IteratorAggregate
      */
     protected static function _getInstanceById($name, $mongoid)
     {
-        $obj = new $name();
-        $obj->_data = $obj->_collection->findOne(array('_id' => new MongoId($mongoid)));
-        return $obj;
+        if($data = $obj->_collection->findOne(array('_id' => new MongoId($mongoid))))
+        {
+            $obj = new $name();
+            $obj->_data = $data;
+            return $obj;
+        }
+        return null;
     }
+
+    /**
+     * conveniance method to retrieve object by criteria, should be used in
+     * public static method by the derrived class
+     * @static
+     * @param  string $name should be the className of the class calling the method
+     * @param  array $criteria
+     * @return King23_MongoObject
+     */
+    protected static function _getInstanceByCriteria($name, $criteria)
+    {
+        if($data = $obj->_collection->findOne($criteria))
+        {
+            $obj = new $name();
+            $obj->_data = $data;
+            return $obj;
+        }
+        return null;
+    }
+
+
 
     /**
      * constructor, meant to setup the object, should be called by derived classes
