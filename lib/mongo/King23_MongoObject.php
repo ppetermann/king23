@@ -30,9 +30,9 @@ abstract class King23_MongoObject implements IteratorAggregate
      */
     protected static function _getInstanceById($name, $mongoid)
     {
+        $obj = new $name();
         if($data = $obj->_collection->findOne(array('_id' => new MongoId($mongoid))))
         {
-            $obj = new $name();
             $obj->_data = $data;
             return $obj;
         }
@@ -49,9 +49,9 @@ abstract class King23_MongoObject implements IteratorAggregate
      */
     protected static function _getInstanceByCriteria($name, $criteria)
     {
+        $obj = new $name();
         if($data = $obj->_collection->findOne($criteria))
         {
-            $obj = new $name();
             $obj->_data = $data;
             return $obj;
         }
