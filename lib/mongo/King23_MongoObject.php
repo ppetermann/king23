@@ -58,6 +58,17 @@ abstract class King23_MongoObject implements IteratorAggregate
         return null;
     }
 
+    /**
+     * @static
+     * @param array $criteria
+     * @return King23_MongoResult
+     */
+    protected static function _find($name, array $criteria)
+    {
+        $obj = new $name();
+        return new King23_MongoResult($name, $obj->_collection->find($criteria));
+    }
+
 
 
     /**
@@ -74,6 +85,16 @@ abstract class King23_MongoObject implements IteratorAggregate
  
         $colname = $this->_className;
         $this->_collection = $mongo['db']->$colname; 
+    }
+
+    /**
+     * load data from array
+     * @param  $data
+     * @return void
+     */
+    public function _loadFromArray(array $data)
+    {
+        $this->_data = $data;
     }
 
     /**
