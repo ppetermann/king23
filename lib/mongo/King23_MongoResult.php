@@ -1,5 +1,5 @@
 <?php
-class King23_MongoResult implements Iterator, Traversable
+class King23_MongoResult implements Iterator
 {
 
     /**
