@@ -29,7 +29,7 @@
  * Base class to handle objects stored in MongoDB
  * @throws King23_MongoException
  */
-abstract class King23_MongoObject implements IteratorAggregate
+abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
 {
     /**
      * @var MongoCollection collection used by instance
