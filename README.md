@@ -44,6 +44,7 @@ a basic example on usage
 - add more cowbell
 
 ## LINKS
+- [Homepage](http://king23.net)
 - [Github](http://github.com/ppetermann/king23)
 - [Twitter](http://twitter.com/King23Framework)
 - [IRC](irc://irc.coldfront.net:6667/King23) bot will join and put in commit messages on commits there 
