@@ -44,6 +44,14 @@ class King23_Router implements King23_Singleton
     private $routes = array();
 
     /**
+     * String containing the basic host of the application, if this is set 
+     * this parameter will be removed from the hostname before hostparameters are extracted,
+     * so having a low parameter count won't falsify the parameters by using the basic host as parameters
+     * @var string
+     */
+    private $basicHost = null;
+
+    /**
      * Singleton Instance
      * @return King23_Router
      */
@@ -59,12 +67,12 @@ class King23_Router implements King23_Singleton
      * @param String $route beginning string of the route
      * @param String $class to be used for this route
      * @param String $action method to be called
-     * @param array $parameters list of parameters that should be retrieved from
-     *  url
+     * @param array $parameters list of parameters that should be retrieved from url
+     * @param array $hostparameters - allows to use subdomains as parameters 
      */
-    public function addRoute($route, $class, $action,$parameters = array())
+    public function addRoute($route, $class, $action,$parameters = array(), $hostparameters = array())
     {
-        $this->routes[$route] = array("class" => $class, "action" => $action, "parameters" => $parameters);
+        $this->routes[$route] = array("class" => $class, "action" => $action, "parameters" => $parameters, "hostparameters" => $hostparameters);
     }
 
     /**
@@ -75,6 +83,17 @@ class King23_Router implements King23_Singleton
     public function addRouter($route, King23_Router $router)
     {
         $this->routes[$route] = array("router" => $router);
+    }
+
+
+    /**
+     * method to set the basicHost for hostparameters in routing
+     * @see King23_Router::$basicHost
+     * @param string basicHost
+     */
+    public function setBasicHost($basicHost = null)
+    {
+        $this->basicHost = $basicHost;
     }
 
     /**
@@ -107,6 +126,30 @@ class King23_Router implements King23_Singleton
                         foreach($info["parameters"] as $key => $value)
                         {
                             if(isset($params[$key]))
+                                $parameters[$value] = $params[$key];
+                            else
+                                $parameters[$value] = null;
+                        }
+                    }
+
+                    if(count($info["hostparameters"])>0) // if we have parameters that we extract from the host, then this is going to happen here.
+                    {
+                        if(is_null($this->basicHost))
+                            $hostname = $_SERVER["SERVER_NAME"];
+                        else
+                            $hostname = str_replace($this->basicHost, "", $_SERVER["SERVER_NAME"]);
+                       
+                        if(substr($hostname, -1) == ".")
+                            $hostname = substr($hostname, 0, -1);
+                        
+                        if(empty($hostname))
+                            $params = array();
+                        else 
+                            $params = array_reverse(explode(".", $hostname));
+                        
+                        foreach($info["hostparameters"] as $key => $value)
+                        {
+                            if(isset($params[$key]) && !empty($params[$key]))
                                 $parameters[$value] = $params[$key];
                             else
                                 $parameters[$value] = null;
