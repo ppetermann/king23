@@ -44,7 +44,7 @@ class King23_Router implements King23_Singleton
     private $routes = array();
 
     /**
-     * String containing the basic host of the application, if this is set 
+     * String containing the basis host of the application, if this is set 
      * this parameter will be removed from the hostname before hostparameters are extracted,
      * so having a low parameter count won't falsify the parameters by using the basic host as parameters
      * @var string
@@ -89,11 +89,11 @@ class King23_Router implements King23_Singleton
     /**
      * method to set the basicHost for hostparameters in routing
      * @see King23_Router::$basicHost
-     * @param string basicHost
+     * @param string baseHost
      */
-    public function setBasicHost($basicHost = null)
+    public function setBaseHost($baseHost = null)
     {
-        $this->basicHost = $basicHost;
+        $this->baseHost = $baseHost;
     }
 
     /**
@@ -134,10 +134,10 @@ class King23_Router implements King23_Singleton
 
                     if(count($info["hostparameters"])>0) // if we have parameters that we extract from the host, then this is going to happen here.
                     {
-                        if(is_null($this->basicHost))
+                        if(is_null($this->baseHost))
                             $hostname = $_SERVER["SERVER_NAME"];
                         else
-                            $hostname = str_replace($this->basicHost, "", $_SERVER["SERVER_NAME"]);
+                            $hostname = str_replace($this->baseHost, "", $_SERVER["SERVER_NAME"]);
                        
                         if(substr($hostname, -1) == ".")
                             $hostname = substr($hostname, 0, -1);
