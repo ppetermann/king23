@@ -112,9 +112,9 @@ class King23_Router implements King23_Singleton
                 {   
                     if($paramstr = substr($request, strlen($route)))
                     {  
-                        $info["router"]->dispatch($paramstr);
+                        return $info["router"]->dispatch($paramstr);
                     } else { // if after the match nothing is left, lets call default route..
-                        $info["router"]->dispatch("/");
+                        return $info["router"]->dispatch("/");
                     }
                 }
                 else // otherwise its a regular (direct) route
@@ -157,7 +157,7 @@ class King23_Router implements King23_Singleton
                     }
                     $class = $info["class"];
                     $view = new $class();
-                    $view->dispatch($info["action"], $parameters);                    
+                    return $view->dispatch($info["action"], $parameters);                    
                 }
                 break;
             }

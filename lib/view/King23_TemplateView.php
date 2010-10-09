@@ -56,17 +56,21 @@ abstract class King23_TemplateView extends King23_View
      * context
      * @param string $template
      * @param array $context
+     * @param bool $silent if set to true the method will not echo out the results
      */
-    protected function render($template, $context = array())
+    protected function render($template, $context = array(), $silent = false)
     {
         $context = array_merge($this->_context, $context);
-        echo $this->sith->cachedGet($template)->render($context, $this->sith);
+        $body = $this->sith->cachedGet($template)->render($context, $this->sith);
+        if(!$silent)
+            echo $body;
+        return $body;
     }
 
     /**
      * function to dispatch requests comming throuh the router
-     * @param <type> $action
-     * @param <type> $request 
+     * @param string $action
+     * @param array $request 
      */
     public function dispatch($action, $request)
     {
