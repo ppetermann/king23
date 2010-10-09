@@ -66,17 +66,4 @@ abstract class King23_TemplateView extends King23_View
             echo $body;
         return $body;
     }
-
-    /**
-     * function to dispatch requests comming throuh the router
-     * @param string $action
-     * @param array $request 
-     */
-    public function dispatch($action, $request)
-    {
-        if(!method_exists($this, $action))
-            throw new King23_ViewActionDoesNotExistException();
-        $this->$action($request);
-    }
-
 }

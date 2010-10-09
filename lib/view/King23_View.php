@@ -32,13 +32,16 @@
 abstract class King23_View
 {
     /**
-     * Dispatch the action call to a method on the current view
-     * @abstract
-     * @param  $action
-     * @param  $request
-     * @return void
+     * function to dispatch requests comming throuh the router
+     * @param string $action
+     * @param array $request 
      */
-    abstract function dispatch($action, $request);
+    public function dispatch($action, $request)
+    {
+        if(!method_exists($this, $action))
+            throw new King23_ViewActionDoesNotExistException();
+        $this->$action($request);
+    }
 
     /**
      * redirect by sending a http location header (and die afterwards to stop script execution on redirect)
