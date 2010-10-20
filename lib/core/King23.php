@@ -31,8 +31,7 @@
  */
 abstract class King23
 {
-    const Version = "0.0.3";
+    const Version = "0.0.4-git";
     const Description = "King23 is lightweight MVC Framework";
     const Authors = "Peter Petermann <ppeterman80@googlemail.com>";
 }
-

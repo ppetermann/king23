@@ -22,7 +22,7 @@ for further information
 
 ## REQUIREMENTS
 - PHP 5.2 (might run on earlier versions, untested)
-- APACHE + mod_rewrite (might work on other servers with own rewrite rulesets, untested)
+- APACHE + mod_rewrite (might work on other servers with own rewrite rulesets, untested) (Mistral can be used instead, but thats highly experimental!)
 - LINUX / MAC OS X (might run on windows, untested)
 
 ## INSTALLATION
