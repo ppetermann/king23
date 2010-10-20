@@ -38,9 +38,9 @@ abstract class King23_View
      */
     public function dispatch($action, $request)
     {
-        if(!method_exists($this, $action))
+        if(!method_exists($this, $action) && !method_exists($this, '__call'))
             throw new King23_ViewActionDoesNotExistException();
-        $this->$action($request);
+        return $this->$action($request);
     }
 
     /**

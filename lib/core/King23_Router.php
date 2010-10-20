@@ -102,6 +102,7 @@ class King23_Router implements King23_Singleton
      */
     public function dispatch($request)
     {
+        uksort($this->routes, array($this, 'sortRoutes'));
         foreach($this->routes as $route => $info)
         {
             // check if route is matched
@@ -162,5 +163,15 @@ class King23_Router implements King23_Singleton
                 break;
             }
         }
+    }
+
+    /**
+    * method to be called by uksort to sort the routes
+    * @param string $a
+    * @param string $b
+    */ 
+    private function sortRoutes($a, $b)
+    {
+        return strlen($a) < strlen($b);
     }
 }
