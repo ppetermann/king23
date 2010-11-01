@@ -106,4 +106,26 @@ class King23_MongoResult implements Iterator, Countable
     {
         return $this->_cursor->count();
     }
+
+    /**
+     * @return run a sort on the cursor
+     * @param array sort options
+     * @returns King23_MongoResult
+     */
+    public function sort(array $sortoptions)
+    {
+        $this->_cursor = $this->_cursor->sort($sortoptions);
+        return $this;
+    }
+
+    /**
+     * @param  $amount
+     * @return King23_MongoResult
+     *
+     */
+    public function limit($amount)
+    {
+        $this->_cursor = $this->_cursor->limit($amount);
+        return $this;
+    }
 }
