@@ -207,7 +207,9 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
      */
     public function __get($name)
     {
-        return $this->_data[$name];
+        if(isset($this->_data[$name]))
+            return $this->_data[$name];
+        return NULL;
     }
 }
 
