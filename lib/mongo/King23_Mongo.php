@@ -41,7 +41,7 @@ class King23_Mongo
      * @param string $reduce reduce method
      * @return void
      */
-    public static function mapReduce($input, $output, $map, $reduce)
+    public static function mapReduce($input, $output, $map, $reduce, $query = NULL)
     {
         if(!($mongo = King23_Registry::getInstance()->mongo))
             throw new King23_MongoException('mongodb is not configured');
@@ -52,13 +52,19 @@ class King23_Mongo
         // reduce to shiptype, sum of losses
         $reduce = new MongoCode($reduce);
 
-        // execute the mapreduce
-        $mongo['db']->command(array(
+        $cmd = array(
             "mapreduce" => $input,
             "map" => $map,
             "reduce" => $reduce,
             "out" => $output
-        ));
+        );
+        
+        // add filter query
+        if(!is_null($query))
+            $cmd['query'] = $query;
+
+        // execute the mapreduce
+        $mongo['db']->command($cmd);
 
     }
 }
