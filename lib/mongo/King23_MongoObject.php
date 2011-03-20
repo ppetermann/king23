@@ -95,7 +95,17 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
         return new King23_MongoResult($name, $obj->_collection->find($criteria));
     }
 
-
+    /**
+     * @static
+     * @param string $name
+     * @param array $criteria
+     * @return array
+     */
+    public static function _findOne($name, array $criteria)
+    {
+        $obj = new $name();
+        return $obj->_collection->findOne($criteria);
+    }
 
     /**
      * constructor, meant to setup the object, should be called by derived classes
