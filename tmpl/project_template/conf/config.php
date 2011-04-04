@@ -29,6 +29,9 @@
 if(!defined("APP_PATH"))
     define("APP_PATH", realpath(dirname(__FILE__) . "/.."));
 
+require_once(APP_PATH . "/lib/King23/lib/core/King23_Classloader.php");
+spl_autoload_register("King23_Classloader::load");
+
 King23_Classloader::init(APP_PATH . "/lib/King23/lib");
 King23_Classloader::init(APP_PATH . "/views");
 
