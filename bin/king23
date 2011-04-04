@@ -38,7 +38,7 @@ error_reporting(E_ALL);
 // lets find out where we are, and load a fitting classloader
 define('KING23_PATH', realpath(dirname(__FILE__) . "/.."));
 require_once(KING23_PATH . "/lib/core/King23_Classloader.php");
-spl_autoload_register("King23_Classloader::load");
+King23_Classloader::register();
 
 King23_Classloader::init(KING23_PATH ."/lib/");
 if(file_exists("./tasks/"))

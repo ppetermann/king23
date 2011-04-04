@@ -48,6 +48,36 @@ class King23_Classloader implements King23_Singleton
     private $classes = array();
 
     /**
+     * If the autoloader was already registered
+     *
+     * @var boolean
+     */
+    protected static $registered = false;
+
+    public static function register()
+    {
+        if (!self::$registered)
+        {
+            spl_autoload_register('King23_Classloader::load');
+            self::$registered = true;
+        }
+    }
+
+    /**
+     * Unregister the autoloader if it has been
+     * registered before
+     *
+     */
+    public static function unregister()
+    {
+        if (self::$registered)
+        {
+            spl_autoload_unregister('King23_Classloader::load');
+            self::$registered = false;
+		}
+    }
+
+    /**
      * Singleton requirement, returns existing instance, creates new
      * instance if none exists
      * @return King23_Classloader
