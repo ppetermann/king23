@@ -64,7 +64,7 @@ class King23_Mongo
             $cmd['query'] = $query;
 
         // execute the mapreduce
-        $mongo['db']->command($cmd);
+        return $mongo['db']->command($cmd);
 
     }
 }
