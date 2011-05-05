@@ -221,5 +221,22 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
             return $this->_data[$name];
         return NULL;
     }
+
+    // --------------------- unserialize
+
+    /**
+     * Magic wakeup method, will reconnect object on unserialze
+     * @throws King23_MongoException
+     * @return void
+     */
+    public function __wakeup()
+    {
+        if(!($mongo = King23_Registry::getInstance()->mongo))
+            throw new King23_MongoException('mongodb is not configured');
+
+        $colname = $this->_className;
+        $this->_collection = $mongo['db']->$colname;
+    }
+
 }
 
