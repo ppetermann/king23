@@ -151,6 +151,16 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
         $this->_collection->save($this->_data);
     }
 
+    /**
+     * refreshes object from database (all changes be lost!)
+     * @return void
+     */
+    public function refresh()
+    {
+        if($data = $this->_collection->findOne(array('_id' => $this->_id)))
+            $this->_data = $data;
+    }
+
     // --------------------------- Iterator Fun
 
     /**
