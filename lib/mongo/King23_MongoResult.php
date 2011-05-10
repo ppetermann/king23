@@ -128,4 +128,16 @@ class King23_MongoResult implements Iterator, Countable
         $this->_cursor = $this->_cursor->limit($amount);
         return $this;
     }
+    
+    /**
+     * Skip the first $num results
+     * 
+     * @param integer $num
+     * @return King23_MongoResult 
+     */
+    public function skip($num)
+    {
+        $this->_cursor->skip($num);
+        return $this;
+    }
 }
