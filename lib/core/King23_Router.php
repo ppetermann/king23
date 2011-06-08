@@ -127,7 +127,7 @@ class King23_Router implements King23_Singleton
                         foreach($info["parameters"] as $key => $value)
                         {
                             if(isset($params[$key]))
-                                $parameters[$value] = $params[$key];
+                                $parameters[$value] = urldecode($params[$key]);
                             else
                                 $parameters[$value] = null;
                         }
