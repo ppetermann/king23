@@ -87,24 +87,26 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
     /**
      * @static
      * @param array $criteria
+     * @param array $fields
      * @return King23_MongoResult
      */
-    protected static function _find($name, array $criteria)
+    protected static function _find($name, array $criteria, array $fields = array())
     {
         $obj = new $name();
-        return new King23_MongoResult($name, $obj->_collection->find($criteria));
+        return new King23_MongoResult($name, $obj->_collection->find($criteria, $fields));
     }
 
     /**
      * @static
      * @param string $name
      * @param array $criteria
+     * @param array $fields
      * @return array
      */
-    public static function _findOne($name, array $criteria)
+    public static function _findOne($name, array $criteria, array $fields = array())
     {
         $obj = new $name();
-        return $obj->_collection->findOne($criteria);
+        return $obj->_collection->findOne($criteria, $fields);
     }
 
     /**
