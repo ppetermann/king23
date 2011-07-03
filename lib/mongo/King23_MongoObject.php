@@ -99,6 +99,20 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
     /**
      * @static
      * @param string $name
+     * @param string $fieldname
+     * @param array $criteria
+     * @return array
+     */
+    protected static function _distinct($name, $fieldname, array $criteria = array())
+    {
+        $obj = new $name();
+        return $obj->_collection->distinct($fieldname, $criteria);
+    }
+
+
+    /**
+     * @static
+     * @param string $name
      * @param array $criteria
      * @param array $fields
      * @return array
