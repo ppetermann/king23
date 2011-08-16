@@ -46,10 +46,8 @@ class King23_Mongo
         if(!($mongo = King23_Registry::getInstance()->mongo))
             throw new King23_MongoException('mongodb is not configured');
 
-        // emit shipType and 1
         $map = new MongoCode($map);
 
-        // reduce to shiptype, sum of losses
         $reduce = new MongoCode($reduce);
 
         $cmd = array(
