@@ -32,6 +32,43 @@
  */
 class King23_Mongo
 {
+
+
+    /**
+     * Method that caches inline map/reduces to allow for transparent cache
+     * all restrictions applying to inline map/reduce apply to this!
+     * @static
+     * @param string $class name of the map/reduce class (hint: __class__)
+     * @param integer $cachetime seconds to cache
+     * @param string $collection name of the collection from which to map/reduce
+     * @param string $output name of the collection to write
+     * @param string $map map method
+     * @param string $reduce reduce method
+     * @param array $query criteria to apply
+     * @return void
+     */
+    public static function cachedMapReduce($class, $cachetime, $collection, $map, $reduce, $query)
+    {
+        $hash = md5($collection . join(':', $options) . $map . $reduce . join(':', $filter));
+        $obj = parent::_getInstanceByCriteria($class, array('hash' => $hash));
+
+        if(is_null($obj) || time() > ($obj->updated->sec + $cachetime))
+        {
+            if(is_null($obj))
+            {
+                $obj = new $class();
+                $obj->hash = $hash;
+            }
+            $result = King23_Mongo::mapReduce($collection, array('inline' => 1), $map, $reduce, $filter);
+            $obj->result = $result;
+            $obj->updated = new MongoDate(time());
+            $obj->save();
+            return $result;
+        }
+
+        return $obj->result;
+    }
+
     /**
      * @static
      * @throws King23_MongoException
@@ -39,6 +76,7 @@ class King23_Mongo
      * @param string $output name of the collection to write
      * @param string $map map method
      * @param string $reduce reduce method
+     * @param array $query criteria to apply
      * @return void
      */
     public static function mapReduce($input, $output, $map, $reduce, $query = NULL)
