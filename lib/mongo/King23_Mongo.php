@@ -59,7 +59,7 @@ class King23_Mongo
                 $obj = new $class();
                 $obj->hash = $hash;
             }
-            $result = King23_Mongo::mapReduce($collection, array('inline' => 1), $map, $reduce, $filter);
+            $result = King23_Mongo::mapReduce($collection, array('inline' => 1), $map, $reduce, $query);
             $obj->result = $result;
             $obj->updated = new MongoDate(time());
             $obj->save();
