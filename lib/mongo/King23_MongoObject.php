@@ -73,7 +73,7 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
      * @param  array $criteria
      * @return King23_MongoObject
      */
-    protected static function _getInstanceByCriteria($name, $criteria)
+    public static function _getInstanceByCriteria($name, $criteria)
     {
         $obj = new $name();
         if($data = $obj->_collection->findOne($criteria))
