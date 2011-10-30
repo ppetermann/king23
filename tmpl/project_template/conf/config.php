@@ -40,7 +40,7 @@ $reg = King23_Registry::getInstance();
 
 
 // Sith Template configuration
-require_once(APP_PATH . "/lib/King23/external/SithTemplate/SithTemplate.php");
+require_once(APP_PATH . "/lib/King23/external/SithTemplate/lib/SithTemplate.php");
 $reg->sith = new TemplateEnviron(array(
     'inputPrefix'            => APP_PATH . "/templates/",
     'outputPrefix'           => APP_PATH . "/templates_c/",
