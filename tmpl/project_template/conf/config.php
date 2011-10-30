@@ -40,7 +40,7 @@ $reg = King23_Registry::getInstance();
 
 
 // Sith Template configuration
-require_once(APP_PATH . "/lib/King23/external/SithTemplate/lib/SithTemplate.php");
+/*require_once(APP_PATH . "/lib/King23/external/SithTemplate/lib/SithTemplate.php");
 $reg->sith = new TemplateEnviron(array(
     'inputPrefix'            => APP_PATH . "/templates/",
     'outputPrefix'           => APP_PATH . "/templates_c/",
@@ -49,6 +49,13 @@ $reg->sith = new TemplateEnviron(array(
     'recompilationMode'      => 1,
     'defaultIODriver'        => "file",
     'autoEscape'             => false,
+));*/
+
+// Twig Template configuration
+require_once(APP_PATH . "/lib/King23/external/Twig/lib/Autoloader.php");
+Twig_Autoloader::register();
+$reg->twig = new Twig_Environment(new Twig_Loader_Filesystem(APP_PATH ."/templates"), array(
+    "cache" => APP_PATH . "/templates_c"
 ));
 
 
