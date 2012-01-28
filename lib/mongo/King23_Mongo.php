@@ -79,7 +79,7 @@ class King23_Mongo
      * @param array $query criteria to apply
      * @return void
      */
-    public static function mapReduce($input, $output, $map, $reduce, $query = NULL)
+    public static function mapReduce($input, $output, $map, $reduce, $query = NULL, $additional=array())
     {
         if(!($mongo = King23_Registry::getInstance()->mongo))
             throw new King23_MongoException('mongodb is not configured');
@@ -94,10 +94,12 @@ class King23_Mongo
             "reduce" => $reduce,
             "out" => $output
         );
-        
+
         // add filter query
         if(!is_null($query))
             $cmd['query'] = $query;
+
+        $cmd = array_merge($cmd, $additional);
 
         // execute the mapreduce
         return $mongo['db']->command($cmd);
