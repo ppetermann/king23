@@ -56,6 +56,7 @@ require_once(APP_PATH . "/lib/King23/external/Twig/lib/Twig/Autoloader.php");
 Twig_Autoloader::register();
 $reg->twig = new Twig_Environment(new Twig_Loader_Filesystem(APP_PATH ."/templates"), array(
     "cache" => APP_PATH . "/templates_c"
+    "auto_reload" => true // remove to disabled recompiling
 ));
 
 
