@@ -123,9 +123,8 @@ class King23_Task extends King23_CLI_Task
 
     /**
      * print out information
-     * @param array $options not used, only for compatibility
      */
-    public function info($options)
+    public function info()
     {
         $this->cli->header("King23 Version: ");
         $this->cli->message(King23::Version);
