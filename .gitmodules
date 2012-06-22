@@ -1,3 +1,0 @@
-[submodule "external/Twig"]
-	path = external/Twig
-	url = git://github.com/fabpot/Twig.git

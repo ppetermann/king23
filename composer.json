@@ -1,0 +1,15 @@
+{
+    "name": "king23/king23",
+    "type": "library",
+    "description": "the King23 Framework",
+    "keywords": ["framework", "king23"],
+    "homepage": "http://king23.net",
+    "license": "MIT",
+    "authors": [ { "name": "Peter Petermann", "email": "ppetermann80@googlemail.com", "homepage": "http://devedge.eu" }],
+    "require": {
+        "twig/twig": "1.*"
+    },
+    "suggest": {
+        "doctrine/doctrine1": "1.2.*"
+    }
+}
