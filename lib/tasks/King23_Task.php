@@ -104,10 +104,7 @@ class King23_Task extends King23_CLI_Task
             $this->cli->warning("exiting");
             return 1;
         }
-        $this->cli->message("creating symlink $name/lib/King23 to point to " . KING23_PATH);
 
-        if(!@symlink(KING23_PATH, "$name/lib/King23"))
-            $this->cli->warning("symlink creation has failed, you have to do it manualy");
 
         $this->cli->message("Setting rights in $name/template_c/");
         exec("chmod -R 777 $name/templates_c", $retstrign, $ret);
@@ -118,6 +115,7 @@ class King23_Task extends King23_CLI_Task
             return 1;
         }
         $this->cli->positive("Project: " . King23_CLI_OutputWriter::FONT_Bold . $name . King23_CLI_OutputWriter::COLOR_FG_Green ." created");
+        $this->cli->message("Please run composer.phar install in the newly created project folder");
         return 0;
     }
 
