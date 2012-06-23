@@ -11,5 +11,6 @@
     },
     "suggest": {
         "doctrine/doctrine1": "1.2.*"
-    }
+    },
+    "bin": ["bin/king23"]
 }
