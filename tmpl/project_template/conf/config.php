@@ -32,7 +32,7 @@ if(!defined("APP_PATH"))
 require_once(APP_PATH . "/vendor/king23/king23/lib/core/King23_Classloader.php");
 King23_Classloader::register();
 
-King23_Classloader::init(APP_PATH . "/lib/King23/lib");
+King23_Classloader::init(APP_PATH . "/vendor/king23/king23/lib");
 King23_Classloader::init(APP_PATH . "/views");
 
 $reg = King23_Registry::getInstance();
