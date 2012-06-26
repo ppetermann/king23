@@ -28,7 +28,7 @@
 
 // its safe to assume that if King23_Singleton is not load yet those three classes need loading
 // its also safe to assume that if it is load the other three are load aswell.
-if(!class_exists('King23_Singleton'))
+if(!interface_exists('King23_Singleton'))
 {
     require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/interfaces/King23_Singleton.php');
     require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/exceptions/King23_Exception.php');
