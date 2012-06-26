@@ -29,7 +29,10 @@
 if(!defined("APP_PATH"))
     define("APP_PATH", realpath(dirname(__FILE__) . "/.."));
 
-require_once(APP_PATH . "/vendor/king23/king23/lib/core/King23_Classloader.php");
+// if in cli we might already have the classloading going on
+if(!class_exists("King23_Classloader"))
+    require_once(APP_PATH . "/vendor/king23/king23/lib/core/King23_Classloader.php");
+
 King23_Classloader::register();
 
 King23_Classloader::init(APP_PATH . "/vendor/king23/king23/lib");
