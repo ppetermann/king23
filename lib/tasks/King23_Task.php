@@ -105,9 +105,8 @@ class King23_Task extends King23_CLI_Task
             return 1;
         }
 
-
-        $this->cli->message("Setting rights in $name/template_c/");
-        exec("chmod -R 777 $name/templates_c", $retstrign, $ret);
+        $this->cli->message("Setting rights in $name/cache/");
+        exec("chmod -R 777 $name/cache/", $retstrign, $ret);
         if($ret != 0)
         {
             $this->cli->error("error occured while setting rights");

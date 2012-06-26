@@ -26,7 +26,7 @@
 
 */
 
-class EXAMPLE_Static extends King23_TwigView
+class EXAMPLE_Static_View extends King23_TwigView
 {
     protected function index($request)
     {
