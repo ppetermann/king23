@@ -97,7 +97,7 @@ class King23_Task extends King23_CLI_Task
             $this->cli->warning("exiting");
             return 1;
         }
-        exec("cp -r " . KING23_PATH ."/tmpl/project_template $name", $retstring, $ret);
+        exec("cp -r " . KING23_PATH ."/vendor/king23/project_template $name", $retstring, $ret);
         if($ret != 0)
         {
             $this->cli->error("error occured during copying");

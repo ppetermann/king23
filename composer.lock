@@ -1,17 +1,13 @@
 {
-    "hash": "8bea504f970f12f3070e9f8c34fe7658",
+    "hash": "8e6540e2556606efc4c0216109552dcf",
     "packages": [
         {
-            "package": "twig/twig",
-            "version": "dev-master",
-            "alias-pretty-version": "1.8.x-dev",
-            "alias-version": "1.8.9999999.9999999-dev"
+            "package": "king23/project_template",
+            "version": "0.0.3"
         },
         {
             "package": "twig/twig",
-            "version": "dev-master",
-            "source-reference": "4679ad51c5390648b7ea4c8f0ecd2c0c344145ba",
-            "commit-date": "1339959143"
+            "version": "v1.8.3"
         }
     ],
     "packages-dev": null,
