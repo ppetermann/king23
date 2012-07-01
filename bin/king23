@@ -36,7 +36,11 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // lets find out where we are, and load a fitting classloader
-define('KING23_PATH', realpath(dirname(__FILE__) . "/.."));
+if(file_exists("./vendor/king23/king23/lib/core/King23.php"))
+  define('KING23_PATH', realpath(dirname("./vendor/king23/king23/lib")));
+else
+  define('KING23_PATH', realpath(dirname(__FILE__) . "/.."));
+
 require_once(KING23_PATH . "/lib/core/King23_Classloader.php");
 King23_Classloader::register();
 
