@@ -25,15 +25,13 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-
+namespace King23\Mongo;
 /**
  * Class with helpers to work with MongoDB
- * @throws King23_MongoException
+ * @throws \King23\Mongo\Exceptions\MongoException
  */
-class King23_Mongo
+class Mongo
 {
-
-
     /**
      * Method that caches inline map/reduces to allow for transparent cache
      * all restrictions applying to inline map/reduce apply to this!
@@ -50,7 +48,7 @@ class King23_Mongo
     public static function cachedMapReduce($class, $cachetime, $collection, $map, $reduce, $query)
     {
         $hash = md5($collection . $map . $reduce . join(':', $query) . join(':', array_keys($query)));
-        $obj = King23_MongoObject::_getInstanceByCriteria($class, array('hash' => $hash));
+        $obj = MongoObject::_getInstanceByCriteria($class, array('hash' => $hash));
 
         if(is_null($obj) || time() > ($obj->updated->sec + $cachetime))
         {
@@ -59,9 +57,9 @@ class King23_Mongo
                 $obj = new $class();
                 $obj->hash = $hash;
             }
-            $result = King23_Mongo::mapReduce($collection, array('inline' => 1), $map, $reduce, $query);
+            $result = self::mapReduce($collection, array('inline' => 1), $map, $reduce, $query);
             $obj->result = $result;
-            $obj->updated = new MongoDate(time());
+            $obj->updated = new \MongoDate(time());
             $obj->save();
             return $result;
         }
@@ -81,12 +79,12 @@ class King23_Mongo
      */
     public static function mapReduce($input, $output, $map, $reduce, $query = NULL, $additional=array())
     {
-        if(!($mongo = King23_Registry::getInstance()->mongo))
-            throw new King23_MongoException('mongodb is not configured');
+        if(!($mongo = \King23\Core\Registry ::getInstance()->mongo))
+            throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
 
-        $map = new MongoCode($map);
+        $map = new \MongoCode($map);
 
-        $reduce = new MongoCode($reduce);
+        $reduce = new \MongoCode($reduce);
 
         $cmd = array(
             "mapreduce" => $input,

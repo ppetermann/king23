@@ -25,11 +25,11 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-
+namespace King23\Core\Interfaces;
 /**
  * for classes implementing a singleton pattern
  */
-interface King23_Singleton
+interface Singleton
 {
     public static function getInstance();
 }

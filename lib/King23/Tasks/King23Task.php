@@ -26,10 +26,11 @@
 
 */
 
+namespace King23\Tasks;
 /**
  * Provider for main king23 tasks
  */
-class King23_Task extends King23_CLI_Task
+class King23Task extends \King23\CommandLine\Task
 {
     /**
      * documentation for the single tasks
@@ -53,15 +54,15 @@ class King23_Task extends King23_CLI_Task
      */
     public function list_modules()
     {
-        /* core tasks */
-        $tasks = glob(KING23_PATH . '/lib//tasks/*_Task.php');
+        /* Core tasks */
+        $tasks = glob(KING23_PATH . '/lib/King23/Tasks/*Task.php');
 
         /* current project tasks */
-        $tasks = array_merge($tasks, glob("./tasks/*_Task.php"));
+        $tasks = array_merge($tasks, glob("./tasks/*Task.php"));
 
         $modules = array();
         foreach($tasks as $taskfile)
-            $modules[substr(basename($taskfile),0,-9)] = substr(basename($taskfile),0,-4);
+            $modules[substr(basename($taskfile),0,-8)] = substr(basename($taskfile),0,-4);
 
         $this->cli->header("Available Modules:");
         foreach($modules as $module => $class)
@@ -77,7 +78,7 @@ class King23_Task extends King23_CLI_Task
      */
     public function create_project($options)
     {
-        $this->cli->header("King23 (Version: " . King23::Version .") project creation");
+        $this->cli->header("King23 (Version: " . \King23\Core\King23::Version .") project creation");
         if(count($options) != 1)
         {
             $this->cli->error("Syntax: king23 King23:create_project <projectname>");
@@ -106,14 +107,14 @@ class King23_Task extends King23_CLI_Task
         }
 
         $this->cli->message("Setting rights in $name/cache/");
-        exec("chmod -R 777 $name/cache/", $retstrign, $ret);
+        exec("chmod -R 777 $name/cache/", $retstring, $ret);
         if($ret != 0)
         {
             $this->cli->error("error occured while setting rights");
             $this->cli->warning("exiting");
             return 1;
         }
-        $this->cli->positive("Project: " . King23_CLI_OutputWriter::FONT_Bold . $name . King23_CLI_OutputWriter::COLOR_FG_Green ." created");
+        $this->cli->positive("Project: " . \King23\CommandLine\OutputWriter::FONT_Bold . $name . \King23\CommandLine\OutputWriter::COLOR_FG_Green ." created");
         $this->cli->message("Please run composer.phar install in the newly created project folder");
         return 0;
     }
@@ -124,11 +125,11 @@ class King23_Task extends King23_CLI_Task
     public function info()
     {
         $this->cli->header("King23 Version: ");
-        $this->cli->message(King23::Version);
+        $this->cli->message(\King23\Core\King23::Version);
         $this->cli->header("Description: ");
-        $this->cli->message(King23::Description);
+        $this->cli->message(\King23\Core\King23::Description);
         $this->cli->header("Authors: ");
-        $this->cli->message(King23::Authors);
+        $this->cli->message(\King23\Core\King23::Authors);
         $this->cli->message();
         parent::info();
     }
@@ -140,7 +141,7 @@ class King23_Task extends King23_CLI_Task
     public function doctrine(array $options)
     {   
         $this->cli->header("King23 Doctrine CLI wrapper");
-        if(is_null(King23_Registry::getInstance()->doctrine))
+        if(is_null(\King23\Core\Registry::getInstance()->doctrine))
         {
             $this->cli->error("Doctrine is not configured (could not find doctrine configuration in King23_Registry)");
             return;
@@ -151,7 +152,7 @@ class King23_Task extends King23_CLI_Task
             return;
         }
         array_unshift($options, "king23 King23:doctrine");
-        $cli = new Doctrine_Cli(King23_Registry::getInstance()->doctrine["config"]);
+        $cli = new Doctrine_Cli(\King23\Core\Registry::getInstance()->doctrine["config"]);
         $cli->run($options);
     }
 }

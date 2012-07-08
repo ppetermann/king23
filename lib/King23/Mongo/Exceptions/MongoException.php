@@ -25,9 +25,11 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
+
+namespace King23\Mongo\Exceptions;
 /**
  * base class for King23_Mongo related exceptions
  */
-class King23_MongoException extends King23_Exception
+class MongoException extends \King23\Core\Exceptions\Exception
 {
 }

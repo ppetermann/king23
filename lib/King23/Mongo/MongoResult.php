@@ -25,11 +25,13 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-class King23_MongoResult implements Iterator, Countable
+namespace King23\Mongo;
+
+class MongoResult implements \Iterator, \Countable
 {
 
     /**
-     * @var MongoCursor
+     * @var \MongoCursor
      */
     protected $_cursor = null;
 
@@ -56,7 +58,7 @@ class King23_MongoResult implements Iterator, Countable
      */
     public function rewind()
     {
-        return $this->_cursor->rewind();
+        $this->_cursor->rewind();
     }
 
     /**
@@ -88,7 +90,7 @@ class King23_MongoResult implements Iterator, Countable
     /**
      * Iterator::current
      * return current specific obect
-     * @return King23_MongoObject
+     * @return MongoObject
      */
     public function current()
     {
@@ -110,7 +112,7 @@ class King23_MongoResult implements Iterator, Countable
     /**
      * @return run a sort on the cursor
      * @param array sort options
-     * @returns King23_MongoResult
+     * @returns MongoResult
      */
     public function sort(array $sortoptions)
     {
@@ -120,7 +122,7 @@ class King23_MongoResult implements Iterator, Countable
 
     /**
      * @param  $amount
-     * @return King23_MongoResult
+     * @return MongoResult
      *
      */
     public function limit($amount)
@@ -133,7 +135,7 @@ class King23_MongoResult implements Iterator, Countable
      * Skip the first $num results
      * 
      * @param integer $num
-     * @return King23_MongoResult 
+     * @return MongoResult
      */
     public function skip($num)
     {

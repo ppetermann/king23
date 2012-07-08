@@ -25,11 +25,11 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-
+namespace King23\Core\Exceptions;
 /**
  * Exception for random case of Class Not Found
  */
-class King23_ClassNotFoundException extends King23_Exception
+class ClassNotFoundException extends Exception
 {
 
 }

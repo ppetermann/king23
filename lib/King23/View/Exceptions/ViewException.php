@@ -25,7 +25,7 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-
-class King23_ViewException extends King23_Exception
+namespace King23\View\Exceptions;
+class ViewException extends \King23\Core\Exceptions\Exception
 {
 }

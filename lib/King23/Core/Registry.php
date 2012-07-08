@@ -25,15 +25,15 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-
+namespace King23\Core;
 /**
  * Singleton object to store global data
  */
-class King23_Registry implements King23_Singleton
+class Registry implements \King23\Core\Interfaces\Singleton
 {
     /**
      * Instance for singleton
-     * @var King23_Registry
+     * @var \King23\Core\Registry
      */
     private static $myInstance;
 
@@ -57,7 +57,7 @@ class King23_Registry implements King23_Singleton
     public static function getInstance()
     {
         if(is_null(self::$myInstance))
-            self::$myInstance = new King23_Registry();
+            self::$myInstance = new Registry();
         return self::$myInstance;
     }
 

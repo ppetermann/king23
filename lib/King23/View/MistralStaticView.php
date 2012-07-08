@@ -25,8 +25,9 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
+namespace King23\View;
 
-class King23_MistralStaticView extends King23_View
+class MistralStaticView extends View
 {
     
     /**

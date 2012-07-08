@@ -25,11 +25,11 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-
+namespace King23\CommandLine;
 /**
  * class simplifying the use of color codes on console
  */
-class King23_CLI_OutputWriter
+class OutputWriter
 {
     const TYPE_Regular = 0;
     const TYPE_Heading = 1;
@@ -76,7 +76,7 @@ class King23_CLI_OutputWriter
      * @param String $message
      * @param Integer $type
      */
-    public static function write($message, $type = King23_CLI_OutputWriter::TYPE_Regular)
+    public static function write($message, $type = OutputWriter::TYPE_Regular)
     {
         switch($type)
         {

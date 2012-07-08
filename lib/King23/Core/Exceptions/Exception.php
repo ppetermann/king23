@@ -25,11 +25,12 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-
+namespace King23\Core\Exceptions;
+use Exception as PHPException;
 /**
  * base exception for all King23 Exceptions (so you can catch 'em all at once ;)
  */
-class King23_Exception extends Exception
+class Exception extends PHPException
 {
     
 }

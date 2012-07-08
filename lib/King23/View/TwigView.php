@@ -1,7 +1,7 @@
 <?php
 /*
  MIT License
- Copyright (c) 2010 Peter Petermann
+ Copyright (c) 2011 Peter Petermann
 
  Permission is hereby granted, free of charge, to any person
  obtaining a copy of this software and associated documentation
@@ -25,32 +25,46 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
+namespace King23\View;
 
 /**
- * base for all views
+ * Basic view for all views who need to use the Twig Templates
+ * all templated views should be derived from this
  */
-abstract class King23_View
+abstract class TwigView extends View
 {
     /**
-     * function to dispatch requests comming throuh the router
-     * @param string $action
-     * @param array $request 
+     * twig environment object, pulled from registry->twig
      */
-    public function dispatch($action, $request)
+    private $twig;
+
+    /**
+     * assoc array containing all vars to use in template
+     * @var array
+     */
+    protected $_context = array();
+
+    /**
+     * public contructor, call this from all derived classes
+     */
+    public function __construct()
     {
-        if(!method_exists($this, $action) && !method_exists($this, '__call'))
-            throw new King23_ViewActionDoesNotExistException();
-        return $this->$action($request);
+        $this->twig = \King23\Core\Registry::getInstance()->twig;
     }
 
     /**
-     * redirect by sending a http location header (and die afterwards to stop script execution on redirect)
-     * @param  $location
-     * @todo evaluate if this method should be moved to King23_Template_View
+     * render template with context, will merge context with allready known
+     * context
+     * @param string $template
+     * @param array $context
+     * @param bool $silent if set to true the method will not echo out the results
      */
-    protected function redirect($location)
+    protected function render($template, $context = array(), $silent = false)
     {
-        header("Location: $location");
-        die();
+        $context = array_merge($this->_context, $context);
+        $body = $this->twig->render($template, $context);
+        if(!$silent)
+            echo $body;
+        return $body;
     }
 }

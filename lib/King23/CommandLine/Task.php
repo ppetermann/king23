@@ -25,11 +25,12 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
+namespace King23\CommandLine;
 
 /**
  * King23_CLI basis task, should be parent of all tasks
  */
-abstract class King23_CLI_Task
+abstract class Task
 {
     /**
      * list of available tasks (key) and their description (value)
@@ -46,17 +47,16 @@ abstract class King23_CLI_Task
     
     /**
      * King23_CLI instance for conveniance
-     * @var King23_CLI
+     * @var \King23\CommandLine\CLI
      */
     protected $cli;
-
 
     /**
      * constructor, call parent::__construct from derived classes
      */
     public function __construct()
     {
-        $this->cli = King23_CLI::getInstance();
+        $this->cli = CLI::getInstance();
     }
 
 
@@ -87,7 +87,7 @@ abstract class King23_CLI_Task
     {
         foreach($this->tasks as $name => $description)
         {
-            $this->cli->header("Task: " . King23_CLI_OutputWriter::COLOR_FGL_Blue . $name);
+            $this->cli->header("Task: " . OutputWriter::COLOR_FGL_Blue . $name);
             $this->cli->header("Description:");
             $this->cli->message($description);
             $this->cli->message();

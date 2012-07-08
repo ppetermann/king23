@@ -25,14 +25,15 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
+namespace King23\Mongo;
 /**
  * Base class to handle objects stored in MongoDB
- * @throws King23_MongoException
+ * @throws \King23\Mongo\Exceptions\MongoException
  */
-abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
+abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
 {
     /**
-     * @var MongoCollection collection used by instance
+     * @var \MongoCollection collection used by instance
      */
     protected $_collection; 
     
@@ -52,12 +53,12 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
      * @static
      * @param  string $name should be the className of the class calling the method
      * @param  string $mongoid
-     * @return King23_MongoObject
+     * @return MongoObject
      */
     protected static function _getInstanceById($name, $mongoid)
     {
         $obj = new $name();
-        if($data = $obj->_collection->findOne(array('_id' => new MongoId($mongoid))))
+        if($data = $obj->_collection->findOne(array('_id' => new \MongoId($mongoid))))
         {
             $obj->_data = $data;
             return $obj;
@@ -71,7 +72,7 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
      * @static
      * @param  string $name should be the className of the class calling the method
      * @param  array $criteria
-     * @return King23_MongoObject
+     * @return MongoObject
      */
     public static function _getInstanceByCriteria($name, $criteria)
     {
@@ -88,12 +89,12 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
      * @static
      * @param array $criteria
      * @param array $fields
-     * @return King23_MongoResult
+     * @return MongoResult
      */
     protected static function _find($name, array $criteria, array $fields = array())
     {
         $obj = new $name();
-        return new King23_MongoResult($name, $obj->_collection->find($criteria, $fields));
+        return new MongoResult($name, $obj->_collection->find($criteria, $fields));
     }
 
     /**
@@ -125,15 +126,15 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
 
     /**
      * constructor, meant to setup the object, should be called by derived classes
-     * @throws King23_MongoException
+     * @throws \King23\Mongo\Exceptions\MongoException
      */
     public function __construct()
     {
         if(is_null($this->_className))
-            throw new King23_MongoException('class name not configured in object');
+            throw new \King23\Mongo\Exceptions\MongoException('class name not configured in object');
 
-        if(!($mongo = King23_Registry::getInstance()->mongo))
-            throw new King23_MongoException('mongodb is not configured');
+        if(!($mongo = \King23\Core\Registry::getInstance()->mongo))
+            throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
  
         $colname = $this->_className;
         $this->_collection = $mongo['db']->$colname; 
@@ -180,11 +181,11 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
     // --------------------------- Iterator Fun
 
     /**
-     * @return ArrayIterator
+     * @return \ArrayIterator
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->_data);
+        return new \ArrayIterator($this->_data);
     }
 
 
@@ -252,13 +253,13 @@ abstract class King23_MongoObject implements IteratorAggregate, ArrayAccess
 
     /**
      * Magic wakeup method, will reconnect object on unserialze
-     * @throws King23_MongoException
+     * @throws \King23\Mongo\Exceptions\MongoException
      * @return void
      */
     public function __wakeup()
     {
-        if(!($mongo = King23_Registry::getInstance()->mongo))
-            throw new King23_MongoException('mongodb is not configured');
+        if(!($mongo = \King23\Core\Registry::getInstance()->mongo))
+            throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
 
         $colname = $this->_className;
         $this->_collection = $mongo['db']->$colname;

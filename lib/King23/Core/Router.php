@@ -25,15 +25,15 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-
+namespace King23\Core;
 /**
  * King23_Router class, allowing the matching of URL -> classmethod
  */
-class King23_Router implements King23_Singleton
+class Router implements \King23\Core\Interfaces\Singleton
 {
     /**
      * Singleton instance
-     * @var King23_Router
+     * @var \King23\Core\Router
      */
     private static $myInstance;
     
@@ -49,16 +49,16 @@ class King23_Router implements King23_Singleton
      * so having a low parameter count won't falsify the parameters by using the basic host as parameters
      * @var string
      */
-    private $basicHost = null;
+    private $baseHost = null;
 
     /**
      * Singleton Instance
-     * @return King23_Router
+     * @return \King23\Core\Router
      */
     public static function getInstance()
     {
         if(is_null(self::$myInstance))
-            self::$myInstance = new King23_Router();
+            self::$myInstance = new \King23\Core\Router();
         return self::$myInstance;
     }
 
@@ -78,9 +78,9 @@ class King23_Router implements King23_Singleton
     /**
      * Add a router for subroutes
      * @param string $route the route used to trigger usage of subrouter
-     * @param King23_Router $router the router object
+     * @param \King23\Core\Router $router the router object
      */
-    public function addRouter($route, King23_Router $router)
+    public function addRouter($route, \King23\Core\Router $router)
     {
         $this->routes[$route] = array("router" => $router);
     }
@@ -89,7 +89,7 @@ class King23_Router implements King23_Singleton
     /**
      * method to set the basicHost for hostparameters in routing
      * @see King23_Router::$basicHost
-     * @param string baseHost
+     * @param String $baseHost
      */
     public function setBaseHost($baseHost = null)
     {
@@ -157,8 +157,10 @@ class King23_Router implements King23_Singleton
                         }
                     }
                     $class = $info["class"];
+
+                    /** @var \King23\View\View $view */
                     $view = new $class();
-                    return $view->dispatch($info["action"], $parameters);                    
+                    return $view->dispatch($info["action"], $parameters);
                 }
                 break;
             }

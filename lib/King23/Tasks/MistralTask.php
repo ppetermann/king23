@@ -4,7 +4,7 @@ $router->addRoute("/images/", "King23_MistralStaticView", "images", array("filen
 $router->addRoute("/css/", "King23_MistralStaticView", "css", array('filename'));
 $router->addRoute("/js/", "King23_MistralStaticView", "js", array('filename'));
 
-class Mistral_Task extends King23_CLI_Task
+class MistralTask extends \King23\CommandLine\Task
 {
     /**
      * documentation for the single tasks
@@ -63,7 +63,7 @@ class Mistral_Task extends King23_CLI_Task
         $_SERVER = array_merge($_SERVER, $request);
         $this->cli->message('receiving request for "' . $_SERVER['REQUEST_URI'] .'"');
         ob_start();
-        $return = King23_Router::getInstance()->dispatch($_SERVER["REQUEST_URI"]); 
+        $return = \King23\Core\Router::getInstance()->dispatch($_SERVER["REQUEST_URI"]);
         $sobody = ob_get_contents();
         ob_end_clean();
         if(is_array($return)) // we got an array back, so we assume it has all data for answering the request

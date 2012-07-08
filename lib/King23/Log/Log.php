@@ -25,11 +25,12 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
+namespace King23\Log;
 
 /**
  * Class used for printing out / sending lines to bot
  */
-class King23_Log
+class Log
 {
     /**
      * write out message for logging purposes

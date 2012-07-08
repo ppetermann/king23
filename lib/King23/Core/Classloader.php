@@ -25,24 +25,25 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
+namespace King23\Core;
 
 // its safe to assume that if King23_Singleton is not load yet those three classes need loading
 // its also safe to assume that if it is load the other three are load aswell.
-if(!interface_exists('King23_Singleton'))
+if(!interface_exists('King23\Core\Singleton'))
 {
-    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/interfaces/King23_Singleton.php');
-    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/exceptions/King23_Exception.php');
-    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/exceptions/King23_PathNotFoundException.php');
+    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/Interfaces/Singleton.php');
+    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/Exceptions/Exception.php');
+    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/Exceptions/PathNotFoundException.php');
 }
 
 /**
  * classloader for King23, this class is meant to handle all classloading
  */
-class King23_Classloader implements King23_Singleton
+class Classloader implements \King23\Core\Interfaces\Singleton
 {
     /**
      * Instance of the Classloader
-     * @var King23_Classloader
+     * @var \King23\Core\Classloader
      */
     private static $myInstance;
 
@@ -63,7 +64,7 @@ class King23_Classloader implements King23_Singleton
     {
         if (!self::$registered)
         {
-            spl_autoload_register('King23_Classloader::load');
+            spl_autoload_register('\King23\Core\Classloader::load');
             self::$registered = true;
         }
     }
@@ -77,7 +78,7 @@ class King23_Classloader implements King23_Singleton
     {
         if (self::$registered)
         {
-            spl_autoload_unregister('King23_Classloader::load');
+            spl_autoload_unregister('\King23\Core\Classloader::load');
             self::$registered = false;
 		}
     }
@@ -90,7 +91,7 @@ class King23_Classloader implements King23_Singleton
     public static function getInstance()
     {
         if(is_null(self::$myInstance))
-            self::$myInstance = new King23_Classloader();
+            self::$myInstance = new \King23\Core\Classloader();
         return self::$myInstance;
     }
 
@@ -125,18 +126,26 @@ class King23_Classloader implements King23_Singleton
     private function configure($path)
     {
         if(!file_exists($path) || !is_dir($path))
-            throw new King23_PathNotFoundException();
+            throw new \King23\Core\Exceptions\PathNotFoundException;
         $this->classes = array_merge($this->classes, $this->parseDir($path));
     }
 
     /**
      * recursive dir parsing method
      * @param string $dir directory to parse
-     * @param array $classes allready found classes
+     * @param array $classes already found classes
      * @return array
      */
-    private function parseDir($dir, $classes = array())
+    private function parseDir($dir, $classes = array(), $namespace ="")
     {
+        if(empty($namespace))
+        {
+            $namespace ='\\'; // global class
+        } else {
+            if($namespace == '\\') $namespace="";
+            $namespace = $namespace . basename($dir) . '\\';
+        }
+
         $d = dir($dir);
         while($item = $d->read())
         {
@@ -145,13 +154,13 @@ class King23_Classloader implements King23_Singleton
 
             if(is_dir("$dir/$item"))
             {
-                $classes = array_merge($classes, $this->parseDir($dir . "/" . $item));
+                $classes = array_merge($classes, $this->parseDir($dir . "/" . $item, array(), $namespace));
                 continue;
             }
 
             if(substr($item, -4) == ".php")
             {
-                $classes[substr($item, 0,-4)] = "$dir/$item";
+                $classes[ $namespace. substr($item, 0,-4)] = "$dir/$item";
             }
         }
         return $classes;

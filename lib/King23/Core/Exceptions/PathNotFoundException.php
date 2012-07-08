@@ -25,11 +25,12 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
+namespace King23\Core\Exceptions;
 
 /**
  * generic exception for a path not found
  */
-class King23_PathNotFoundException extends King23_Exception
+class PathNotFoundException extends Exception
 {
 
 }

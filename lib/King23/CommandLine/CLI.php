@@ -25,10 +25,12 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
+namespace King23\CommandLine;
+
 /**
  * conveniance class for output in the King23 CLI
  */
-final class King23_CLI implements King23_Singleton
+final class CLI implements \King23\Core\Interfaces\Singleton
 {
     private static $myInstance =null;
 
@@ -37,12 +39,12 @@ final class King23_CLI implements King23_Singleton
     }
 
     /**
-     * @return KING23_CLI
+     * @return \King23\CommandLine\CLI
      */
     public static function getInstance()
     {
         if(is_null(self::$myInstance))
-            self::$myInstance = new King23_CLI();
+            self::$myInstance = new CLI();
         return self::$myInstance;
     }
 
@@ -52,7 +54,7 @@ final class King23_CLI implements King23_Singleton
      */
     public function message($message ="")
     {
-        King23_CLI_OutputWriter::write($message);
+        OutputWriter::write($message);
     }
 
     /**
@@ -61,7 +63,7 @@ final class King23_CLI implements King23_Singleton
      */
     public function error($message)
     {
-        King23_CLI_OutputWriter::write($message, King23_CLI_OutputWriter::TYPE_Error);
+        OutputWriter::write($message, OutputWriter::TYPE_Error);
     }
 
     /**
@@ -70,7 +72,7 @@ final class King23_CLI implements King23_Singleton
      */
     public function warning($message)
     {
-        King23_CLI_OutputWriter::write($message, King23_CLI_OutputWriter::TYPE_Warning);
+        OutputWriter::write($message, OutputWriter::TYPE_Warning);
     }
 
     /**
@@ -79,7 +81,7 @@ final class King23_CLI implements King23_Singleton
      */
     public function header($message)
     {
-        King23_CLI_OutputWriter::write($message, King23_CLI_OutputWriter::TYPE_Heading);
+        OutputWriter::write($message, OutputWriter::TYPE_Heading);
     }
 
     /**
@@ -88,7 +90,7 @@ final class King23_CLI implements King23_Singleton
      */
     public function positive($message)
     {
-        King23_CLI_OutputWriter::write($message, King23_CLI_OutputWriter::TYPE_Positive);
+        OutputWriter::write($message, OutputWriter::TYPE_Positive);
     }
 
 }
