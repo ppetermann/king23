@@ -1,10 +1,6 @@
 {
-    "hash": "8e6540e2556606efc4c0216109552dcf",
+    "hash": "27cee9c8172f63a6c0ebe8181125eb55",
     "packages": [
-        {
-            "package": "king23/project_template",
-            "version": "0.0.3"
-        },
         {
             "package": "twig/twig",
             "version": "v1.8.3"
