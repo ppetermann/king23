@@ -13,5 +13,8 @@
     "suggest": {
         "doctrine/doctrine1": "1.2.*"
     },
-    "bin": ["bin/king23"]
+    "bin": ["bin/king23"],
+    "autoload": {
+        "psr-0": { "King23": "lib/" }
+    }
 }
