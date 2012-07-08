@@ -45,7 +45,12 @@ if(file_exists("./conf/cli.php"))
     require_once "./conf/cli.php";
 else if(file_exists("./conf/config.php")) // otherwise, if exists, read config.php
     require_once "./conf/config.php";
-
+else // config does not exist, so lets at least add the king path to classload
+{
+    require_once KING23_PATH . "/lib/King23/Core/Classloader.php";
+    King23\Core\Classloader::register();
+    King23\Core\Classloader::init(KING23_PATH."/lib/");
+}
 if(file_exists("./tasks/"))
     King23\Core\Classloader::init("./tasks/"); 
 

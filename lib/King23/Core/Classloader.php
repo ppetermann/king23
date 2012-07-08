@@ -172,7 +172,7 @@ class Classloader implements \King23\Core\Interfaces\Singleton
      * @return String filepath, false on fail
      */
     private function find($name)
-    {
+    {   
         if(isset($this->classes[$name]))
             return $this->classes[$name];
         return false;
