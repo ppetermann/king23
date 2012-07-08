@@ -11,7 +11,7 @@
     },
     "suggest": {
         "doctrine/doctrine1": "1.2.*",
-        "king23/project_template": ">=0.0.3"
+        "king23/project_template": "0.1.0"
     },
     "bin": ["bin/king23"],
     "autoload": {
