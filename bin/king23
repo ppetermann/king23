@@ -34,19 +34,11 @@
 // Lets have all errors
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
 // lets find out where we are, and load a fitting classloader
-if(file_exists("./vendor/king23/king23/lib/King23/Core/King23.php"))
-  define('KING23_PATH', realpath(dirname("./vendor/king23/king23/lib/King23/")));
+if(file_exists(realpath("./vendor/king23/king23/lib/King23/Core/King23.php")))
+  define('KING23_PATH', realpath(dirname("./vendor/king23/king23/lib")));
 else
   define('KING23_PATH', realpath(dirname(__FILE__) . "/.."));
-
-require_once(KING23_PATH . "/lib/King23/Core/Classloader.php");
-\King23\Core\Classloader::register();
-
-\King23\Core\Classloader::init(KING23_PATH ."/lib/");
-if(file_exists("./tasks/"))
-    \King23\Core\Classloader::init("./tasks/");
 
 // if exists read cli config
 if(file_exists("./conf/cli.php"))
@@ -54,23 +46,28 @@ if(file_exists("./conf/cli.php"))
 else if(file_exists("./conf/config.php")) // otherwise, if exists, read config.php
     require_once "./conf/config.php";
 
+if(file_exists("./tasks/"))
+    King23\Core\Classloader::init("./tasks/"); 
+
 $cli = \King23\CommandLine\CLI::getInstance();
 
 /* core tasks */
 $tasks = glob(KING23_PATH . '/lib/King23/Tasks/*Task.php');
 
 /* current project tasks */
-$tasks = array_merge($tasks, glob("./tasks/*Task.php"));
+$tasks = array_merge($tasks, glob("./tasks/*/*Task.php"));
 
 $modules = array();
 foreach($tasks as $taskfile) {
     if(substr($taskfile, 0, strlen(KING23_PATH . '/lib/')) == KING23_PATH . '/lib/')  {
         $modules[substr(basename($taskfile),0,-8)] = str_replace("/", '\\',substr($taskfile,strlen(KING23_PATH . '/lib/'),-4));
     } else {
-        $modules[substr(basename($taskfile),0,-8)] = substr($taskfile,0,-4);
+        $modules[substr(basename($taskfile),0,-8)] = str_replace("/", '\\', substr($taskfile,8,-4));
     }
 }
+
 if($argc > 1)
+
 {
     $module_task = explode(":", $argv[1]);
     if(count($module_task) > 2)

@@ -54,15 +54,20 @@ class King23Task extends \King23\CommandLine\Task
      */
     public function list_modules()
     {
-        /* Core tasks */
+        /* core tasks */
         $tasks = glob(KING23_PATH . '/lib/King23/Tasks/*Task.php');
 
         /* current project tasks */
-        $tasks = array_merge($tasks, glob("./tasks/*Task.php"));
+        $tasks = array_merge($tasks, glob("./tasks/*/*Task.php"));
 
         $modules = array();
-        foreach($tasks as $taskfile)
-            $modules[substr(basename($taskfile),0,-8)] = substr(basename($taskfile),0,-4);
+        foreach($tasks as $taskfile) {
+            if(substr($taskfile, 0, strlen(KING23_PATH . '/lib/')) == KING23_PATH . '/lib/')  {
+                $modules[substr(basename($taskfile),0,-8)] = str_replace("/", '\\',substr($taskfile,strlen(KING23_PATH . '/lib/'),-4));
+            } else {
+                $modules[substr(basename($taskfile),0,-8)] = str_replace("/", '\\', substr($taskfile,8,-4));
+            }
+        }
 
         $this->cli->header("Available Modules:");
         foreach($modules as $module => $class)
