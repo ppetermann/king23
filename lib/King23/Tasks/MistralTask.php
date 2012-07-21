@@ -1,8 +1,8 @@
 <?php
-$router = King23_Router::getInstance();
-$router->addRoute("/images/", "King23_MistralStaticView", "images", array("filename"));
-$router->addRoute("/css/", "King23_MistralStaticView", "css", array('filename'));
-$router->addRoute("/js/", "King23_MistralStaticView", "js", array('filename'));
+$router = \King23\Core\Router::getInstance();
+$router->addRoute("/images/", '\King23\View\MistralStaticView', "images", array("filename"));
+$router->addRoute("/css/", '\King23\View\MistralStaticView', "css", array('filename'));
+$router->addRoute("/js/", '\King23\View\MistralStaticView', "js", array('filename'));
 
 class MistralTask extends \King23\CommandLine\Task
 {
@@ -18,7 +18,7 @@ class MistralTask extends \King23\CommandLine\Task
     /**
      * Name of the module
      */
-    protected $name = "";
+    protected $name = "Mistral";
 
 
     // this is a bit of a hack, the original $_SERVER content will be saved here
