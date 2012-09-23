@@ -7,11 +7,10 @@
     "license": "MIT",
     "authors": [ { "name": "Peter Petermann", "email": "ppetermann80@googlemail.com", "homepage": "http://devedge.eu" }],
     "require": {
-        "twig/twig": "1.8.3"
+        "twig/twig": "1.9.2"
     },
     "suggest": {
-        "doctrine/doctrine1": "1.2.*",
-        "king23/project_template": "0.1.0"
+        "king23/project_template": "0.1.1"
     },
     "bin": ["bin/king23"],
     "autoload": {
