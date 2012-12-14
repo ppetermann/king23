@@ -39,11 +39,11 @@ class Mongo
      * @param string $class name of the map/reduce class (hint: __class__)
      * @param integer $cachetime seconds to cache
      * @param string $collection name of the collection from which to map/reduce
-     * @param string $output name of the collection to write
      * @param string $map map method
      * @param string $reduce reduce method
      * @param array $query criteria to apply
-     * @return void
+     * @internal param string $output name of the collection to write
+     * @return mixed
      */
     public static function cachedMapReduce($class, $cachetime, $collection, $map, $reduce, $query)
     {
@@ -68,19 +68,29 @@ class Mongo
     }
 
     /**
+     * @return mixed
+     * @throws Exceptions\MongoException
+     */
+    public static function getMongoConfig() {
+        if(!($mongo = \King23\Core\Registry ::getInstance()->mongo))
+            throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
+        return $mongo;
+    }
+
+    /**
      * @static
-     * @throws King23_MongoException
+     *
      * @param string $input name of the collection from which to map/reduce
      * @param string $output name of the collection to write
      * @param string $map map method
      * @param string $reduce reduce method
      * @param array $query criteria to apply
-     * @return void
+     * @param array $additional
+     * @return mixed
      */
     public static function mapReduce($input, $output, $map, $reduce, $query = NULL, $additional=array())
     {
-        if(!($mongo = \King23\Core\Registry ::getInstance()->mongo))
-            throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
+        $mongo = Mongo::getMongoConfig();
 
         $map = new \MongoCode($map);
 

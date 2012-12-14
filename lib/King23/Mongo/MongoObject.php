@@ -133,11 +133,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
         if(is_null($this->_className))
             throw new \King23\Mongo\Exceptions\MongoException('class name not configured in object');
 
-        if(!($mongo = \King23\Core\Registry::getInstance()->mongo))
-            throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
- 
-        $colname = $this->_className;
-        $this->_collection = $mongo['db']->$colname; 
+        $this->__initialize();
     }
 
     /**
@@ -258,12 +254,17 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      */
     public function __wakeup()
     {
-        if(!($mongo = \King23\Core\Registry::getInstance()->mongo))
-            throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
+        $this->__initialize();
+    }
 
+    /**
+     * initialize mongodb connections
+     * @throws Exceptions\MongoException
+     */
+    protected function __initialize() {
+        $mongo = Mongo::getMongoConfig();
         $colname = $this->_className;
         $this->_collection = $mongo['db']->$colname;
     }
-
 }
 
