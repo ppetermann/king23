@@ -1,6 +1,6 @@
 # King23 PHP Framework
 
-Copyright (C) 2010 by Peter Petermann
+Copyright (C) 2010 - 2013 by Peter Petermann
 All rights reserved.
 
 King23 is a small and simple MVC Framework for PHP
