@@ -21,7 +21,7 @@ for further information
 - using SithTemplate (great template system by  Piotr Legnica)
 
 ## REQUIREMENTS
-- PHP 5.2 (might run on earlier versions, untested)
+- PHP 5.3 (might run on earlier versions, untested)
 - APACHE + mod_rewrite (might work on other servers with own rewrite rulesets, untested) (Mistral can be used instead, but thats highly experimental!)
 - LINUX / MAC OS X (might run on windows, untested)
 
@@ -53,6 +53,6 @@ a basic example on usage
 - Peter Petermann <ppetermann80@googlemail.com> 
 
 ## ACKNOWLEDGEMENTS
-- King23 is making use of SithTemplate by Piotr Legnica, more information in lib/SithTemplate (bundled) or at http://piotrlegnica.one.pl/SithTemplate/
+- King23 is making use of several opensource components, such as: monolog, twig
 - King23 is losely based on ideas of Frameworks like Ruby on Rails or Django (but does not use any code of those)
 - King23 is running on PHP (obviously), so some credit to the PHP Project here.

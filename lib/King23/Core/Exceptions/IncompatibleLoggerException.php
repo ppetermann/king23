@@ -25,21 +25,13 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-namespace King23\Log;
+namespace King23\Core\Exceptions;
 
 /**
- * Class used for printing out / sending lines to bot
- * @deprecated use monolog loggin instead.
+ * Class IncompatibleLoggerException
+ * @package King23\Core\Exceptions
  */
-class Log
+class IncompatibleLoggerException extends \King23\Core\Exceptions\Exception
 {
-    /**
-     * write out message for logging purposes
-     * @param String $message
-     */
-    public function log($message)
-    {
-        $finalizedMessage = "[". date("Y-m-d H:i:s"). "] " . $message . "\n";
-        echo $finalizedMessage;
-    }
+
 }

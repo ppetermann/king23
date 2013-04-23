@@ -26,6 +26,8 @@
 
 */
 namespace King23\View;
+use King23\Core\Registry;
+
 /**
  * base for all views
  */
@@ -34,10 +36,13 @@ abstract class View
     /**
      * function to dispatch requests comming throuh the router
      * @param string $action
-     * @param array $request 
+     * @param array $request
+     * @throws Exceptions\ViewActionDoesNotExistException
+     * @return
      */
     public function dispatch($action, $request)
     {
+        Registry::getInstance()->getLogger()->debug('dispatching to action: ' . $action);
         if(!method_exists($this, $action) && !method_exists($this, '__call'))
             throw new \King23\View\Exceptions\ViewActionDoesNotExistException();
         return $this->$action($request);
@@ -46,7 +51,6 @@ abstract class View
     /**
      * redirect by sending a http location header (and die afterwards to stop script execution on redirect)
      * @param  $location
-     * @todo evaluate if this method should be moved to King23_Template_View
      */
     protected function redirect($location)
     {

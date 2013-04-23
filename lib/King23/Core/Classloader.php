@@ -86,7 +86,7 @@ class Classloader implements \King23\Core\Interfaces\Singleton
     /**
      * Singleton requirement, returns existing instance, creates new
      * instance if none exists
-     * @return King23_Classloader
+     * @return \King23\Core\Classloader
      */
     public static function getInstance()
     {
@@ -122,6 +122,7 @@ class Classloader implements \King23\Core\Interfaces\Singleton
     /**
      * implementation of the parse call
      * @param string $path
+     * @throws Exceptions\PathNotFoundException
      */
     private function configure($path)
     {
@@ -134,6 +135,7 @@ class Classloader implements \King23\Core\Interfaces\Singleton
      * recursive dir parsing method
      * @param string $dir directory to parse
      * @param array $classes already found classes
+     * @param string $namespace
      * @return array
      */
     private function parseDir($dir, $classes = array(), $namespace ="")

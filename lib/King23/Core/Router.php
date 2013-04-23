@@ -72,6 +72,7 @@ class Router implements \King23\Core\Interfaces\Singleton
      */
     public function addRoute($route, $class, $action,$parameters = array(), $hostparameters = array())
     {
+        Registry::getInstance()->getLogger()->debug('adding route : ' . $route . ' to class ' . $class . ' and action ' . $action);
         $this->routes[$route] = array("class" => $class, "action" => $action, "parameters" => $parameters, "hostparameters" => $hostparameters);
     }
 
@@ -82,6 +83,7 @@ class Router implements \King23\Core\Interfaces\Singleton
      */
     public function addRouter($route, \King23\Core\Router $router)
     {
+        Registry::getInstance()->getLogger()->debug('Adding Subroute router for ' . $route);
         $this->routes[$route] = array("router" => $router);
     }
 
@@ -93,6 +95,7 @@ class Router implements \King23\Core\Interfaces\Singleton
      */
     public function setBaseHost($baseHost = null)
     {
+        Registry::getInstance()->getLogger()->debug('Setting Router baseHost to ' .$baseHost);
         $this->baseHost = $baseHost;
     }
 
@@ -102,12 +105,16 @@ class Router implements \King23\Core\Interfaces\Singleton
      */
     public function dispatch($request)
     {
+        Registry::getInstance()->getLogger()->debug('Dispatching request for ' . $request);
+
         uksort($this->routes, array($this, 'sortRoutes'));
         foreach($this->routes as $route => $info)
         {
             // check if route is matched
             if(substr($request, 0, strlen($route)) == $route)
             {
+                Registry::getInstance()->getLogger()->debug('route ' . $route . ' matches ' . $request);
+
                 // is this a sub router?
                 if(isset($info["router"]))
                 {   
@@ -165,13 +172,15 @@ class Router implements \King23\Core\Interfaces\Singleton
                 break;
             }
         }
+        return "";
     }
 
     /**
     * method to be called by uksort to sort the routes
     * @param string $a
     * @param string $b
-    */ 
+    * @return bool
+    */
     private function sortRoutes($a, $b)
     {
         return strlen($a) < strlen($b);

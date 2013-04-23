@@ -31,28 +31,31 @@ class MistralStaticView extends View
 {
     
     /**
-    * __call method, should return file with finfo guessed mimetype
-    * @param string $method
-    * @param array $params
-    */
+     * __call method, should return file with finfo guessed mimetype
+     * @param string $method
+     * @param array $params
+     * @return array|bool
+     */
     public function __call($method, $params)
     {
         return $this->getFile($method, $params[0]['filename']);
     }
 
     /** 
-    * special call for js, to add mimetypea
-    * @param array $request
-    */ 
+     * special call for js, to add mimetypea
+     * @param array $request
+     * @return array|bool
+     */
     public function js($request)
     {
         return $this->getFile('js', $request['filename'], 'text/javascript');
     }
     
     /** 
-    * special call for css to add mimetype
-    * @param array $request
-    */
+     * special call for css to add mimetype
+     * @param array $request
+     * @return array|bool
+     */
     public function css($request)
     {
         return $this->getFile('css', $request['filename'], 'text/css');
@@ -60,11 +63,12 @@ class MistralStaticView extends View
     
 
     /**
-    * returns array with contents, mimetype and http status for the file
-    * @param string $path
-    * @param string $filename
-    * @param mixed $mime, string if given, false if guessing
-    */
+     * returns array with contents, mimetype and http status for the file
+     * @param string $path
+     * @param string $filename
+     * @param mixed $mime, string if given, false if guessing
+     * @return array|bool
+     */
     private function getFile($path, $filename, $mime = false)
     {
         $file = APP_PATH . '/public/' . $path . '/'. $filename;

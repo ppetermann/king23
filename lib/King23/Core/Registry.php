@@ -26,6 +26,9 @@
 
 */
 namespace King23\Core;
+use King23\Core\Exceptions\IncompatibleLoggerException;
+use King23\Log\NullLog;
+
 /**
  * Singleton object to store global data
  */
@@ -52,7 +55,7 @@ class Registry implements \King23\Core\Interfaces\Singleton
 
     /**
      * Return Instance, create instance if not instanced yet
-     * @return King23_Registry
+     * @return \King23\Core\Registry
      */
     public static function getInstance()
     {
@@ -82,5 +85,21 @@ class Registry implements \King23\Core\Interfaces\Singleton
     public function  __set($name,  $value)
     {
         return $this->data[$name] = $value;
+    }
+
+    /**
+     * conveniance method that allows to get a logger from registry, and be sure it implements the LoggerInterface
+     * @return \Psr\Log\LoggerInterface
+     * @throws Exceptions\IncompatibleLoggerException
+     */
+    public function getLogger() {
+        // make sure we have a logger set
+        if(!isset($this->data['logger']))
+            $this->data['logger'] = new NullLog();
+
+        // we drop here if the logger is nothing we can use at all
+        if(!($this->data['logger'] instanceof \Psr\Log\LoggerInterface)) throw new IncompatibleLoggerException("Registries Logger is not a PSR-3 LoggerInterface");
+
+        return $this->data['logger'];
     }
 }
