@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3685594b4c79c906dd74f25018713983",
+    "hash": "bb111fc04ca8fb35af8d225b4cf304d4",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -46,7 +46,7 @@
                     "Monolog": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -87,7 +87,7 @@
                     "Psr\\Log\\": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -107,16 +107,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.9.2",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
-                "url": "git://github.com/fabpot/Twig.git",
-                "reference": "v1.9.2"
+                "url": "https://github.com/fabpot/Twig.git",
+                "reference": "v1.13.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig/zipball/v1.9.2",
-                "reference": "v1.9.2",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/v1.13.0",
+                "reference": "v1.13.0",
                 "shasum": ""
             },
             "require": {
@@ -125,7 +125,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.9-dev"
+                    "dev-master": "1.13-dev"
                 }
             },
             "autoload": {
@@ -133,7 +133,7 @@
                     "Twig_": "lib/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3"
             ],
@@ -152,7 +152,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2012-08-25 10:32:57"
+            "time": "2013-05-10 15:12:43"
         }
     ],
     "packages-dev": [
