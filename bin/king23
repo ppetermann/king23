@@ -51,6 +51,12 @@ else // config does not exist, so lets at least add the king path to classload
     King23\Core\Classloader::register();
     King23\Core\Classloader::init(KING23_PATH."/lib/");
 }
+
+if(file_exists("./vendor/autoload.php"))
+    require_once("./vendor/autoload.php");
+else if(file_exists(KING23_PATH .'/vendor/autoload.php'))
+    require_once(KING23_PATH .'/vendor/autoload.php');
+
 if(file_exists("./tasks/"))
     King23\Core\Classloader::init("./tasks/"); 
 

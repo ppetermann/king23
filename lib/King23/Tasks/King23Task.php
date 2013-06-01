@@ -40,7 +40,8 @@ class King23Task extends \King23\CommandLine\Task
         "info" => "General Informative Task",
         "list_modules" => "show a list of all currently available modules",
         "create_project" => "create a new project, requires project name as parameter",
-        "doctrine" => "call doctrines cli (requires doctrine to be installed / configured)"
+        "doctrine" => "call doctrines cli (requires doctrine to be installed / configured)",
+        "shell" => "run boris based king23 shell environment" 
     );
 
     /**
@@ -159,5 +160,23 @@ class King23Task extends \King23\CommandLine\Task
         array_unshift($options, "king23 King23:doctrine");
         $cli = new Doctrine_Cli(\King23\Core\Registry::getInstance()->doctrine["config"]);
         $cli->run($options);
+    }
+
+    /**
+     * start a boris based shell with loaded king23 environment
+     * @ param array $options parameters array for compatibility reasons, ot used 
+     */
+    public function shell(array $options) {
+        if(!class_exists('\Boris\Boris', true))
+            die("Boris not installed, make sure your composer environment has d11wtq/boris in its list");
+        if(defined("KING23_CLI_PROMPT"))
+            $prompt = KING23_CLI_PROMPT;
+        else 
+            $prompt = "king23> ";
+        $boris = new \Boris\Boris($prompt);
+        $boris->onStart(function() { 
+            echo "King23 Version " . \King23\Core\King23::Version . " Boris based Shell Environment starting\n";
+        });
+        $boris->start();
     }
 }
