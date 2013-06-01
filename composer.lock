@@ -3,40 +3,8 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2f9c1f504fc292580e76b19ed84b2b05",
+    "hash": "2b237a3a40207f4cd2d0c091736de643",
     "packages": [
-        {
-            "name": "d11wtq/boris",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/d11wtq/boris.git",
-                "reference": "562557de35b41bcfbc023601102736f20d321ef5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/d11wtq/boris/zipball/562557de35b41bcfbc023601102736f20d321ef5",
-                "reference": "562557de35b41bcfbc023601102736f20d321ef5",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcntl": "*",
-                "ext-posix": "*",
-                "ext-readline": "*",
-                "php": ">=5.3.0"
-            },
-            "bin": [
-                "bin/boris"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Boris": "lib"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "time": "2013-05-28 02:19:01"
-        },
         {
             "name": "monolog/monolog",
             "version": "1.5.0",
@@ -188,7 +156,38 @@
         }
     ],
     "packages-dev": [
-
+        {
+            "name": "d11wtq/boris",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/d11wtq/boris.git",
+                "reference": "562557de35b41bcfbc023601102736f20d321ef5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/d11wtq/boris/zipball/562557de35b41bcfbc023601102736f20d321ef5",
+                "reference": "562557de35b41bcfbc023601102736f20d321ef5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcntl": "*",
+                "ext-posix": "*",
+                "ext-readline": "*",
+                "php": ">=5.3.0"
+            },
+            "bin": [
+                "bin/boris"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Boris": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2013-05-28 02:19:01"
+        }
     ],
     "aliases": [
 

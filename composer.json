@@ -8,7 +8,9 @@
     "authors": [ { "name": "Peter Petermann", "email": "ppetermann80@googlemail.com", "homepage": "http://devedge.eu" }],
     "require": {
         "twig/twig": "1.13.0",
-        "monolog/monolog": "1.5.0",
+        "monolog/monolog": "1.5.0"
+    },
+    "require-dev": {
         "d11wtq/boris": "*@dev"
     },
     "suggest": {
