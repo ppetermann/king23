@@ -70,6 +70,13 @@ class King23Task extends \King23\CommandLine\Task
             }
         }
 
+        // in case of being run in a phar file, we have to cheat here!
+        if(defined("KING23_PHAR")) 
+        { 
+            $modules['King23'] = 'King23\Tasks\King23Task';
+            $modules['Mistral'] = 'King23\Tasks\Mistral';
+        }
+
         $this->cli->header("Available Modules:");
         foreach($modules as $module => $class)
         {

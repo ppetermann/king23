@@ -1,0 +1,14 @@
+{
+    "alias": "king23.phar",
+    "chmod": "0755",
+    "directories": ["lib"],
+    "files": ["bin/king23.box"],
+    "finder": [{
+        "name": "*.php",
+        "in": "vendor"
+    }],
+    "git-version": "git-version",
+    "main": "bin/king23.box",
+    "output": "king23-@git-version@.phar",
+    "stub": true
+}
