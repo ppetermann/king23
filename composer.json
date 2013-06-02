@@ -11,13 +11,16 @@
         "monolog/monolog": "1.5.0"
     },
     "require-dev": {
-        "d11wtq/boris": "*@dev"
-    },
-    "suggest": {
-        "king23/project_template": "0.1.1"
+        "d11wtq/boris": "*@dev",
+        "king23/project_template": "0.1.7"
     },
     "bin": ["bin/king23"],
     "autoload": {
         "psr-0": { "King23": "lib/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.7-dev"
+        }
     }
 }

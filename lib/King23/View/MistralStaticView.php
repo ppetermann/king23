@@ -80,7 +80,7 @@ class MistralStaticView extends View
         {
             if(!$mime) 
             {
-                $finfo = new finfo(FILEINFO_MIME_TYPE);
+                $finfo = new \finfo(FILEINFO_MIME_TYPE);
                 $mimetype = $finfo->file($file);
             } else {
                 $mimetype = $mime;

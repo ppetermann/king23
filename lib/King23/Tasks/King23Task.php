@@ -111,14 +111,20 @@ class King23Task extends \King23\CommandLine\Task
             $this->cli->warning("exiting");
             return 1;
         }
-        exec("cp -r " . KING23_PATH ."/vendor/king23/project_template $name", $retstring, $ret);
-        if($ret != 0)
-        {
-            $this->cli->error("error occured during copying");
-            $this->cli->warning("exiting");
+        if(defined("KING23_PHAR")){
+            // $phar = new \Phar(\Phar::running());
+            // $phar->extractTo($name, 'vendor/king23/project_template');
+            $this->cli->error("sadly this task does not work on the phar version atm"); 
             return 1;
+        } else {
+            exec("cp -r " . KING23_PATH ."/vendor/king23/project_template $name", $retstring, $ret);
+            if($ret != 0)
+            {
+                $this->cli->error("error occured during copying");
+                $this->cli->warning("exiting");
+                return 1;
+            }
         }
-
         $this->cli->message("Setting rights in $name/cache/");
         exec("chmod -R 777 $name/cache/", $retstring, $ret);
         if($ret != 0)
