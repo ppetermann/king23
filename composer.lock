@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "561f7b2916a3cc249db89a5056596c8d",
+    "hash": "0c4a8e6136317cab1f1f7c4c77f7b54d",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -158,16 +158,16 @@
     "packages-dev": [
         {
             "name": "d11wtq/boris",
-            "version": "dev-master",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/d11wtq/boris.git",
-                "reference": "562557de35b41bcfbc023601102736f20d321ef5"
+                "reference": "v1.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/d11wtq/boris/zipball/562557de35b41bcfbc023601102736f20d321ef5",
-                "reference": "562557de35b41bcfbc023601102736f20d321ef5",
+                "url": "https://api.github.com/repos/d11wtq/boris/zipball/v1.0.1",
+                "reference": "v1.0.1",
                 "shasum": ""
             },
             "require": {
@@ -186,7 +186,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2013-05-28 02:19:01"
+            "time": "2013-06-03 10:50:32"
         },
         {
             "name": "king23/project_template",
@@ -229,9 +229,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "d11wtq/boris": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": [
 
     ],
