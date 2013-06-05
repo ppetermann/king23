@@ -18,7 +18,7 @@ for further information
 - url router
 - extendable command line task system
 - ideas borrowed from better known mvc frameworks (not really a feature i guess ;)
-- using SithTemplate (great template system by  Piotr Legnica)
+- a simple mongodb layer 
 
 ## REQUIREMENTS
 - PHP 5.3 (might run on earlier versions, untested)
@@ -30,7 +30,15 @@ for further information
 2. add bin/king23 to your path (hint `sudo ln -s /path/to/king23/bin/king23 /bin/king23`)
 
 ## USAGE
-the king23 CLI comes with a simple way to create a project: (assuming bin/king23 is in path)
+New Style (recommended):
+use composer:
+1) http://getcomposer.org
+2) `php composer.phar create-project king23/project_template DIRNAMEFORYOURNEWPROJECT`
+3) Important: edit DIRNAMEFORYOURNEWPROJECT/composer.json, change projects package name etc.
+
+
+Old style:
+the king23 CLI comes with a simple way to create a project: (assuming bin/king23 is in path) and the project_template is installed.
 
 `king23 King23:create_project myproject` 
 
@@ -40,7 +48,6 @@ a basic example on usage
 ## TODO
 - more documentation
 - code generators 
-- database layer (leaving the choice open atm, but comes with some help for doctrine)
 - add more cowbell
 
 ## LINKS
@@ -53,6 +60,6 @@ a basic example on usage
 - Peter Petermann <ppetermann80@googlemail.com> 
 
 ## ACKNOWLEDGEMENTS
-- King23 is making use of several opensource components, such as: monolog, twig
+- King23 is making use of several opensource components, such as: monolog, twig, boris
 - King23 is losely based on ideas of Frameworks like Ruby on Rails or Django (but does not use any code of those)
 - King23 is running on PHP (obviously), so some credit to the PHP Project here.

@@ -40,7 +40,6 @@ class King23Task extends \King23\CommandLine\Task
         "info" => "General Informative Task",
         "list_modules" => "show a list of all currently available modules",
         "create_project" => "create a new project, requires project name as parameter",
-        "doctrine" => "call doctrines cli (requires doctrine to be installed / configured)",
         "shell" => "run boris based king23 shell environment" 
     );
 
@@ -153,28 +152,6 @@ class King23Task extends \King23\CommandLine\Task
         parent::info();
     }
     
-    /**
-     * doctrine task, allows to call doctrines cli (if doctrine is installed) 
-     * @param array $options parameters to  be passed to doctrines cli
-     */
-    public function doctrine(array $options)
-    {   
-        $this->cli->header("King23 Doctrine CLI wrapper");
-        if(is_null(\King23\Core\Registry::getInstance()->doctrine))
-        {
-            $this->cli->error("Doctrine is not configured (could not find doctrine configuration in King23_Registry)");
-            return;
-        } 
-        if(!class_exists("Doctrine"))
-        {
-            $this->cli->error("Doctrine class not found, please ensure Doctrine is installed and configured");
-            return;
-        }
-        array_unshift($options, "king23 King23:doctrine");
-        $cli = new Doctrine_Cli(\King23\Core\Registry::getInstance()->doctrine["config"]);
-        $cli->run($options);
-    }
-
     /**
      * start a boris based shell with loaded king23 environment
      * @ param array $options parameters array for compatibility reasons, ot used 
