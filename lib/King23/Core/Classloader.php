@@ -80,7 +80,7 @@ class Classloader implements \King23\Core\Interfaces\Singleton
         {
             spl_autoload_unregister('\King23\Core\Classloader::load');
             self::$registered = false;
-		}
+        }
     }
 
     /**
