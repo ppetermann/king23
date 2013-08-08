@@ -85,7 +85,12 @@ class MistralStaticView extends View
             } else {
                 $mimetype = $mime;
             }
-            return array('status_code' => '200 OK', 'connection' => 'close', 'content-type' => $mimetype, 'body' => $data);
+            return array(
+                'status_code' => '200 OK', 
+                'connection' => 'close', 
+                'content-type' => $mimetype, 
+                'body' => $data
+            );
         }
         return array('status_code' => '404 NOT FOUND', 'connection' => 'close' );
     }

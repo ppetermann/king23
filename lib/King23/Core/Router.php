@@ -72,8 +72,16 @@ class Router implements \King23\Core\Interfaces\Singleton
      */
     public function addRoute($route, $class, $action,$parameters = array(), $hostparameters = array())
     {
-        Registry::getInstance()->getLogger()->debug('adding route : ' . $route . ' to class ' . $class . ' and action ' . $action);
-        $this->routes[$route] = array("class" => $class, "action" => $action, "parameters" => $parameters, "hostparameters" => $hostparameters);
+        Registry::getInstance()
+            ->getLogger()
+            ->debug('adding route : ' . $route . ' to class ' . $class . ' and action ' . $action);
+        
+        $this->routes[$route] = array(
+            "class" => $class, 
+            "action" => $action, 
+            "parameters" => $parameters, 
+            "hostparameters" => $hostparameters
+        );
     }
 
     /**
@@ -140,7 +148,7 @@ class Router implements \King23\Core\Interfaces\Singleton
                         }
                     }
 
-                    if(count($info["hostparameters"])>0) // if we have parameters that we extract from the host, then this is going to happen here.
+                    if(count($info["hostparameters"])>0) // extract host params if given.
                     {
                         if(is_null($this->baseHost))
                             $hostname = $_SERVER["SERVER_NAME"];

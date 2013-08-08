@@ -63,7 +63,9 @@ class King23Task extends \King23\CommandLine\Task
         $modules = array();
         foreach($tasks as $taskfile) {
             if(substr($taskfile, 0, strlen(KING23_PATH . '/lib/')) == KING23_PATH . '/lib/')  {
-                $modules[substr(basename($taskfile),0,-8)] = str_replace("/", '\\',substr($taskfile,strlen(KING23_PATH . '/lib/'),-4));
+                $modules[substr(basename($taskfile),0,-8)] = str_replace(
+                    "/", '\\', substr($taskfile,strlen(KING23_PATH . '/lib/'),-4)
+                );
             } else {
                 $modules[substr(basename($taskfile),0,-8)] = str_replace("/", '\\', substr($taskfile,8,-4));
             }
@@ -132,7 +134,10 @@ class King23Task extends \King23\CommandLine\Task
             $this->cli->warning("exiting");
             return 1;
         }
-        $this->cli->positive("Project: " . \King23\CommandLine\OutputWriter::FONT_Bold . $name . \King23\CommandLine\OutputWriter::COLOR_FG_Green ." created");
+        $this->cli->positive(
+            "Project: " .\King23\CommandLine\OutputWriter::FONT_Bold . $name 
+            . \King23\CommandLine\OutputWriter::COLOR_FG_Green ." created"
+        );
         $this->cli->message("Please run composer.phar install in the newly created project folder");
         return 0;
     }

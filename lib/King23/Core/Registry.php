@@ -98,7 +98,8 @@ class Registry implements \King23\Core\Interfaces\Singleton
             $this->data['logger'] = new NullLog();
 
         // we drop here if the logger is nothing we can use at all
-        if(!($this->data['logger'] instanceof \Psr\Log\LoggerInterface)) throw new IncompatibleLoggerException("Registries Logger is not a PSR-3 LoggerInterface");
+        if(!($this->data['logger'] instanceof \Psr\Log\LoggerInterface)) 
+            throw new IncompatibleLoggerException("Registries Logger is not a PSR-3 LoggerInterface");
 
         return $this->data['logger'];
     }

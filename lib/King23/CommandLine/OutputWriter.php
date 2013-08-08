@@ -101,7 +101,9 @@ class OutputWriter
                 $fg = self::COLOR_FG_Default;
                 $bg = self::COLOR_BG_Default;
         }
-        $message = self::COLOR_FG_LightGray . "[" . date("Y-m-d H:i:s") ."] " .$bg . $fg . $message . self::COLOR_FG_Default . self::COLOR_BG_Default . "\n";
-        echo $message;
+        $messageout = self::COLOR_FG_LightGray; 
+        $messageout .= "[" . date("Y-m-d H:i:s") ."] " .$bg . $fg;
+        $messageout .= $message . self::COLOR_FG_Default . self::COLOR_BG_Default . "\n";
+        echo $messageout;
     }
  }
