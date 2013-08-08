@@ -72,15 +72,13 @@ class King23Task extends \King23\CommandLine\Task
         }
 
         // in case of being run in a phar file, we have to cheat here!
-        if(defined("KING23_PHAR")) 
-        { 
+        if(defined("KING23_PHAR")) { 
             $modules['King23'] = 'King23\Tasks\King23Task';
             $modules['Mistral'] = 'King23\Tasks\Mistral';
         }
 
         $this->cli->header("Available Modules:");
-        foreach($modules as $module => $class)
-        {
+        foreach($modules as $module => $class) {
             $this->cli->message($module);
         }
     }
@@ -93,26 +91,23 @@ class King23Task extends \King23\CommandLine\Task
     public function create_project($options)
     {
         $this->cli->header("King23 (Version: " . \King23\Core\King23::Version .") project creation");
-        if(count($options) != 1)
-        {
+        if(count($options) != 1) {
             $this->cli->error("Syntax: king23 King23:create_project <projectname>");
             return 1;
         }
         $name = $options[0];
 
-        if(file_exists($name))
-        {
+        if(file_exists($name)) {
             $this->cli->error("folder with name '$name' allready exists");
             return 1;
         }
         $this->cli->message("copying project template to $name");
-        if(!is_writeable("."))
-        {
+        if(!is_writeable(".")) {
             $this->cli->error("cannot write in current folder");
             $this->cli->warning("exiting");
             return 1;
         }
-        if(defined("KING23_PHAR")){
+        if(defined("KING23_PHAR")) {
             // $phar = new \Phar(\Phar::running());
             // $phar->extractTo($name, 'vendor/king23/project_template');
             $this->cli->error("sadly this task does not work on the phar version atm"); 
@@ -128,8 +123,7 @@ class King23Task extends \King23\CommandLine\Task
         }
         $this->cli->message("Setting rights in $name/cache/");
         exec("chmod -R 777 $name/cache/", $retstring, $ret);
-        if($ret != 0)
-        {
+        if($ret != 0) {
             $this->cli->error("error occured while setting rights");
             $this->cli->warning("exiting");
             return 1;
@@ -162,12 +156,14 @@ class King23Task extends \King23\CommandLine\Task
      * @ param array $options parameters array for compatibility reasons, ot used 
      */
     public function shell(array $options) {
-        if(!class_exists('\Boris\Boris', true))
+        if(!class_exists('\Boris\Boris', true)) {
             die("Boris not installed, make sure your composer environment has d11wtq/boris in its list");
-        if(defined("KING23_CLI_PROMPT"))
+        }
+        if(defined("KING23_CLI_PROMPT")) {
             $prompt = KING23_CLI_PROMPT;
-        else 
+        } else {
             $prompt = "king23> ";
+        }
         $boris = new \Boris\Boris($prompt);
         $boris->onStart(function() { 
             echo "King23 Version " . \King23\Core\King23::Version . " Boris based Shell Environment starting\n";

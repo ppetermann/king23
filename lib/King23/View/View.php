@@ -43,8 +43,9 @@ abstract class View
     public function dispatch($action, $request)
     {
         Registry::getInstance()->getLogger()->debug('dispatching to action: ' . $action);
-        if(!method_exists($this, $action) && !method_exists($this, '__call'))
+        if(!method_exists($this, $action) && !method_exists($this, '__call')) {
             throw new \King23\View\Exceptions\ViewActionDoesNotExistException();
+        }
         return $this->$action($request);
     }
 

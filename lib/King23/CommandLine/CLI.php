@@ -43,8 +43,9 @@ final class CLI implements \King23\Core\Interfaces\Singleton
      */
     public static function getInstance()
     {
-        if(is_null(self::$myInstance))
+        if(is_null(self::$myInstance)) {
             self::$myInstance = new CLI();
+        }
         return self::$myInstance;
     }
 

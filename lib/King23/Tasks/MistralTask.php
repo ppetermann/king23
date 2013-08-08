@@ -34,12 +34,12 @@ class MistralTask extends \King23\CommandLine\Task
     */ 
     public function run($options)
     {
-        if(isset($options[0]) && !empty($options[0]))
-        {
+        if(isset($options[0]) && !empty($options[0])) {
             $details=explode(":", $options[0]);
             $ip = $details[0];
-            if(isset($details[1]))
+            if(isset($details[1])) {
                 $port = $details[1];
+            }
         } else {
             $ip = '0.0.0.0';
             $port = 3000;

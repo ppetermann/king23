@@ -58,8 +58,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
     protected static function _getInstanceById($name, $mongoid)
     {
         $obj = new $name();
-        if($data = $obj->_collection->findOne(array('_id' => new \MongoId($mongoid))))
-        {
+        if($data = $obj->_collection->findOne(array('_id' => new \MongoId($mongoid)))) {
             $obj->_data = $data;
             return $obj;
         }
@@ -77,8 +76,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
     public static function _getInstanceByCriteria($name, $criteria)
     {
         $obj = new $name();
-        if($data = $obj->_collection->findOne($criteria))
-        {
+        if($data = $obj->_collection->findOne($criteria)) {
             $obj->_data = $data;
             return $obj;
         }
@@ -130,8 +128,9 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      */
     public function __construct()
     {
-        if(is_null($this->_className))
+        if(is_null($this->_className)) {
             throw new \King23\Mongo\Exceptions\MongoException('class name not configured in object');
+        }
 
         $this->__initialize();
     }
@@ -170,8 +169,9 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      */
     public function refresh()
     {
-        if($data = $this->_collection->findOne(array('_id' => $this->_id)))
+        if($data = $this->_collection->findOne(array('_id' => $this->_id))) {
             $this->_data = $data;
+        }
     }
 
     // --------------------------- Iterator Fun
@@ -240,8 +240,9 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      */
     public function __get($name)
     {
-        if(isset($this->_data[$name]))
+        if(isset($this->_data[$name])) {
             return $this->_data[$name];
+        }
         return NULL;
     }
 

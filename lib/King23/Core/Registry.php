@@ -59,8 +59,9 @@ class Registry implements \King23\Core\Interfaces\Singleton
      */
     public static function getInstance()
     {
-        if(is_null(self::$myInstance))
+        if(is_null(self::$myInstance)) {
             self::$myInstance = new Registry();
+        }
         return self::$myInstance;
     }
 
@@ -71,8 +72,9 @@ class Registry implements \King23\Core\Interfaces\Singleton
      */
     public function  __get($name)
     {
-        if(isset($this->data[$name]))
+        if(isset($this->data[$name])) {
             return $this->data[$name];
+        }
         return null;
     }
 
@@ -94,12 +96,14 @@ class Registry implements \King23\Core\Interfaces\Singleton
      */
     public function getLogger() {
         // make sure we have a logger set
-        if(!isset($this->data['logger']))
+        if(!isset($this->data['logger'])) {
             $this->data['logger'] = new NullLog();
+        }
 
         // we drop here if the logger is nothing we can use at all
-        if(!($this->data['logger'] instanceof \Psr\Log\LoggerInterface)) 
+        if(!($this->data['logger'] instanceof \Psr\Log\LoggerInterface)) {
             throw new IncompatibleLoggerException("Registries Logger is not a PSR-3 LoggerInterface");
+        }
 
         return $this->data['logger'];
     }

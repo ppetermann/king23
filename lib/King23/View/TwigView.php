@@ -63,8 +63,9 @@ abstract class TwigView extends View
     {
         $context = array_merge($this->_context, $context);
         $body = $this->twig->render($template, $context);
-        if(!$silent)
+        if(!$silent) {
             echo $body;
+        }
         return $body;
     }
 }

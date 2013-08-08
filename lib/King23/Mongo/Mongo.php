@@ -50,10 +50,8 @@ class Mongo
         $hash = md5($collection . $map . $reduce . join(':', $query) . join(':', array_keys($query)));
         $obj = MongoObject::_getInstanceByCriteria($class, array('hash' => $hash));
 
-        if(is_null($obj) || time() > ($obj->updated->sec + $cachetime))
-        {
-            if(is_null($obj))
-            {
+        if(is_null($obj) || time() > ($obj->updated->sec + $cachetime)) {
+            if(is_null($obj)) {
                 $obj = new $class();
                 $obj->hash = $hash;
             }
@@ -72,8 +70,9 @@ class Mongo
      * @throws Exceptions\MongoException
      */
     public static function getMongoConfig() {
-        if(!($mongo = \King23\Core\Registry ::getInstance()->mongo))
+        if(!($mongo = \King23\Core\Registry ::getInstance()->mongo)) {
             throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
+        }
         return $mongo;
     }
 
@@ -104,8 +103,9 @@ class Mongo
         );
 
         // add filter query
-        if(!is_null($query))
+        if(!is_null($query)) {
             $cmd['query'] = $query;
+        }
 
         $cmd = array_merge($cmd, $additional);
 

@@ -57,8 +57,9 @@ class Router implements \King23\Core\Interfaces\Singleton
      */
     public static function getInstance()
     {
-        if(is_null(self::$myInstance))
+        if(is_null(self::$myInstance)) {
             self::$myInstance = new \King23\Core\Router();
+        }
         return self::$myInstance;
     }
 
@@ -141,34 +142,39 @@ class Router implements \King23\Core\Interfaces\Singleton
                         $params = explode("/", $paramstr);
                         foreach($info["parameters"] as $key => $value)
                         {
-                            if(isset($params[$key]))
+                            if(isset($params[$key])) {
                                 $parameters[$value] = urldecode($params[$key]);
-                            else
+                            } else {
                                 $parameters[$value] = null;
+                            }
                         }
                     }
 
                     if(count($info["hostparameters"])>0) // extract host params if given.
                     {
-                        if(is_null($this->baseHost))
+                        if(is_null($this->baseHost)) {
                             $hostname = $_SERVER["SERVER_NAME"];
-                        else
+                        } else {
                             $hostname = str_replace($this->baseHost, "", $_SERVER["SERVER_NAME"]);
-                       
-                        if(substr($hostname, -1) == ".")
+                        }
+                        
+                        if(substr($hostname, -1) == ".") {
                             $hostname = substr($hostname, 0, -1);
+                        }
                         
-                        if(empty($hostname))
+                        if(empty($hostname)) {
                             $params = array();
-                        else 
+                        } else  {
                             $params = array_reverse(explode(".", $hostname));
-                        
+                        }
+
                         foreach($info["hostparameters"] as $key => $value)
                         {
-                            if(isset($params[$key]) && !empty($params[$key]))
+                            if(isset($params[$key]) && !empty($params[$key])) {
                                 $parameters[$value] = $params[$key];
-                            else
+                            } else {
                                 $parameters[$value] = null;
+                            }
                         }
                     }
                     $class = $info["class"];

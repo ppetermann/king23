@@ -62,8 +62,7 @@ class Classloader implements \King23\Core\Interfaces\Singleton
 
     public static function register()
     {
-        if (!self::$registered)
-        {
+        if (!self::$registered) {
             spl_autoload_register('\King23\Core\Classloader::load');
             self::$registered = true;
         }
@@ -76,8 +75,7 @@ class Classloader implements \King23\Core\Interfaces\Singleton
      */
     public static function unregister()
     {
-        if (self::$registered)
-        {
+        if (self::$registered) {
             spl_autoload_unregister('\King23\Core\Classloader::load');
             self::$registered = false;
         }
@@ -90,8 +88,9 @@ class Classloader implements \King23\Core\Interfaces\Singleton
      */
     public static function getInstance()
     {
-        if(is_null(self::$myInstance))
+        if(is_null(self::$myInstance)) {
             self::$myInstance = new \King23\Core\Classloader();
+        }
         return self::$myInstance;
     }
 
@@ -102,8 +101,7 @@ class Classloader implements \King23\Core\Interfaces\Singleton
      */
     public static function load($name)
     {
-        if($file = self::getInstance()->find($name))
-        {
+        if($file = self::getInstance()->find($name)) {
             require_once($file);
             return true;
         }
@@ -126,8 +124,9 @@ class Classloader implements \King23\Core\Interfaces\Singleton
      */
     private function configure($path)
     {
-        if(!file_exists($path) || !is_dir($path))
+        if(!file_exists($path) || !is_dir($path)) {
             throw new \King23\Core\Exceptions\PathNotFoundException;
+        }
         $this->classes = array_merge($this->classes, $this->parseDir($path));
     }
 
@@ -140,28 +139,28 @@ class Classloader implements \King23\Core\Interfaces\Singleton
      */
     private function parseDir($dir, $classes = array(), $namespace ="")
     {
-        if(empty($namespace))
-        {
+        if(empty($namespace)) {
             $namespace ='\\'; // global class
         } else {
-            if($namespace == '\\') $namespace="";
+            if($namespace == '\\') {
+                $namespace="";
+            }
             $namespace = $namespace . basename($dir) . '\\';
         }
 
         $d = dir($dir);
         while($item = $d->read())
         {
-            if($item == "." || $item == "..")
+            if($item == "." || $item == "..") {
                 continue;
+            }
 
-            if(is_dir("$dir/$item"))
-            {
+            if(is_dir("$dir/$item")) {
                 $classes = array_merge($classes, $this->parseDir($dir . "/" . $item, array(), $namespace));
                 continue;
             }
 
-            if(substr($item, -4) == ".php")
-            {
+            if(substr($item, -4) == ".php") {
                 $classes[ $namespace. substr($item, 0,-4)] = "$dir/$item";
             }
         }
@@ -175,8 +174,9 @@ class Classloader implements \King23\Core\Interfaces\Singleton
      */
     private function find($name)
     {   
-        if(isset($this->classes[$name]))
+        if(isset($this->classes[$name])) {
             return $this->classes[$name];
+        }
         return false;
     }
 }
