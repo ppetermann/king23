@@ -3,3 +3,8 @@ nbproject
 docs/
 .idea
 vendor
+build/api/
+build/code-browser/
+build/coverage/
+build/phpdox/
+cache.properties
