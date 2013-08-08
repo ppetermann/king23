@@ -63,7 +63,7 @@ final class CLI implements \King23\Core\Interfaces\Singleton
      */
     public function error($message)
     {
-        OutputWriter::write($message, OutputWriter::TYPE_Error);
+        OutputWriter::write($message, OutputWriter::TYPE_ERROR);
     }
 
     /**
@@ -72,7 +72,7 @@ final class CLI implements \King23\Core\Interfaces\Singleton
      */
     public function warning($message)
     {
-        OutputWriter::write($message, OutputWriter::TYPE_Warning);
+        OutputWriter::write($message, OutputWriter::TYPE_WARNING);
     }
 
     /**
@@ -81,7 +81,7 @@ final class CLI implements \King23\Core\Interfaces\Singleton
      */
     public function header($message)
     {
-        OutputWriter::write($message, OutputWriter::TYPE_Heading);
+        OutputWriter::write($message, OutputWriter::TYPE_HEADING);
     }
 
     /**
@@ -90,7 +90,7 @@ final class CLI implements \King23\Core\Interfaces\Singleton
      */
     public function positive($message)
     {
-        OutputWriter::write($message, OutputWriter::TYPE_Positive);
+        OutputWriter::write($message, OutputWriter::TYPE_POSITIVE);
     }
 
 }

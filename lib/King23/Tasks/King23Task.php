@@ -135,8 +135,8 @@ class King23Task extends \King23\CommandLine\Task
             return 1;
         }
         $this->cli->positive(
-            "Project: " .\King23\CommandLine\OutputWriter::FONT_Bold . $name 
-            . \King23\CommandLine\OutputWriter::COLOR_FG_Green ." created"
+            "Project: " .\King23\CommandLine\OutputWriter::FONT_BOLD . $name 
+            . \King23\CommandLine\OutputWriter::COLOR_FG_GREEN ." created"
         );
         $this->cli->message("Please run composer.phar install in the newly created project folder");
         return 0;

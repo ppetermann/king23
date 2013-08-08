@@ -87,7 +87,7 @@ abstract class Task
     {
         foreach($this->tasks as $name => $description)
         {
-            $this->cli->header("Task: " . OutputWriter::COLOR_FGL_Blue . $name);
+            $this->cli->header("Task: " . OutputWriter::COLOR_FGL_BLUE . $name);
             $this->cli->header("Description:");
             $this->cli->message($description);
             $this->cli->message();
