@@ -29,7 +29,7 @@ namespace King23\Core;
 /**
  * King23_Router class, allowing the matching of URL -> classmethod
  */
-class Router implements \King23\Core\Interfaces\Singleton
+class Router implements Interfaces\Singleton
 {
     /**
      * Singleton instance
@@ -167,6 +167,13 @@ class Router implements \King23\Core\Interfaces\Singleton
         }
     }
 
+    /**
+     * Handle a regular route
+     * @param array $info
+     * @param string $request
+     * @param string $route
+     * @return mixed
+     */
     private function handleRoute($info, $request, $route)
     {
         // prepare parameters
@@ -185,35 +192,46 @@ class Router implements \King23\Core\Interfaces\Singleton
 
         // check host parameters
         if(count($info["hostparameters"])>0) {
-            if(is_null($this->baseHost)) {
-                $hostname = $_SERVER["SERVER_NAME"];
-            } else {
-                $hostname = str_replace($this->baseHost, "", $_SERVER["SERVER_NAME"]);
-            }
-
-            if(substr($hostname, -1) == ".") {
-                $hostname = substr($hostname, 0, -1);
-            }
-
-            if(empty($hostname)) {
-                $params = array();
-            } else  {
-                $params = array_reverse(explode(".", $hostname));
-            }
-
-            foreach($info["hostparameters"] as $key => $value)
-            {
-                if(isset($params[$key]) && !empty($params[$key])) {
-                    $parameters[$value] = $params[$key];
-                } else {
-                    $parameters[$value] = null;
-                }
-            }
+          $parameters = array_merge($parameters, $this->extractHostParameters($info));
         }
         $class = $info["class"];
 
         /** @var \King23\View\View $view */
         $view = new $class();
         return $view->dispatch($info["action"], $parameters);
+    }
+
+  /**
+   * extract parameters from hostname
+   * @param array $info
+   * @return array
+   */
+  private function extractHostParameters($info) {
+        $parameters = array();
+        if(is_null($this->baseHost)) {
+            $hostname = $_SERVER["SERVER_NAME"];
+        } else {
+            $hostname = str_replace($this->baseHost, "", $_SERVER["SERVER_NAME"]);
+        }
+
+        if(substr($hostname, -1) == ".") {
+            $hostname = substr($hostname, 0, -1);
+        }
+
+        if(empty($hostname)) {
+            $params = array();
+        } else  {
+            $params = array_reverse(explode(".", $hostname));
+        }
+
+        foreach($info["hostparameters"] as $key => $value)
+        {
+            if(isset($params[$key]) && !empty($params[$key])) {
+                $parameters[$value] = $params[$key];
+            } else {
+                $parameters[$value] = null;
+            }
+        }
+        return $parameters;
     }
 }
