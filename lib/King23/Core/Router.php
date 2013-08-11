@@ -110,7 +110,9 @@ class Router implements \King23\Core\Interfaces\Singleton
 
     /**
      * execute url request to method or subouter call
+     *
      * @param string $request
+     * @return string
      */
     public function dispatch($request)
     {
@@ -126,62 +128,12 @@ class Router implements \King23\Core\Interfaces\Singleton
 
                 // is this a sub router?
                 if(isset($info["router"]))
-                {   
-                    if($paramstr = substr($request, strlen($route)))
-                    {  
-                        return $info["router"]->dispatch($paramstr);
-                    } else { // if after the match nothing is left, lets call default route..
-                        return $info["router"]->dispatch("/");
-                    }
+                {
+                    return $this->handleSubRoute($info, $request, $route);
                 }
                 else // otherwise its a regular (direct) route
                 {
-                    $parameters = array();
-                    if($paramstr = substr($request, strlen($route)))
-                    {
-                        $params = explode("/", $paramstr);
-                        foreach($info["parameters"] as $key => $value)
-                        {
-                            if(isset($params[$key])) {
-                                $parameters[$value] = urldecode($params[$key]);
-                            } else {
-                                $parameters[$value] = null;
-                            }
-                        }
-                    }
-
-                    if(count($info["hostparameters"])>0) // extract host params if given.
-                    {
-                        if(is_null($this->baseHost)) {
-                            $hostname = $_SERVER["SERVER_NAME"];
-                        } else {
-                            $hostname = str_replace($this->baseHost, "", $_SERVER["SERVER_NAME"]);
-                        }
-                        
-                        if(substr($hostname, -1) == ".") {
-                            $hostname = substr($hostname, 0, -1);
-                        }
-                        
-                        if(empty($hostname)) {
-                            $params = array();
-                        } else  {
-                            $params = array_reverse(explode(".", $hostname));
-                        }
-
-                        foreach($info["hostparameters"] as $key => $value)
-                        {
-                            if(isset($params[$key]) && !empty($params[$key])) {
-                                $parameters[$value] = $params[$key];
-                            } else {
-                                $parameters[$value] = null;
-                            }
-                        }
-                    }
-                    $class = $info["class"];
-
-                    /** @var \King23\View\View $view */
-                    $view = new $class();
-                    return $view->dispatch($info["action"], $parameters);
+                    return $this->handleRoute($info, $request, $route);
                 }
                 break;
             }
@@ -198,5 +150,70 @@ class Router implements \King23\Core\Interfaces\Singleton
     private function sortRoutes($a, $b)
     {
         return strlen($a) < strlen($b);
+    }
+
+    /**
+     * @param $info
+     * @param $request
+     * @param $route
+     * @return mixed
+     */
+    private function handleSubRoute($info, $request, $route)
+    {
+        if($paramstr = substr($request, strlen($route))) {
+            return $info["router"]->dispatch($paramstr);
+        } else { // if after the match nothing is left, lets call default route..
+            return $info["router"]->dispatch("/");
+        }
+    }
+
+    private function handleRoute($info, $request, $route)
+    {
+        // prepare parameters
+        $parameters = array();
+        if($paramstr = substr($request, strlen($route))) {
+            $params = explode("/", $paramstr);
+            foreach($info["parameters"] as $key => $value)
+            {
+                if(isset($params[$key])) {
+                    $parameters[$value] = urldecode($params[$key]);
+                } else {
+                    $parameters[$value] = null;
+                }
+            }
+        }
+
+        // check host parameters
+        if(count($info["hostparameters"])>0) {
+            if(is_null($this->baseHost)) {
+                $hostname = $_SERVER["SERVER_NAME"];
+            } else {
+                $hostname = str_replace($this->baseHost, "", $_SERVER["SERVER_NAME"]);
+            }
+
+            if(substr($hostname, -1) == ".") {
+                $hostname = substr($hostname, 0, -1);
+            }
+
+            if(empty($hostname)) {
+                $params = array();
+            } else  {
+                $params = array_reverse(explode(".", $hostname));
+            }
+
+            foreach($info["hostparameters"] as $key => $value)
+            {
+                if(isset($params[$key]) && !empty($params[$key])) {
+                    $parameters[$value] = $params[$key];
+                } else {
+                    $parameters[$value] = null;
+                }
+            }
+        }
+        $class = $info["class"];
+
+        /** @var \King23\View\View $view */
+        $view = new $class();
+        return $view->dispatch($info["action"], $parameters);
     }
 }
