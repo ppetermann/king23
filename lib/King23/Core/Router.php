@@ -192,7 +192,7 @@ class Router implements Interfaces\Singleton
 
         // check host parameters
         if(count($info["hostparameters"])>0) {
-          $parameters = array_merge($parameters, $this->extractHostParameters($info));
+            $parameters = array_merge($parameters, $this->extractHostParameters($info));
         }
         $class = $info["class"];
 
@@ -201,12 +201,12 @@ class Router implements Interfaces\Singleton
         return $view->dispatch($info["action"], $parameters);
     }
 
-  /**
-   * extract parameters from hostname
-   * @param array $info
-   * @return array
-   */
-  private function extractHostParameters($info) {
+    /**
+     * extract parameters from hostname
+     * @param array $info
+     * @return array
+     */
+    private function extractHostParameters($info) {
         $parameters = array();
         if(is_null($this->baseHost)) {
             $hostname = $_SERVER["SERVER_NAME"];
