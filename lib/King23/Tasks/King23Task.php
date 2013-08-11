@@ -90,7 +90,7 @@ class King23Task extends \King23\CommandLine\Task
      */
     public function create_project($options)
     {
-        $this->cli->header("King23 (Version: " . \King23\Core\King23::Version .") project creation");
+        $this->cli->header("King23 (Version: " . \King23\Core\King23::VERSION .") project creation");
         if(count($options) != 1) {
             $this->cli->error("Syntax: king23 King23:create_project <projectname>");
             return 1;
@@ -142,11 +142,11 @@ class King23Task extends \King23\CommandLine\Task
     public function info()
     {
         $this->cli->header("King23 Version: ");
-        $this->cli->message(\King23\Core\King23::Version);
+        $this->cli->message(\King23\Core\King23::VERSION);
         $this->cli->header("Description: ");
-        $this->cli->message(\King23\Core\King23::Description);
+        $this->cli->message(\King23\Core\King23::DESCRIPTION);
         $this->cli->header("Authors: ");
-        $this->cli->message(\King23\Core\King23::Authors);
+        $this->cli->message(\King23\Core\King23::AUTHORS);
         $this->cli->message();
         parent::info();
     }
@@ -166,7 +166,7 @@ class King23Task extends \King23\CommandLine\Task
         }
         $boris = new \Boris\Boris($prompt);
         $boris->onStart(function() { 
-            echo "King23 Version " . \King23\Core\King23::Version . " Boris based Shell Environment starting\n";
+            echo "King23 Version " . \King23\Core\King23::VERSION . " Boris based Shell Environment starting\n";
         });
         $boris->start();
     }

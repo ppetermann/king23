@@ -112,7 +112,7 @@ if($argc > 1)
         $object->$task($argv); // call!
     }
 } else {
-        $cli->header("King23 CLI (Version: " . \King23\Core\King23::Version . ")");
+        $cli->header("King23 CLI (Version: " . \King23\Core\King23::VERSION . ")");
         $cli->message("Syntax: king23 <taskmodule>:<task>");
         $cli->message();
 
