@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0c4a8e6136317cab1f1f7c4c77f7b54d",
+    "hash": "b3d6c9b906d2a16f0f321bf970bc0deb",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -158,16 +158,16 @@
     "packages-dev": [
         {
             "name": "d11wtq/boris",
-            "version": "v1.0.1",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/d11wtq/boris.git",
-                "reference": "v1.0.1"
+                "reference": "v1.0.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/d11wtq/boris/zipball/v1.0.1",
-                "reference": "v1.0.1",
+                "url": "https://api.github.com/repos/d11wtq/boris/zipball/v1.0.3",
+                "reference": "v1.0.3",
                 "shasum": ""
             },
             "require": {
@@ -186,24 +186,24 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2013-06-03 10:50:32"
+            "time": "2013-08-19 10:52:14"
         },
         {
             "name": "king23/project_template",
-            "version": "0.1.7",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ppetermann/king23_projecttemplate.git",
-                "reference": "0.1.7"
+                "reference": "0.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ppetermann/king23_projecttemplate/zipball/0.1.7",
-                "reference": "0.1.7",
+                "url": "https://api.github.com/repos/ppetermann/king23_projecttemplate/zipball/0.2.0",
+                "reference": "0.2.0",
                 "shasum": ""
             },
             "require": {
-                "king23/king23": "0.1.*"
+                "king23/king23": "0.2.*"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -222,7 +222,7 @@
             "keywords": [
                 "king23"
             ],
-            "time": "2013-06-02 15:09:51"
+            "time": "2013-08-19 15:47:31"
         }
     ],
     "aliases": [
