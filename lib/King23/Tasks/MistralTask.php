@@ -1,11 +1,6 @@
 <?php
 namespace King23\Tasks;
 
-$router = \King23\Core\Router::getInstance();
-$router->addRoute("/images/", '\King23\View\MistralStaticView', "images", array("filename"));
-$router->addRoute("/css/", '\King23\View\MistralStaticView', "css", array('filename'));
-$router->addRoute("/js/", '\King23\View\MistralStaticView', "js", array('filename'));
-
 class MistralTask extends \King23\CommandLine\Task
 {
     /**
@@ -28,6 +23,18 @@ class MistralTask extends \King23\CommandLine\Task
     // since the php run is not terminated this is the only way to ensure that
     // seperate requests dont interfere with eachother
     protected $original_Server;
+
+    /**
+     * constructor 
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $router = \King23\Core\Router::getInstance();
+        $router->addRoute("/images/", '\King23\View\MistralStaticView', "images", array("filename"));
+        $router->addRoute("/css/", '\King23\View\MistralStaticView', "css", array('filename'));
+        $router->addRoute("/js/", '\King23\View\MistralStaticView', "js", array('filename'));
+    }
 
     /**
      * Task to launch the mistral server
