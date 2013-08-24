@@ -135,8 +135,7 @@ class Router implements Interfaces\Singleton
                 // is this a sub router?
                 if (isset($info["router"])) {
                     return $this->handleSubRoute($info, $request, $route);
-                } else // otherwise its a regular (direct) route
-                {
+                } else {
                     return $this->handleRoute($info, $request, $route);
                 }
                 break;

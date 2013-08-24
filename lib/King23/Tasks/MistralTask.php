@@ -17,7 +17,6 @@ class MistralTask extends \King23\CommandLine\Task
         "info" => "General Informative Task",
         "run" => "Run the Mistral Server [ip[:port]]",
     );
-
     /**
      * Name of the module
      */
@@ -37,15 +36,17 @@ class MistralTask extends \King23\CommandLine\Task
      */
     public function run($options)
     {
+        // default values
+        $ip = '0.0.0.0';
+        $port = 3000;
+
+        // overwrite options if given
         if (isset($options[0]) && !empty($options[0])) {
             $details = explode(":", $options[0]);
             $ip = $details[0];
             if (isset($details[1])) {
                 $port = $details[1];
             }
-        } else {
-            $ip = '0.0.0.0';
-            $port = 3000;
         }
         $keepalive = 3;
         $this->cli->header("King23 // Mistral Webserver ");
@@ -56,11 +57,11 @@ class MistralTask extends \King23\CommandLine\Task
         mistral_start();
     }
 
-
     /**
      * method to be called on each request, should dispatch call to router
      *
      * @param array $request
+     * @return array
      */
     public function handleRequest($request)
     {
@@ -78,11 +79,7 @@ class MistralTask extends \King23\CommandLine\Task
             return $return;
         }
 
-        if (is_string(
-              $return
-          ) && !empty($return)
-        ) // non-empty string returned, lets assume its the body, and its html
-        {
+        if (is_string($return) && !empty($return)) {
             $this->cli->message('string returned, assuming request body');
             $body = $return;
         } else {
