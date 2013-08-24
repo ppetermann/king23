@@ -25,7 +25,7 @@ class MistralTask extends \King23\CommandLine\Task
     protected $original_Server;
 
     /**
-     * constructor 
+     * constructor
      */
     public function __construct()
     {

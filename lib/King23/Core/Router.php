@@ -38,14 +38,12 @@ class Router implements Interfaces\Singleton
      * @var \King23\Core\Router
      */
     private static $myInstance;
-
     /**
      * Array for storing known routes
      *
      * @var array
      */
     private $routes = array();
-
     /**
      * String containing the basis host of the application, if this is set
      * this parameter will be removed from the hostname before hostparameters are extracted,
@@ -103,7 +101,6 @@ class Router implements Interfaces\Singleton
         $this->routes[$route] = array("router" => $router);
     }
 
-
     /**
      * method to set the basicHost for hostparameters in routing
      *
@@ -126,7 +123,13 @@ class Router implements Interfaces\Singleton
     {
         Registry::getInstance()->getLogger()->debug('Dispatching request for '.$request);
 
-        uksort($this->routes, array($this, 'sortRoutes'));
+        uksort(
+            $this->routes,
+            function ($a, $b) {
+                return strlen($a) < strlen($b);
+            }
+        );
+
         foreach ($this->routes as $route => $info) {
             // check if route is matched
             if (substr($request, 0, strlen($route)) == $route) {
@@ -142,18 +145,6 @@ class Router implements Interfaces\Singleton
             }
         }
         return "";
-    }
-
-    /**
-     * method to be called by uksort to sort the routes
-     *
-     * @param string $a
-     * @param string $b
-     * @return bool
-     */
-    private function sortRoutes($a, $b)
-    {
-        return strlen($a) < strlen($b);
     }
 
     /**
