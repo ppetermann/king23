@@ -28,7 +28,7 @@
 namespace King23\Core;
 
 // its safe to assume that if King23_Singleton is not load yet those three classes need loading
-// its also safe to assume that if it is load the other three are load aswell.
+// its also safe to assume that if it is load the other three are load as well.
 if (!interface_exists('King23\Core\Singleton')) {
     require_once(pathinfo(__FILE__, PATHINFO_DIRNAME).'/Interfaces/Singleton.php');
     require_once(pathinfo(__FILE__, PATHINFO_DIRNAME).'/Exceptions/Exception.php');

@@ -270,5 +270,4 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
         $colname = $this->_className;
         $this->_collection = $mongo['db']->$colname;
     }
-
 }

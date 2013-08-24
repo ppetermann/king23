@@ -80,8 +80,7 @@ class MistralTask extends \King23\CommandLine\Task
 
         $sobody = ob_get_contents();
         ob_end_clean();
-        if (is_array($return)) // we got an array back, so we assume it has all data for answering the request
-        {
+        if (is_array($return)) {
             $this->cli->message('array returned, assuming request can be answered');
             return $return;
         }
