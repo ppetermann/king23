@@ -80,15 +80,7 @@ abstract class Task
     {
         $this->cli->header("Module ".$this->name);
         $this->cli->header("-----------------------");
-        $this->_info();
-    }
 
-
-    /**
-     * might be called from info tasks to write basic information about each task
-     */
-    public function _info()
-    {
         foreach ($this->tasks as $name => $description) {
             $this->cli->header("Task: ".OutputWriter::COLOR_FGL_BLUE.$name);
             $this->cli->header("Description:");

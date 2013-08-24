@@ -58,7 +58,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param  string $mongoid
      * @return MongoObject
      */
-    protected static function _getInstanceById($name, $mongoid)
+    protected static function getInstanceById($name, $mongoid)
     {
         $obj = new $name();
         if ($data = $obj->_collection->findOne(array('_id' => new \MongoId($mongoid)))) {
@@ -77,7 +77,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param  array $criteria
      * @return MongoObject
      */
-    public static function _getInstanceByCriteria($name, $criteria)
+    public static function getInstanceByCriteria($name, $criteria)
     {
         $obj = new $name();
         if ($data = $obj->_collection->findOne($criteria)) {
@@ -89,11 +89,12 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
 
     /**
      * @static
+     * @param $name
      * @param array $criteria
      * @param array $fields
      * @return MongoResult
      */
-    protected static function _find($name, array $criteria, array $fields = array())
+    protected static function find($name, array $criteria, array $fields = array())
     {
         $obj = new $name();
         return new MongoResult($name, $obj->_collection->find($criteria, $fields));
@@ -106,7 +107,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param array $criteria
      * @return array
      */
-    protected static function _distinct($name, $fieldname, array $criteria = array())
+    protected static function distinct($name, $fieldname, array $criteria = array())
     {
         $obj = new $name();
         return $obj->_collection->distinct($fieldname, $criteria);
@@ -120,7 +121,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param array $fields
      * @return array
      */
-    public static function _findOne($name, array $criteria, array $fields = array())
+    public static function findOne($name, array $criteria, array $fields = array())
     {
         $obj = new $name();
         return $obj->_collection->findOne($criteria, $fields);
@@ -146,7 +147,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param  $data
      * @return void
      */
-    public function _loadFromArray(array $data)
+    public function loadFromArray(array $data)
     {
         $this->_data = $data;
     }

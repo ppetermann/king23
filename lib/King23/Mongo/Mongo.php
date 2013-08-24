@@ -51,7 +51,7 @@ class Mongo
     public static function cachedMapReduce($class, $cachetime, $collection, $map, $reduce, $query)
     {
         $hash = md5($collection.$map.$reduce.join(':', $query).join(':', array_keys($query)));
-        $obj = MongoObject::_getInstanceByCriteria($class, array('hash' => $hash));
+        $obj = MongoObject::getInstanceByCriteria($class, array('hash' => $hash));
 
         if (is_null($obj) || time() > ($obj->updated->sec + $cachetime)) {
             if (is_null($obj)) {

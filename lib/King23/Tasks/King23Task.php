@@ -40,8 +40,8 @@ class King23Task extends \King23\CommandLine\Task
      */
     protected $tasks = array(
         "info" => "General Informative Task",
-        "list_modules" => "show a list of all currently available modules",
-        "create_project" => "create a new project, requires project name as parameter",
+        "listModules" => "show a list of all currently available modules",
+        "createProject" => "create a new project, requires project name as parameter",
         "shell" => "run boris based king23 shell environment"
     );
 
@@ -54,7 +54,7 @@ class King23Task extends \King23\CommandLine\Task
     /**
      * List all available modules (from point of script run)
      */
-    public function list_modules()
+    public function listModules()
     {
         /* core tasks */
         $tasks = glob(KING23_PATH.'/lib/King23/Tasks/*Task.php');
@@ -93,7 +93,7 @@ class King23Task extends \King23\CommandLine\Task
      * @param array $options should contain name as first option
      * @return int
      */
-    public function create_project($options)
+    public function createProject($options)
     {
         $this->cli->header("King23 (Version: ".\King23\Core\King23::VERSION.") project creation");
         if (count($options) != 1) {

@@ -43,8 +43,8 @@ class MongoResult implements \Iterator, \Countable
 
     /**
      * @param  string $className
-     * @param  MongoCursor $cursor
-     * @return void
+     * @param  \MongoCursor $cursor
+     * @return \King23\Mongo\MongoResult
      */
     public function __construct($className, $cursor)
     {
