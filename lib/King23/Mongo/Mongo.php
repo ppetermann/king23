@@ -1,116 +1,120 @@
 <?php
-/*
- MIT License
- Copyright (c) 2010 - 2013 Peter Petermann
+    /*
+     MIT License
+     Copyright (c) 2010 - 2013 Peter Petermann
 
- Permission is hereby granted, free of charge, to any person
- obtaining a copy of this software and associated documentation
- files (the "Software"), to deal in the Software without
- restriction, including without limitation the rights to use,
- copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the
- Software is furnished to do so, subject to the following
- conditions:
+     Permission is hereby granted, free of charge, to any person
+     obtaining a copy of this software and associated documentation
+     files (the "Software"), to deal in the Software without
+     restriction, including without limitation the rights to use,
+     copy, modify, merge, publish, distribute, sublicense, and/or sell
+     copies of the Software, and to permit persons to whom the
+     Software is furnished to do so, subject to the following
+     conditions:
 
- The above copyright notice and this permission notice shall be
- included in all copies or substantial portions of the Software.
+     The above copyright notice and this permission notice shall be
+     included in all copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- OTHER DEALINGS IN THE SOFTWARE.
+     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+     OTHER DEALINGS IN THE SOFTWARE.
 
-*/
-namespace King23\Mongo;
-/**
- * Class with helpers to work with MongoDB
- * @throws \King23\Mongo\Exceptions\MongoException
- */
-class Mongo
-{
-    /**
-     * Method that caches inline map/reduces to allow for transparent cache
-     * all restrictions applying to inline map/reduce apply to this!
-     * @static
-     * @param string $class name of the map/reduce class (hint: __class__)
-     * @param integer $cachetime seconds to cache
-     * @param string $collection name of the collection from which to map/reduce
-     * @param string $map map method
-     * @param string $reduce reduce method
-     * @param array $query criteria to apply
-     * @internal param string $output name of the collection to write
-     * @return mixed
-     */
-    public static function cachedMapReduce($class, $cachetime, $collection, $map, $reduce, $query)
-    {
-        $hash = md5($collection . $map . $reduce . join(':', $query) . join(':', array_keys($query)));
-        $obj = MongoObject::_getInstanceByCriteria($class, array('hash' => $hash));
-
-        if(is_null($obj) || time() > ($obj->updated->sec + $cachetime)) {
-            if(is_null($obj)) {
-                $obj = new $class();
-                $obj->hash = $hash;
-            }
-            $result = self::mapReduce($collection, array('inline' => 1), $map, $reduce, $query);
-            $obj->result = $result;
-            $obj->updated = new \MongoDate(time());
-            $obj->save();
-            return $result;
-        }
-
-        return $obj->result;
-    }
+    */
+    namespace King23\Mongo;
 
     /**
-     * @return mixed
-     * @throws Exceptions\MongoException
-     */
-    public static function getMongoConfig() {
-        if(!($mongo = \King23\Core\Registry ::getInstance()->mongo)) {
-            throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
-        }
-        return $mongo;
-    }
-
-    /**
-     * @static
+     * Class with helpers to work with MongoDB
      *
-     * @param string $input name of the collection from which to map/reduce
-     * @param string $output name of the collection to write
-     * @param string $map map method
-     * @param string $reduce reduce method
-     * @param array $query criteria to apply
-     * @param array $additional
-     * @return mixed
+     * @throws \King23\Mongo\Exceptions\MongoException
      */
-    public static function mapReduce($input, $output, $map, $reduce, $query = NULL, $additional=array())
+    class Mongo
     {
-        $mongo = Mongo::getMongoConfig();
+        /**
+         * Method that caches inline map/reduces to allow for transparent cache
+         * all restrictions applying to inline map/reduce apply to this!
+         *
+         * @static
+         * @param string $class name of the map/reduce class (hint: __class__)
+         * @param integer $cachetime seconds to cache
+         * @param string $collection name of the collection from which to map/reduce
+         * @param string $map map method
+         * @param string $reduce reduce method
+         * @param array $query criteria to apply
+         * @internal param string $output name of the collection to write
+         * @return mixed
+         */
+        public static function cachedMapReduce($class, $cachetime, $collection, $map, $reduce, $query)
+        {
+            $hash = md5($collection.$map.$reduce.join(':', $query).join(':', array_keys($query)));
+            $obj = MongoObject::_getInstanceByCriteria($class, array('hash' => $hash));
 
-        $map = new \MongoCode($map);
+            if (is_null($obj) || time() > ($obj->updated->sec + $cachetime)) {
+                if (is_null($obj)) {
+                    $obj = new $class();
+                    $obj->hash = $hash;
+                }
+                $result = self::mapReduce($collection, array('inline' => 1), $map, $reduce, $query);
+                $obj->result = $result;
+                $obj->updated = new \MongoDate(time());
+                $obj->save();
+                return $result;
+            }
 
-        $reduce = new \MongoCode($reduce);
-
-        $cmd = array(
-            "mapreduce" => $input,
-            "map" => $map,
-            "reduce" => $reduce,
-            "out" => $output
-        );
-
-        // add filter query
-        if(!is_null($query)) {
-            $cmd['query'] = $query;
+            return $obj->result;
         }
 
-        $cmd = array_merge($cmd, $additional);
+        /**
+         * @return mixed
+         * @throws Exceptions\MongoException
+         */
+        public static function getMongoConfig()
+        {
+            if (!($mongo = \King23\Core\Registry ::getInstance()->mongo)) {
+                throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
+            }
+            return $mongo;
+        }
 
-        // execute the mapreduce
-        return $mongo['db']->command($cmd);
+        /**
+         * @static
+         *
+         * @param string $input name of the collection from which to map/reduce
+         * @param string $output name of the collection to write
+         * @param string $map map method
+         * @param string $reduce reduce method
+         * @param array $query criteria to apply
+         * @param array $additional
+         * @return mixed
+         */
+        public static function mapReduce($input, $output, $map, $reduce, $query = null, $additional = array())
+        {
+            $mongo = Mongo::getMongoConfig();
 
+            $map = new \MongoCode($map);
+
+            $reduce = new \MongoCode($reduce);
+
+            $cmd = array(
+                "mapreduce" => $input,
+                "map" => $map,
+                "reduce" => $reduce,
+                "out" => $output
+            );
+
+            // add filter query
+            if (!is_null($query)) {
+                $cmd['query'] = $query;
+            }
+
+            $cmd = array_merge($cmd, $additional);
+
+            // execute the mapreduce
+            return $mongo['db']->command($cmd);
+
+        }
     }
-}
