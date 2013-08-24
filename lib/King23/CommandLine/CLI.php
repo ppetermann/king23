@@ -98,5 +98,4 @@ final class CLI implements \King23\Core\Interfaces\Singleton
     {
         OutputWriter::write($message, OutputWriter::TYPE_POSITIVE);
     }
-
 }
