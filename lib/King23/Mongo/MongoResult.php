@@ -38,13 +38,13 @@ class MongoResult implements \Iterator, \Countable
     /**
      * @var string
      */
-    protected $_className= null;
+    protected $_className = null;
 
 
     /**
      * @param  string $className
-     * @param  MongoCursor $cursor
-     * @return void
+     * @param  \MongoCursor $cursor
+     * @return \King23\Mongo\MongoResult
      */
     public function __construct($className, $cursor)
     {
@@ -63,6 +63,7 @@ class MongoResult implements \Iterator, \Countable
 
     /**
      * Iterator::valid
+     *
      * @return bool
      */
     public function valid()
@@ -72,6 +73,7 @@ class MongoResult implements \Iterator, \Countable
 
     /**
      * Iterator::key
+     *
      * @return string key
      */
     public function key()
@@ -90,6 +92,7 @@ class MongoResult implements \Iterator, \Countable
     /**
      * Iterator::current
      * return current specific obect
+     *
      * @return MongoObject
      */
     public function current()
@@ -100,10 +103,10 @@ class MongoResult implements \Iterator, \Countable
         $k23doc->_loadFromArray($doc);
         return $k23doc;
     }
-    
+
     /**
-    * count method on the cursor, allows to get result count
-    */ 
+     * count method on the cursor, allows to get result count
+     */
     public function count()
     {
         return $this->_cursor->count();
@@ -130,10 +133,10 @@ class MongoResult implements \Iterator, \Countable
         $this->_cursor = $this->_cursor->limit($amount);
         return $this;
     }
-    
+
     /**
      * Skip the first $num results
-     * 
+     *
      * @param integer $num
      * @return MongoResult
      */

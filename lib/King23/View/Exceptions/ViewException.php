@@ -26,6 +26,7 @@
 
 */
 namespace King23\View\Exceptions;
+
 class ViewException extends \King23\Core\Exceptions\Exception
 {
 }

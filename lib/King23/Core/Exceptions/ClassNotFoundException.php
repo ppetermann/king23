@@ -26,6 +26,7 @@
 
 */
 namespace King23\Core\Exceptions;
+
 /**
  * Exception for random case of Class Not Found
  */

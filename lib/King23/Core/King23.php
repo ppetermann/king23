@@ -26,6 +26,7 @@
 
 */
 namespace King23\Core;
+
 /**
  * abstract class, holding basic information about the King23 framework
  */

@@ -26,6 +26,7 @@
 
 */
 namespace King23\Core;
+
 use King23\Core\Exceptions\IncompatibleLoggerException;
 use King23\Log\NullLog;
 
@@ -36,12 +37,14 @@ class Registry implements \King23\Core\Interfaces\Singleton
 {
     /**
      * Instance for singleton
+     *
      * @var \King23\Core\Registry
      */
     private static $myInstance;
 
     /**
      * store for the global data
+     *
      * @var array
      */
     private $data = array();
@@ -55,11 +58,12 @@ class Registry implements \King23\Core\Interfaces\Singleton
 
     /**
      * Return Instance, create instance if not instanced yet
+     *
      * @return \King23\Core\Registry
      */
     public static function getInstance()
     {
-        if(is_null(self::$myInstance)) {
+        if (is_null(self::$myInstance)) {
             self::$myInstance = new Registry();
         }
         return self::$myInstance;
@@ -67,12 +71,13 @@ class Registry implements \King23\Core\Interfaces\Singleton
 
     /**
      * magic get function, for conveniant access to registry
+     *
      * @param string $name
      * @return mixed
      */
     public function  __get($name)
     {
-        if(isset($this->data[$name])) {
+        if (isset($this->data[$name])) {
             return $this->data[$name];
         }
         return null;
@@ -80,28 +85,31 @@ class Registry implements \King23\Core\Interfaces\Singleton
 
     /**
      * magic set function for conveniant access to registry
+     *
      * @param string $name
      * @param mixed $value
      * @return boolean
      */
-    public function  __set($name,  $value)
+    public function  __set($name, $value)
     {
         return $this->data[$name] = $value;
     }
 
     /**
      * conveniance method that allows to get a logger from registry, and be sure it implements the LoggerInterface
+     *
      * @return \Psr\Log\LoggerInterface
      * @throws Exceptions\IncompatibleLoggerException
      */
-    public function getLogger() {
+    public function getLogger()
+    {
         // make sure we have a logger set
-        if(!isset($this->data['logger'])) {
+        if (!isset($this->data['logger'])) {
             $this->data['logger'] = new NullLog();
         }
 
         // we drop here if the logger is nothing we can use at all
-        if(!($this->data['logger'] instanceof \Psr\Log\LoggerInterface)) {
+        if (!($this->data['logger'] instanceof \Psr\Log\LoggerInterface)) {
             throw new IncompatibleLoggerException("Registries Logger is not a PSR-3 LoggerInterface");
         }
 

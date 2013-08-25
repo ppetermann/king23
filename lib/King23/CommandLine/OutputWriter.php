@@ -26,6 +26,7 @@
 
 */
 namespace King23\CommandLine;
+
 /**
  * class simplifying the use of color codes on console
  */
@@ -42,18 +43,18 @@ class OutputWriter
     const FONT_BLINK = "\033[5m";
     const FONT_INVERT = "\033[7m";
 
-    const COLOR_FG_BLACK ="\033[0;30m30";
+    const COLOR_FG_BLACK = "\033[0;30m30";
     const COLOR_FG_RED = "\033[0;31m";
     const COLOR_FG_GREEN = "\033[0;32m";
     const COLOR_FG_YELLOW = "\033[0;33m";
     const COLOR_FG_BLUE = "\033[0;34m";
-    const COLOR_FG_MAGENTA ="\033[0;35m";
+    const COLOR_FG_MAGENTA = "\033[0;35m";
     const COLOR_FG_CYAN = "\033[0;36m";
     const COLOR_FG_LIGHTGRAY = "\033[0;37m";
     const COLOR_FG_DEFAULT = "\033[0;39m";
-    
-    const COLOR_FGL_DARKGRAY ="\033[1;30m";
-    const COLOR_FGL_RED ="\033[1;31m";
+
+    const COLOR_FGL_DARKGRAY = "\033[1;30m";
+    const COLOR_FGL_RED = "\033[1;31m";
     const COLOR_FGL_GREEN = "\033[1;32m";
     const COLOR_FGL_YELLOW = "\033[1;33m";
     const COLOR_FGL_BLUE = "\033[1;34m";
@@ -63,25 +64,25 @@ class OutputWriter
 
     const COLOR_BG_BLACK = "\033[40m";
     const COLOR_BG_RED = "\033[41m";
-    const COLOR_BG_GREEN ="\033[42m";
-    const COLOR_BG_YELLOW ="\033[43m";
-    const COLOR_BG_BLUE ="\033[44m";
-    const COLOR_BG_MAGENTA ="\033[45m";
+    const COLOR_BG_GREEN = "\033[42m";
+    const COLOR_BG_YELLOW = "\033[43m";
+    const COLOR_BG_BLUE = "\033[44m";
+    const COLOR_BG_MAGENTA = "\033[45m";
     const COLOR_BG_CYAN = "\033[46m";
-    const COLOR_BG_LIGHTGRAY ="\033[47m";
-    const COLOR_BG_DEFAULT ="\033[49m";
+    const COLOR_BG_LIGHTGRAY = "\033[47m";
+    const COLOR_BG_DEFAULT = "\033[49m";
 
     /**
      * write a string to output, with optional type
+     *
      * @param String $message
      * @param Integer $type
      */
     public static function write($message, $type = OutputWriter::TYPE_REGULAR)
     {
-        switch($type)
-        {
+        switch ($type) {
             case self::TYPE_HEADING:
-                $fg = self::COLOR_FG_DEFAULT . self::FONT_BOLD;
+                $fg = self::COLOR_FG_DEFAULT.self::FONT_BOLD;
                 $bg = self::COLOR_BG_DEFAULT;
                 break;
             case self::TYPE_WARNING:
@@ -101,9 +102,9 @@ class OutputWriter
                 $fg = self::COLOR_FG_DEFAULT;
                 $bg = self::COLOR_BG_DEFAULT;
         }
-        $messageout = self::COLOR_FG_LIGHTGRAY; 
-        $messageout .= "[" . date("Y-m-d H:i:s") ."] " .$bg . $fg;
-        $messageout .= $message . self::COLOR_FG_DEFAULT . self::COLOR_BG_DEFAULT . "\n";
+        $messageout = self::COLOR_FG_LIGHTGRAY;
+        $messageout .= "[".date("Y-m-d H:i:s")."] ".$bg.$fg;
+        $messageout .= $message.self::COLOR_FG_DEFAULT.self::COLOR_BG_DEFAULT."\n";
         echo $messageout;
     }
- }
+}

@@ -32,7 +32,7 @@ namespace King23\CommandLine;
  */
 final class CLI implements \King23\Core\Interfaces\Singleton
 {
-    private static $myInstance =null;
+    private static $myInstance = null;
 
     private function  __construct()
     {
@@ -43,7 +43,7 @@ final class CLI implements \King23\Core\Interfaces\Singleton
      */
     public static function getInstance()
     {
-        if(is_null(self::$myInstance)) {
+        if (is_null(self::$myInstance)) {
             self::$myInstance = new CLI();
         }
         return self::$myInstance;
@@ -51,15 +51,17 @@ final class CLI implements \King23\Core\Interfaces\Singleton
 
     /**
      * Write a string as regular message to output
+     *
      * @param String $message
      */
-    public function message($message ="")
+    public function message($message = "")
     {
         OutputWriter::write($message);
     }
 
     /**
      * Write a string colorcoded as error to the output
+     *
      * @param String $message
      */
     public function error($message)
@@ -69,6 +71,7 @@ final class CLI implements \King23\Core\Interfaces\Singleton
 
     /**
      * Write a string colorcoded as warning to the output
+     *
      * @param String $message
      */
     public function warning($message)
@@ -78,6 +81,7 @@ final class CLI implements \King23\Core\Interfaces\Singleton
 
     /**
      * Write a string colorcoded as header to output
+     *
      * @param String $message
      */
     public function header($message)
@@ -87,11 +91,11 @@ final class CLI implements \King23\Core\Interfaces\Singleton
 
     /**
      * write a string colorcoded as positive/success to output
+     *
      * @param String $message
      */
     public function positive($message)
     {
         OutputWriter::write($message, OutputWriter::TYPE_POSITIVE);
     }
-
 }

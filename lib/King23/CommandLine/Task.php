@@ -34,19 +34,22 @@ abstract class Task
 {
     /**
      * list of available tasks (key) and their description (value)
+     *
      * @var Array
      */
     protected $tasks = array();
 
     /**
      * Name of the Task Module
+     *
      * @var String
      */
     protected $name = "MISSING NAME";
 
-    
+
     /**
      * King23_CLI instance for conveniance
+     *
      * @var \King23\CommandLine\CLI
      */
     protected $cli;
@@ -62,6 +65,7 @@ abstract class Task
 
     /**
      * returns tasks array
+     *
      * @return array
      */
     public function getTasks()
@@ -74,20 +78,11 @@ abstract class Task
      */
     public function info()
     {
-        $this->cli->header("Module " . $this->name);
+        $this->cli->header("Module ".$this->name);
         $this->cli->header("-----------------------");
-        $this->_info();
-    }
-    
 
-    /**
-     * might be called from info tasks to write basic information about each task
-     */
-    public function _info()
-    {
-        foreach($this->tasks as $name => $description)
-        {
-            $this->cli->header("Task: " . OutputWriter::COLOR_FGL_BLUE . $name);
+        foreach ($this->tasks as $name => $description) {
+            $this->cli->header("Task: ".OutputWriter::COLOR_FGL_BLUE.$name);
             $this->cli->header("Description:");
             $this->cli->message($description);
             $this->cli->message();

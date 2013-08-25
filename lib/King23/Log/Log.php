@@ -29,17 +29,19 @@ namespace King23\Log;
 
 /**
  * Class used for printing out / sending lines to bot
+ *
  * @deprecated use monolog loggin instead.
  */
 class Log
 {
     /**
      * write out message for logging purposes
+     *
      * @param String $message
      */
     public function log($message)
     {
-        $finalizedMessage = "[". date("Y-m-d H:i:s"). "] " . $message . "\n";
+        $finalizedMessage = "[".date("Y-m-d H:i:s")."] ".$message."\n";
         echo $finalizedMessage;
     }
 }

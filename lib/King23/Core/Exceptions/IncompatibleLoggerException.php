@@ -29,6 +29,7 @@ namespace King23\Core\Exceptions;
 
 /**
  * Class IncompatibleLoggerException
+ *
  * @package King23\Core\Exceptions
  */
 class IncompatibleLoggerException extends \King23\Core\Exceptions\Exception

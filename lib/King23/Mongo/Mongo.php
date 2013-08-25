@@ -26,8 +26,10 @@
 
 */
 namespace King23\Mongo;
+
 /**
  * Class with helpers to work with MongoDB
+ *
  * @throws \King23\Mongo\Exceptions\MongoException
  */
 class Mongo
@@ -35,6 +37,7 @@ class Mongo
     /**
      * Method that caches inline map/reduces to allow for transparent cache
      * all restrictions applying to inline map/reduce apply to this!
+     *
      * @static
      * @param string $class name of the map/reduce class (hint: __class__)
      * @param integer $cachetime seconds to cache
@@ -47,11 +50,11 @@ class Mongo
      */
     public static function cachedMapReduce($class, $cachetime, $collection, $map, $reduce, $query)
     {
-        $hash = md5($collection . $map . $reduce . join(':', $query) . join(':', array_keys($query)));
-        $obj = MongoObject::_getInstanceByCriteria($class, array('hash' => $hash));
+        $hash = md5($collection.$map.$reduce.join(':', $query).join(':', array_keys($query)));
+        $obj = MongoObject::getInstanceByCriteria($class, array('hash' => $hash));
 
-        if(is_null($obj) || time() > ($obj->updated->sec + $cachetime)) {
-            if(is_null($obj)) {
+        if (is_null($obj) || time() > ($obj->updated->sec + $cachetime)) {
+            if (is_null($obj)) {
                 $obj = new $class();
                 $obj->hash = $hash;
             }
@@ -69,8 +72,9 @@ class Mongo
      * @return mixed
      * @throws Exceptions\MongoException
      */
-    public static function getMongoConfig() {
-        if(!($mongo = \King23\Core\Registry ::getInstance()->mongo)) {
+    public static function getMongoConfig()
+    {
+        if (!($mongo = \King23\Core\Registry ::getInstance()->mongo)) {
             throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
         }
         return $mongo;
@@ -87,7 +91,7 @@ class Mongo
      * @param array $additional
      * @return mixed
      */
-    public static function mapReduce($input, $output, $map, $reduce, $query = NULL, $additional=array())
+    public static function mapReduce($input, $output, $map, $reduce, $query = null, $additional = array())
     {
         $mongo = Mongo::getMongoConfig();
 
@@ -103,7 +107,7 @@ class Mongo
         );
 
         // add filter query
-        if(!is_null($query)) {
+        if (!is_null($query)) {
             $cmd['query'] = $query;
         }
 

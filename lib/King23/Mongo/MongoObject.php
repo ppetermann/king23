@@ -26,8 +26,10 @@
 
 */
 namespace King23\Mongo;
+
 /**
  * Base class to handle objects stored in MongoDB
+ *
  * @throws \King23\Mongo\Exceptions\MongoException
  */
 abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
@@ -35,8 +37,8 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
     /**
      * @var \MongoCollection collection used by instance
      */
-    protected $_collection; 
-    
+    protected $_collection;
+
     /**
      * @var string ensure this is overwritten by the derived classes!
      */
@@ -45,20 +47,21 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
     /**
      * @var array container to store the data of this obect
      */
-    protected $_data = null; 
+    protected $_data = null;
 
     /**
      * conveniance method to retrieve object by id, should be used in
      * public static method by the derrived class
+     *
      * @static
      * @param  string $name should be the className of the class calling the method
      * @param  string $mongoid
      * @return MongoObject
      */
-    protected static function _getInstanceById($name, $mongoid)
+    protected static function getInstanceById($name, $mongoid)
     {
         $obj = new $name();
-        if($data = $obj->_collection->findOne(array('_id' => new \MongoId($mongoid)))) {
+        if ($data = $obj->_collection->findOne(array('_id' => new \MongoId($mongoid)))) {
             $obj->_data = $data;
             return $obj;
         }
@@ -68,15 +71,16 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
     /**
      * conveniance method to retrieve object by criteria, should be used in
      * public static method by the derrived class
+     *
      * @static
      * @param  string $name should be the className of the class calling the method
      * @param  array $criteria
      * @return MongoObject
      */
-    public static function _getInstanceByCriteria($name, $criteria)
+    public static function getInstanceByCriteria($name, $criteria)
     {
         $obj = new $name();
-        if($data = $obj->_collection->findOne($criteria)) {
+        if ($data = $obj->_collection->findOne($criteria)) {
             $obj->_data = $data;
             return $obj;
         }
@@ -85,11 +89,12 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
 
     /**
      * @static
+     * @param $name
      * @param array $criteria
      * @param array $fields
      * @return MongoResult
      */
-    protected static function _find($name, array $criteria, array $fields = array())
+    protected static function find($name, array $criteria, array $fields = array())
     {
         $obj = new $name();
         return new MongoResult($name, $obj->_collection->find($criteria, $fields));
@@ -102,7 +107,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param array $criteria
      * @return array
      */
-    protected static function _distinct($name, $fieldname, array $criteria = array())
+    protected static function distinct($name, $fieldname, array $criteria = array())
     {
         $obj = new $name();
         return $obj->_collection->distinct($fieldname, $criteria);
@@ -116,7 +121,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param array $fields
      * @return array
      */
-    public static function _findOne($name, array $criteria, array $fields = array())
+    public static function findOne($name, array $criteria, array $fields = array())
     {
         $obj = new $name();
         return $obj->_collection->findOne($criteria, $fields);
@@ -124,29 +129,32 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
 
     /**
      * constructor, meant to setup the object, should be called by derived classes
+     *
      * @throws \King23\Mongo\Exceptions\MongoException
      */
     public function __construct()
     {
-        if(is_null($this->_className)) {
+        if (is_null($this->_className)) {
             throw new \King23\Mongo\Exceptions\MongoException('class name not configured in object');
         }
 
-        $this->__initialize();
+        $this->__wakeup();
     }
 
     /**
      * load data from array
+     *
      * @param  $data
      * @return void
      */
-    public function _loadFromArray(array $data)
+    public function loadFromArray(array $data)
     {
         $this->_data = $data;
     }
 
     /**
      * remove the instance from the mongodb - this will not kill the object in local space however
+     *
      * @return void
      */
     public function delete()
@@ -156,6 +164,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
 
     /**
      * save the object in the mongodb, will insert on new object, or update if _id is set
+     *
      * @return void
      */
     public function save()
@@ -165,11 +174,12 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
 
     /**
      * refreshes object from database (all changes be lost!)
+     *
      * @return void
      */
     public function refresh()
     {
-        if($data = $this->_collection->findOne(array('_id' => $this->_id))) {
+        if ($data = $this->_collection->findOne(array('_id' => $this->_id))) {
             $this->_data = $data;
         }
     }
@@ -219,7 +229,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        return $this->_data[$offset] = $value;       
+        return $this->_data[$offset] = $value;
     }
 
     // --------------------------- OBJECT STYLE ACCESS
@@ -240,32 +250,24 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      */
     public function __get($name)
     {
-        if(isset($this->_data[$name])) {
+        if (isset($this->_data[$name])) {
             return $this->_data[$name];
         }
-        return NULL;
+        return null;
     }
 
     // --------------------- unserialize
 
     /**
      * Magic wakeup method, will reconnect object on unserialze
+     *
      * @throws \King23\Mongo\Exceptions\MongoException
      * @return void
      */
     public function __wakeup()
     {
-        $this->__initialize();
-    }
-
-    /**
-     * initialize mongodb connections
-     * @throws Exceptions\MongoException
-     */
-    protected function __initialize() {
         $mongo = Mongo::getMongoConfig();
         $colname = $this->_className;
         $this->_collection = $mongo['db']->$colname;
     }
 }
-

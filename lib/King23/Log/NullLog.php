@@ -30,6 +30,7 @@ namespace King23\Log;
 /**
  * this class implements Psr\Log\LoggerInterface, but does not do anything,
  * basically this should be set as logger, if no logging is used (See config)
+ *
  * @package King23\Log
  */
 class NullLog implements \Psr\Log\LoggerInterface

@@ -26,6 +26,7 @@
 
 */
 namespace King23\View\Exceptions;
+
 class ViewActionDoesNotExistException extends ViewException
 {
 }

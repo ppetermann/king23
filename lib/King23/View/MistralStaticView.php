@@ -29,9 +29,10 @@ namespace King23\View;
 
 class MistralStaticView extends View
 {
-    
+
     /**
      * __call method, should return file with finfo guessed mimetype
+     *
      * @param string $method
      * @param array $params
      * @return array|bool
@@ -41,8 +42,9 @@ class MistralStaticView extends View
         return $this->getFile($method, $params[0]['filename']);
     }
 
-    /** 
+    /**
      * special call for js, to add mimetypea
+     *
      * @param array $request
      * @return array|bool
      */
@@ -50,9 +52,10 @@ class MistralStaticView extends View
     {
         return $this->getFile('js', $request['filename'], 'text/javascript');
     }
-    
-    /** 
+
+    /**
      * special call for css to add mimetype
+     *
      * @param array $request
      * @return array|bool
      */
@@ -60,38 +63,36 @@ class MistralStaticView extends View
     {
         return $this->getFile('css', $request['filename'], 'text/css');
     }
-    
+
 
     /**
      * returns array with contents, mimetype and http status for the file
+     *
      * @param string $path
      * @param string $filename
-     * @param mixed $mime, string if given, false if guessing
+     * @param mixed $mime , string if given, false if guessing
      * @return array|bool
      */
     private function getFile($path, $filename, $mime = false)
     {
-        $file = APP_PATH . '/public/' . $path . '/'. $filename;
-        if(!file_exists($file))
-        {
+        $file = APP_PATH.'/public/'.$path.'/'.$filename;
+        if (!file_exists($file)) {
             return false; // better handling necessary!
         }
-        if($data = file_get_contents($file))
-        {
-            if(!$mime) 
-            {
+        if ($data = file_get_contents($file)) {
+            if (!$mime) {
                 $finfo = new \finfo(FILEINFO_MIME_TYPE);
                 $mimetype = $finfo->file($file);
             } else {
                 $mimetype = $mime;
             }
             return array(
-                'status_code' => '200 OK', 
-                'connection' => 'close', 
-                'content-type' => $mimetype, 
+                'status_code' => '200 OK',
+                'connection' => 'close',
+                'content-type' => $mimetype,
                 'body' => $data
             );
         }
-        return array('status_code' => '404 NOT FOUND', 'connection' => 'close' );
+        return array('status_code' => '404 NOT FOUND', 'connection' => 'close');
     }
 }

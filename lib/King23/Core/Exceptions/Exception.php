@@ -26,11 +26,13 @@
 
 */
 namespace King23\Core\Exceptions;
+
 use Exception as PHPException;
+
 /**
  * base exception for all King23 Exceptions (so you can catch 'em all at once ;)
  */
 class Exception extends PHPException
 {
-    
+
 }

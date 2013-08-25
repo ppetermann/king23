@@ -28,12 +28,11 @@
 namespace King23\Core;
 
 // its safe to assume that if King23_Singleton is not load yet those three classes need loading
-// its also safe to assume that if it is load the other three are load aswell.
-if(!interface_exists('King23\Core\Singleton'))
-{
-    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/Interfaces/Singleton.php');
-    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/Exceptions/Exception.php');
-    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/Exceptions/PathNotFoundException.php');
+// its also safe to assume that if it is load the other three are load as well.
+if (!interface_exists('King23\Core\Singleton')) {
+    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME).'/Interfaces/Singleton.php');
+    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME).'/Exceptions/Exception.php');
+    require_once(pathinfo(__FILE__, PATHINFO_DIRNAME).'/Exceptions/PathNotFoundException.php');
 }
 
 /**
@@ -43,12 +42,14 @@ class Classloader implements \King23\Core\Interfaces\Singleton
 {
     /**
      * Instance of the Classloader
+     *
      * @var \King23\Core\Classloader
      */
     private static $myInstance;
 
     /**
      * should contain all found classes
+     *
      * @var Array
      */
     private $classes = array();
@@ -84,11 +85,12 @@ class Classloader implements \King23\Core\Interfaces\Singleton
     /**
      * Singleton requirement, returns existing instance, creates new
      * instance if none exists
+     *
      * @return \King23\Core\Classloader
      */
     public static function getInstance()
     {
-        if(is_null(self::$myInstance)) {
+        if (is_null(self::$myInstance)) {
             self::$myInstance = new \King23\Core\Classloader();
         }
         return self::$myInstance;
@@ -96,12 +98,13 @@ class Classloader implements \King23\Core\Interfaces\Singleton
 
     /**
      * Load the class definition for a specific class
+     *
      * @param String $name
      * @return boolean
      */
     public static function load($name)
     {
-        if($file = self::getInstance()->find($name)) {
+        if ($file = self::getInstance()->find($name)) {
             require_once($file);
             return true;
         }
@@ -110,6 +113,7 @@ class Classloader implements \King23\Core\Interfaces\Singleton
 
     /**
      * Parse given path for further classes
+     *
      * @param String $path
      */
     public static function init($path)
@@ -119,12 +123,13 @@ class Classloader implements \King23\Core\Interfaces\Singleton
 
     /**
      * implementation of the parse call
+     *
      * @param string $path
      * @throws Exceptions\PathNotFoundException
      */
     private function configure($path)
     {
-        if(!file_exists($path) || !is_dir($path)) {
+        if (!file_exists($path) || !is_dir($path)) {
             throw new \King23\Core\Exceptions\PathNotFoundException;
         }
         $this->classes = array_merge($this->classes, $this->parseDir($path));
@@ -132,36 +137,36 @@ class Classloader implements \King23\Core\Interfaces\Singleton
 
     /**
      * recursive dir parsing method
+     *
      * @param string $dir directory to parse
      * @param array $classes already found classes
      * @param string $namespace
      * @return array
      */
-    private function parseDir($dir, $classes = array(), $namespace ="")
+    private function parseDir($dir, $classes = array(), $namespace = "")
     {
-        if(empty($namespace)) {
-            $namespace ='\\'; // global class
+        if (empty($namespace)) {
+            $namespace = '\\'; // global class
         } else {
-            if($namespace == '\\') {
-                $namespace="";
+            if ($namespace == '\\') {
+                $namespace = "";
             }
-            $namespace = $namespace . basename($dir) . '\\';
+            $namespace = $namespace.basename($dir).'\\';
         }
 
         $d = dir($dir);
-        while($item = $d->read())
-        {
-            if($item == "." || $item == "..") {
+        while ($item = $d->read()) {
+            if ($item == "." || $item == "..") {
                 continue;
             }
 
-            if(is_dir("$dir/$item")) {
-                $classes = array_merge($classes, $this->parseDir($dir . "/" . $item, array(), $namespace));
+            if (is_dir("$dir/$item")) {
+                $classes = array_merge($classes, $this->parseDir($dir."/".$item, array(), $namespace));
                 continue;
             }
 
-            if(substr($item, -4) == ".php") {
-                $classes[ $namespace. substr($item, 0,-4)] = "$dir/$item";
+            if (substr($item, -4) == ".php") {
+                $classes[$namespace.substr($item, 0, -4)] = "$dir/$item";
             }
         }
         return $classes;
@@ -169,12 +174,13 @@ class Classloader implements \King23\Core\Interfaces\Singleton
 
     /**
      * get a file name to a specified class name
+     *
      * @param string $name name of the file
      * @return String filepath, false on fail
      */
     private function find($name)
-    {   
-        if(isset($this->classes[$name])) {
+    {
+        if (isset($this->classes[$name])) {
             return $this->classes[$name];
         }
         return false;

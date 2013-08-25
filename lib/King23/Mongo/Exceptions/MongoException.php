@@ -27,6 +27,7 @@
 */
 
 namespace King23\Mongo\Exceptions;
+
 /**
  * base class for King23_Mongo related exceptions
  */

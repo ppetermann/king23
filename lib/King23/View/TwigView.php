@@ -40,6 +40,7 @@ abstract class TwigView extends View
 
     /**
      * assoc array containing all vars to use in template
+     *
      * @var array
      */
     protected $_context = array();
@@ -55,6 +56,7 @@ abstract class TwigView extends View
     /**
      * render template with context, will merge context with allready known
      * context
+     *
      * @param string $template
      * @param array $context
      * @param bool $silent if set to true the method will not echo out the results
@@ -63,7 +65,7 @@ abstract class TwigView extends View
     {
         $context = array_merge($this->_context, $context);
         $body = $this->twig->render($template, $context);
-        if(!$silent) {
+        if (!$silent) {
             echo $body;
         }
         return $body;

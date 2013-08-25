@@ -26,6 +26,7 @@
 
 */
 namespace King23\Core\Interfaces;
+
 /**
  * for classes implementing a singleton pattern
  */
