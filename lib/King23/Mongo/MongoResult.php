@@ -100,7 +100,7 @@ class MongoResult implements \Iterator, \Countable
         $doc = $this->_cursor->current();
         $class = $this->_className;
         $k23doc = new $class();
-        $k23doc->_loadFromArray($doc);
+        $k23doc->loadFromArray($doc);
         return $k23doc;
     }
 
