@@ -58,7 +58,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param  string $mongoid
      * @return MongoObject
      */
-    protected static function getInstanceById($name, $mongoid)
+    protected static function doGetInstanceById($name, $mongoid)
     {
         $obj = new $name();
         if ($data = $obj->_collection->findOne(array('_id' => new \MongoId($mongoid)))) {
@@ -77,7 +77,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param  array $criteria
      * @return MongoObject
      */
-    public static function getInstanceByCriteria($name, $criteria)
+    public static function doGetInstanceByCriteria($name, $criteria)
     {
         $obj = new $name();
         if ($data = $obj->_collection->findOne($criteria)) {
@@ -94,7 +94,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param array $fields
      * @return MongoResult
      */
-    protected static function find($name, array $criteria, array $fields = array())
+    protected static function doFind($name, array $criteria, array $fields = array())
     {
         $obj = new $name();
         return new MongoResult($name, $obj->_collection->find($criteria, $fields));
@@ -107,7 +107,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param array $criteria
      * @return array
      */
-    protected static function distinct($name, $fieldname, array $criteria = array())
+    protected static function doDistinct($name, $fieldname, array $criteria = array())
     {
         $obj = new $name();
         return $obj->_collection->distinct($fieldname, $criteria);
@@ -121,7 +121,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * @param array $fields
      * @return array
      */
-    public static function findOne($name, array $criteria, array $fields = array())
+    public static function doFindOne($name, array $criteria, array $fields = array())
     {
         $obj = new $name();
         return $obj->_collection->findOne($criteria, $fields);
