@@ -106,10 +106,12 @@ class MongoResult implements \Iterator, \Countable
 
     /**
      * count method on the cursor, allows to get result count
+     * @param bool $foundOnly
+     * @return int
      */
-    public function count()
+    public function count($foundOnly = false)
     {
-        return $this->_cursor->count();
+        return $this->_cursor->count($foundOnly);
     }
 
     /**
