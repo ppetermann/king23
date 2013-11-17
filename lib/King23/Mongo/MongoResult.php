@@ -126,6 +126,16 @@ class MongoResult implements \Iterator, \Countable
     }
 
     /**
+     * @param array options
+     * @returns MongoResult
+     */
+    public function hint(array $hintoptions)
+    {
+        $this->_cursor = $this->_cursor->hint($hintoptions);
+        return $this;
+    }
+
+    /**
      * @param  $amount
      * @return MongoResult
      *
