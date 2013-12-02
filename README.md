@@ -1,4 +1,6 @@
 # King23 PHP Framework
+[![Latest Stable Version](https://poser.pugx.org/king23/king23/v/stable.png)](https://packagist.org/packages/3rdpartyeve/phealng)
+[![Total Downloads](https://poser.pugx.org/king23/king23/downloads.png)](https://packagist.org/packages/3rdpartyeve/phealng)
 
 Copyright (C) 2010 - 2013 by Peter Petermann
 All rights reserved.
