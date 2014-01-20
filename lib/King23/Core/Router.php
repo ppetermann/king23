@@ -72,7 +72,7 @@ class Router implements Interfaces\Singleton
      * @param String $route beginning string of the route
      * @param String $class to be used for this route
      * @param String $action method to be called
-     * @param array $parameters list of parameters that should be retrieved from url
+     * @param string[] $parameters list of parameters that should be retrieved from url
      * @param array $hostparameters - allows to use subdomains as parameters
      */
     public function addRoute($route, $class, $action, $parameters = array(), $hostparameters = array())
@@ -149,7 +149,7 @@ class Router implements Interfaces\Singleton
 
     /**
      * @param $info
-     * @param $request
+     * @param string $request
      * @param $route
      * @return mixed
      */
