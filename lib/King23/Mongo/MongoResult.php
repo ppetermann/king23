@@ -115,7 +115,7 @@ class MongoResult implements \Iterator, \Countable
     }
 
     /**
-     * @return run a sort on the cursor
+     * @return MongoResult a sort on the cursor
      * @param array sort options
      * @returns MongoResult
      */

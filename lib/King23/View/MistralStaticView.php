@@ -70,7 +70,7 @@ class MistralStaticView extends View
      *
      * @param string $path
      * @param string $filename
-     * @param mixed $mime , string if given, false if guessing
+     * @param string $mime , string if given, false if guessing
      * @return array|bool
      */
     private function getFile($path, $filename, $mime = false)

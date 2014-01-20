@@ -164,7 +164,7 @@ class Registry implements Singleton, \ArrayAccess
 
     /**
      * @param \Closure $callable
-     * @return callable
+     * @return \Closure
      */
     public function single(\Closure $callable) {
         return function($c) use ($callable) {
