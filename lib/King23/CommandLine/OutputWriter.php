@@ -97,7 +97,6 @@ class OutputWriter
                 $fg = self::COLOR_FG_GREEN;
                 $bg = self::COLOR_BG_DEFAULT;
                 break;
-            case self::TYPE_REGULAR:
             default:
                 $fg = self::COLOR_FG_DEFAULT;
                 $bg = self::COLOR_BG_DEFAULT;
