@@ -39,30 +39,31 @@ error_reporting(E_ALL);
 define('KING23_PATH', __DIR__ . "/..");
 
 // if exists read cli config
-if(file_exists("./conf/cli.php"))
+if (file_exists("./conf/cli.php")) {
     require_once "./conf/cli.php";
-else if(file_exists("./conf/config.php")) // otherwise, if exists, read config.php
+} else if (file_exists("./conf/config.php")) {
     require_once "./conf/config.php";
-else // config does not exist, so lets at least add the king path to classload
-{
+} else {
     require_once KING23_PATH . "/lib/King23/Core/Classloader.php";
     King23\Core\Classloader::register();
-    King23\Core\Classloader::init(KING23_PATH."/lib/");
+    King23\Core\Classloader::init(KING23_PATH . "/lib/");
 }
 
 // it might make sense to load both here
-if(file_exists("./vendor/autoload.php"))
+if (file_exists("./vendor/autoload.php")) {
     require_once("./vendor/autoload.php");
-else if(file_exists(KING23_PATH .'/vendor/autoload.php'))
-    require_once(KING23_PATH .'/vendor/autoload.php');
+} else if (file_exists(KING23_PATH . '/vendor/autoload.php')) {
+    require_once(KING23_PATH . '/vendor/autoload.php');
+}
 
-if(file_exists("./tasks/"))
-    King23\Core\Classloader::init("./tasks/"); 
+if (file_exists("./tasks/")) {
+    King23\Core\Classloader::init("./tasks/");
+}
 
 $cli = \King23\CommandLine\CLI::getInstance();
 
 
-$modules = array( 
+$modules = array(
     'King23' => '\King23\Tasks\King23Task',
     'Mistral' => '\King23\Tasks\MistralTask'
 );
@@ -71,23 +72,21 @@ $tasks = array();
 /* current project tasks */
 $tasks = array_merge($tasks, glob("./tasks/*/*Task.php"));
 
-foreach($tasks as $taskfile) {
-    if(substr($taskfile, 0, strlen(KING23_PATH . '/lib/')) == KING23_PATH . '/lib/')  {
-        $modules[substr(basename($taskfile),0,-8)] = str_replace("/", '\\',substr($taskfile,strlen(KING23_PATH . '/lib/'),-4));
+foreach ($tasks as $taskfile) {
+    if (substr($taskfile, 0, strlen(KING23_PATH . '/lib/')) == KING23_PATH . '/lib/') {
+        $modules[substr(basename($taskfile), 0, -8)] = str_replace("/", '\\', substr($taskfile, strlen(KING23_PATH . '/lib/'), -4));
     } else {
-        $modules[substr(basename($taskfile),0,-8)] = str_replace("/", '\\', substr($taskfile,8,-4));
+        $modules[substr(basename($taskfile), 0, -8)] = str_replace("/", '\\', substr($taskfile, 8, -4));
     }
 }
 
-if($argc > 1)
-{
+if ($argc > 1) {
     $module_task = explode(":", $argv[1]);
-    if(count($module_task) > 2)
-    {
-        $cli->error("Syntax Error: " .$argv[1]. " is not <module>[:<task>]");
+    if (count($module_task) > 2) {
+        $cli->error("Syntax Error: " . $argv[1] . " is not <module>[:<task>]");
         return 1;
-    } elseif(count($module_task) == 1) {
-        $cli->warning($module_task[0] ." called without task, assuming 'info' ");
+    } elseif (count($module_task) == 1) {
+        $cli->warning($module_task[0] . " called without task, assuming 'info' ");
         $module = $module_task[0];
         $task = "info";
     } else {
@@ -96,15 +95,13 @@ if($argc > 1)
     }
 
 
-    if(!isset($modules[$module]))
-    {
+    if (!isset($modules[$module])) {
         $cli->error("Module: $module does not exist.");
         return 1;
     } else {
-        $classname= $modules[$module];
-        $object= new $classname();
-        if(!method_exists($object, $task))
-        {
+        $classname = $modules[$module];
+        $object = new $classname();
+        if (!method_exists($object, $task)) {
             $cli->error("Module: $module does not know a task $task");
             return 1;
         }
@@ -113,11 +110,11 @@ if($argc > 1)
         $object->$task($argv); // call!
     }
 } else {
-        $cli->header("King23 CLI (Version: " . \King23\Core\King23::VERSION . ") Phar");
-        $cli->message("Syntax: king23 <taskmodule>:<task>");
-        $cli->message();
+    $cli->header("King23 CLI (Version: " . \King23\Core\King23::VERSION . ") Phar");
+    $cli->message("Syntax: king23 <taskmodule>:<task>");
+    $cli->message();
 
-        $object = new \King23\Tasks\King23Task();
-        $object->list_modules();
+    $object = new \King23\Tasks\King23Task();
+    $object->list_modules();
 }
 return 0;
