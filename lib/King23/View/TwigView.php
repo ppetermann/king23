@@ -26,6 +26,7 @@
 
 */
 namespace King23\View;
+use King23\Core\Registry;
 
 /**
  * Basic view for all views who need to use the Twig Templates
@@ -50,7 +51,7 @@ abstract class TwigView extends View
      */
     public function __construct()
     {
-        $this->twig = \King23\Core\Registry::getInstance()->twig;
+        $this->twig = Registry::getInstance()->twig;
     }
 
     /**

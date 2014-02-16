@@ -27,6 +27,8 @@
 */
 namespace King23\View;
 
+use King23\Core\Exceptions\Exception;
+
 class MistralStaticView extends View
 {
 
@@ -70,11 +72,16 @@ class MistralStaticView extends View
      *
      * @param string $path
      * @param string $filename
-     * @param string $mime , string if given, false if guessing
+     * @param bool|string $mime , string if given, false if guessing
+     * @throws \King23\Core\Exceptions\Exception
      * @return array|bool
      */
     private function getFile($path, $filename, $mime = false)
     {
+        if (!defined("APP_PATH")) {
+            throw new Exception("APP_PATH was not defined");
+        }
+
         $file = APP_PATH.'/public/'.$path.'/'.$filename;
         if (!file_exists($file)) {
             return false; // better handling necessary!

@@ -28,6 +28,7 @@
 namespace King23\View;
 
 use King23\Core\Registry;
+use King23\View\Exceptions\ViewActionDoesNotExistException;
 
 /**
  * base for all views
@@ -46,7 +47,7 @@ abstract class View
     {
         Registry::getInstance()->getLogger()->debug('dispatching to action: '.$action);
         if (!method_exists($this, $action) && !method_exists($this, '__call')) {
-            throw new \King23\View\Exceptions\ViewActionDoesNotExistException();
+            throw new ViewActionDoesNotExistException();
         }
         return $this->$action($request);
     }

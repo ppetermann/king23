@@ -1,6 +1,8 @@
 <?php
 namespace King23\Tasks;
 
+use King23\Core\Router;
+
 class MistralTask extends \King23\CommandLine\Task
 {
     /**
@@ -30,7 +32,7 @@ class MistralTask extends \King23\CommandLine\Task
     public function __construct()
     {
         parent::__construct();
-        $router = \King23\Core\Router::getInstance();
+        $router = Router::getInstance();
         $router->addRoute("/images/", '\King23\View\MistralStaticView', "images", array("filename"));
         $router->addRoute("/css/", '\King23\View\MistralStaticView', "css", array('filename'));
         $router->addRoute("/js/", '\King23\View\MistralStaticView', "js", array('filename'));
@@ -76,7 +78,7 @@ class MistralTask extends \King23\CommandLine\Task
         $_SERVER = array_merge($_SERVER, $request);
         $this->cli->message('receiving request for "'.$_SERVER['REQUEST_URI'].'"');
         ob_start();
-        $return = \King23\Core\Router::getInstance()->dispatch($_SERVER["REQUEST_URI"]);
+        $return = Router::getInstance()->dispatch($_SERVER["REQUEST_URI"]);
 
         $sobody = ob_get_contents();
         ob_end_clean();

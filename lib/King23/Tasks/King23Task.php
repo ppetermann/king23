@@ -27,11 +27,15 @@
 */
 
 namespace King23\Tasks;
+use Boris\Boris;
+use King23\CommandLine\OutputWriter;
+use King23\CommandLine\Task;
+use King23\Core\King23;
 
 /**
  * Provider for main king23 tasks
  */
-class King23Task extends \King23\CommandLine\Task
+class King23Task extends Task
 {
     /**
      * documentation for the single tasks
@@ -95,7 +99,7 @@ class King23Task extends \King23\CommandLine\Task
      */
     public function createProject($options)
     {
-        $this->cli->header("King23 (Version: ".\King23\Core\King23::VERSION.") project creation");
+        $this->cli->header("King23 (Version: ". King23::VERSION.") project creation");
         if (count($options) != 1) {
             $this->cli->error("Syntax: king23 King23:create_project <projectname>");
             return 1;
@@ -133,8 +137,8 @@ class King23Task extends \King23\CommandLine\Task
             return 1;
         }
         $this->cli->positive(
-            "Project: ".\King23\CommandLine\OutputWriter::FONT_BOLD.$name
-            .\King23\CommandLine\OutputWriter::COLOR_FG_GREEN." created"
+            "Project: ". OutputWriter::FONT_BOLD.$name
+            . OutputWriter::COLOR_FG_GREEN." created"
         );
         $this->cli->message("Please run composer.phar install in the newly created project folder");
         return 0;
@@ -146,11 +150,11 @@ class King23Task extends \King23\CommandLine\Task
     public function info()
     {
         $this->cli->header("King23 Version: ");
-        $this->cli->message(\King23\Core\King23::VERSION);
+        $this->cli->message(King23::VERSION);
         $this->cli->header("Description: ");
-        $this->cli->message(\King23\Core\King23::DESCRIPTION);
+        $this->cli->message(King23::DESCRIPTION);
         $this->cli->header("Authors: ");
-        $this->cli->message(\King23\Core\King23::AUTHORS);
+        $this->cli->message(King23::AUTHORS);
         $this->cli->message();
         parent::info();
     }
@@ -169,10 +173,10 @@ class King23Task extends \King23\CommandLine\Task
         } else {
             $prompt = "king23> ";
         }
-        $boris = new \Boris\Boris($prompt);
+        $boris = new Boris($prompt);
         $boris->onStart(
             function () {
-                echo "King23 Version ".\King23\Core\King23::VERSION." Boris based Shell Environment starting\n";
+                echo "King23 Version ". King23::VERSION." Boris based Shell Environment starting\n";
             }
         );
         $boris->start();
