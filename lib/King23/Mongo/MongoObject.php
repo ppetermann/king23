@@ -26,11 +26,12 @@
 
 */
 namespace King23\Mongo;
+use King23\Mongo\Exceptions\MongoException;
 
 /**
  * Base class to handle objects stored in MongoDB
  *
- * @throws \King23\Mongo\Exceptions\MongoException
+ * @throws MongoException
  */
 abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
 {
@@ -130,12 +131,12 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
     /**
      * constructor, meant to setup the object, should be called by derived classes
      *
-     * @throws \King23\Mongo\Exceptions\MongoException
+     * @throws MongoException
      */
     public function __construct()
     {
         if (is_null($this->_className)) {
-            throw new \King23\Mongo\Exceptions\MongoException('class name not configured in object');
+            throw new MongoException('class name not configured in object');
         }
 
         $this->__wakeup();
@@ -261,7 +262,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
     /**
      * Magic wakeup method, will reconnect object on unserialze
      *
-     * @throws \King23\Mongo\Exceptions\MongoException
+     * @throws MongoException
      * @return void
      */
     public function __wakeup()

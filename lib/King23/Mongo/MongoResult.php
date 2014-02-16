@@ -99,6 +99,8 @@ class MongoResult implements \Iterator, \Countable
     {
         $doc = $this->_cursor->current();
         $class = $this->_className;
+
+        /** @var MongoObject $k23doc */
         $k23doc = new $class();
         $k23doc->loadFromArray($doc);
         return $k23doc;
@@ -116,7 +118,7 @@ class MongoResult implements \Iterator, \Countable
 
     /**
      * @return MongoResult a sort on the cursor
-     * @param array sort options
+     * @param array $sortoptions
      * @returns MongoResult
      */
     public function sort(array $sortoptions)
@@ -126,7 +128,7 @@ class MongoResult implements \Iterator, \Countable
     }
 
     /**
-     * @param array options
+     * @param array $hintoptions
      * @returns MongoResult
      */
     public function hint(array $hintoptions)

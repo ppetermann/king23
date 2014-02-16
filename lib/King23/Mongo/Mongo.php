@@ -26,11 +26,13 @@
 
 */
 namespace King23\Mongo;
+use King23\Core\Registry;
+use King23\Mongo\Exceptions\MongoException;
 
 /**
  * Class with helpers to work with MongoDB
  *
- * @throws \King23\Mongo\Exceptions\MongoException
+ * @throws MongoException
  */
 class Mongo
 {
@@ -51,7 +53,7 @@ class Mongo
     public static function cachedMapReduce($class, $cachetime, $collection, $map, $reduce, $query)
     {
         $hash = md5($collection.$map.$reduce.join(':', $query).join(':', array_keys($query)));
-        $obj = MongoObject::getInstanceByCriteria($class, array('hash' => $hash));
+        $obj = MongoObject::doGetInstanceByCriteria($class, array('hash' => $hash));
 
         if (is_null($obj) || time() > ($obj->updated->sec + $cachetime)) {
             if (is_null($obj)) {
@@ -74,8 +76,8 @@ class Mongo
      */
     public static function getMongoConfig()
     {
-        if (!($mongo = \King23\Core\Registry ::getInstance()->mongo)) {
-            throw new \King23\Mongo\Exceptions\MongoException('mongodb is not configured');
+        if (!($mongo = Registry ::getInstance()->mongo)) {
+            throw new MongoException('mongodb is not configured');
         }
         return $mongo;
     }

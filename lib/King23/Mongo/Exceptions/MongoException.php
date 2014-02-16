@@ -27,10 +27,11 @@
 */
 
 namespace King23\Mongo\Exceptions;
+use King23\Core\Exceptions\Exception;
 
 /**
  * base class for King23_Mongo related exceptions
  */
-class MongoException extends \King23\Core\Exceptions\Exception
+class MongoException extends Exception
 {
 }
