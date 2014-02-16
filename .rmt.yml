@@ -33,7 +33,7 @@ master:
     pre-release-actions:
         changelog-update:          # Update a CHANGELOG file before the release
             format: semantic
-        update-version-class: 
-            class: \King23\Core\King23
+        update-version-class-file: 
+            classfile: lib/King23/Core/King23.php 
             pattern: pattern: const VERSION = "%version%";
         vcs-commit: ~              # Commit the CHANGELOG
