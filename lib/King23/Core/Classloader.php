@@ -135,6 +135,25 @@ class Classloader implements \King23\Core\Interfaces\Singleton
         $this->classes = array_merge($this->classes, $this->parseDir($path));
     }
 
+
+    /**
+     * builds a namesapce name out of a dir path, and a namespace piece
+     * @param string $dir
+     * @param string $namespace
+     * @return string
+     */
+    private function buildNamespace($dir, $namespace) {
+        if (empty($namespace)) {
+            $namespace = '\\'; // global class
+        } else {
+            if ($namespace == '\\') {
+                $namespace = "";
+            }
+            $namespace = $namespace.basename($dir).'\\';
+        }
+        return $namespace;
+    }
+
     /**
      * recursive dir parsing method
      *
@@ -145,14 +164,7 @@ class Classloader implements \King23\Core\Interfaces\Singleton
      */
     private function parseDir($dir, $classes = array(), $namespace = "")
     {
-        if (empty($namespace)) {
-            $namespace = '\\'; // global class
-        } else {
-            if ($namespace == '\\') {
-                $namespace = "";
-            }
-            $namespace = $namespace.basename($dir).'\\';
-        }
+        $namespace = $this->buildNamespace($dir, $namespace);
 
         $d = dir($dir);
         while ($item = $d->read()) {

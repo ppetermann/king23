@@ -28,7 +28,6 @@
 
 namespace King23\Tasks;
 use Boris\Boris;
-use King23\CommandLine\OutputWriter;
 use King23\CommandLine\Task;
 use King23\Core\King23;
 
@@ -96,51 +95,11 @@ class King23Task extends Task
      *
      * @param array $options should contain name as first option
      * @return int
+     * @deprecated
      */
     public function createProject($options)
     {
-        $this->cli->header("King23 (Version: ". King23::VERSION.") project creation");
-        if (count($options) != 1) {
-            $this->cli->error("Syntax: king23 King23:create_project <projectname>");
-            return 1;
-        }
-        $name = $options[0];
-
-        if (file_exists($name)) {
-            $this->cli->error("folder with name '$name' allready exists");
-            return 1;
-        }
-        $this->cli->message("copying project template to $name");
-        if (!is_writeable(".")) {
-            $this->cli->error("cannot write in current folder");
-            $this->cli->warning("exiting");
-            return 1;
-        }
-        if (defined("KING23_PHAR")) {
-            // $phar = new \Phar(\Phar::running());
-            // $phar->extractTo($name, 'vendor/king23/project_template');
-            $this->cli->error("sadly this task does not work on the phar version atm");
-            return 1;
-        } else {
-            exec("cp -r ".KING23_PATH."/vendor/king23/project_template $name", $retstring, $ret);
-            if ($ret != 0) {
-                $this->cli->error("error occured during copying");
-                $this->cli->warning("exiting");
-                return 1;
-            }
-        }
-        $this->cli->message("Setting rights in $name/cache/");
-        exec("chmod -R 777 $name/cache/", $retstring, $ret);
-        if ($ret != 0) {
-            $this->cli->error("error occured while setting rights");
-            $this->cli->warning("exiting");
-            return 1;
-        }
-        $this->cli->positive(
-            "Project: ". OutputWriter::FONT_BOLD.$name
-            . OutputWriter::COLOR_FG_GREEN." created"
-        );
-        $this->cli->message("Please run composer.phar install in the newly created project folder");
+        $this->cli->error("createProject is deprecated, use composer create-project king23/project_template");
         return 0;
     }
 
