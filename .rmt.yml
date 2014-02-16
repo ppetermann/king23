@@ -35,5 +35,4 @@ master:
             format: semantic
         update-version-class-file: 
             classfile: lib/King23/Core/King23.php 
-            pattern: pattern: const VERSION = "%version%";
         vcs-commit: ~              # Commit the CHANGELOG
