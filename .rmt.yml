@@ -34,6 +34,6 @@ master:
         changelog-update:          # Update a CHANGELOG file before the release
             format: semantic
         update-version-class: 
-            class: King23\Core\King23
+            class: \King23\Core\King23
             pattern: pattern: const VERSION = "%version%";
         vcs-commit: ~              # Commit the CHANGELOG
