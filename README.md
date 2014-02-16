@@ -1,8 +1,9 @@
 # King23 PHP Framework
-[![Latest Stable Version](https://poser.pugx.org/king23/king23/v/stable.png)](https://packagist.org/packages/3rdpartyeve/phealng)
-[![Total Downloads](https://poser.pugx.org/king23/king23/downloads.png)](https://packagist.org/packages/3rdpartyeve/phealng)
+[![Latest Stable Version](https://poser.pugx.org/king23/king23/v/stable.png)](https://packagist.org/packages/king23/king23)
+[![Total Downloads](https://poser.pugx.org/king23/king23/downloads.png)](https://packagist.org/packages/king23/king23)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/ppetermann/king23/badges/quality-score.png?s=46a1e1b22d075da22f7392cf39b88c89ab3e4b55)](https://scrutinizer-ci.com/g/ppetermann/king23/)
 
-Copyright (C) 2010 - 2013 by Peter Petermann
+Copyright (C) 2010 - 2014 by Peter Petermann
 All rights reserved.
 
 King23 is a small and simple MVC Framework for PHP
