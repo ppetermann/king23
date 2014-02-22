@@ -160,14 +160,8 @@ final class CLI implements Singleton
 
             // acceptable answer found
             if (in_array($result, $answers)) {
-
-                $confirmation = in_array($result, array("y", "yes", "Yes", "YES"))
+                return in_array($result, array("y", "yes", "Yes", "YES"))
                     || (empty($result) && ("" === $result) === $default);
-
-                if ($confirmation) {
-                    return true;
-                }
-                return false;
             }
         }
     }
