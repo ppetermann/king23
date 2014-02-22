@@ -66,13 +66,16 @@ class OutputWriter
      *
      * @param String $message
      * @param Integer $type
+     * @param bool $prefixCarriageReturn
      */
-    public static function write($message, $type = OutputWriter::TYPE_REGULAR)
+    public static function write($message, $type = OutputWriter::TYPE_REGULAR, $prefixCarriageReturn = true)
     {
         $colors = self::getTheme()->getColorsFor($type);
 
+        $messageout = $prefixCarriageReturn ? "\r" : "";
+
         // timestamp will always be lightgray no matter the message type
-        $messageout = Colors::COLOR_FG_LIGHTGRAY . "[".date("Y-m-d H:i:s")."] ";
+        $messageout .= Colors::COLOR_FG_LIGHTGRAY . "[".date("Y-m-d H:i:s")."] ";
 
         // set to type colors
         $messageout .= $colors['bg'] . $colors['fg'];
