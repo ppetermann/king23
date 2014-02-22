@@ -42,7 +42,7 @@ use composer:
 3) Important: edit DIRNAMEFORYOURNEWPROJECT/composer.json, change projects package name etc.
 
 
-Old style:
+Old style (deprecated):
 the king23 CLI comes with a simple way to create a project: (assuming bin/king23 is in path) and the project_template is installed.
 
 `king23 King23:create_project myproject` 

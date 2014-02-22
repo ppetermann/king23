@@ -26,6 +26,8 @@
 
 */
 namespace King23\CommandLine;
+use King23\CommandLine\Theme\K23;
+use King23\CommandLine\Theme\Theme;
 
 /**
  * class simplifying the use of color codes on console
@@ -38,39 +40,24 @@ class OutputWriter
     const TYPE_ERROR = 3;
     const TYPE_POSITIVE = 4;
 
-    const FONT_BOLD = "\033[1m";
-    const FONT_UNDERLINE = "\033[4m";
-    const FONT_BLINK = "\033[5m";
-    const FONT_INVERT = "\033[7m";
+    /**
+     * @var Theme
+     */
+    public static $theme;
 
-    const COLOR_FG_BLACK = "\033[0;30m30";
-    const COLOR_FG_RED = "\033[0;31m";
-    const COLOR_FG_GREEN = "\033[0;32m";
-    const COLOR_FG_YELLOW = "\033[0;33m";
-    const COLOR_FG_BLUE = "\033[0;34m";
-    const COLOR_FG_MAGENTA = "\033[0;35m";
-    const COLOR_FG_CYAN = "\033[0;36m";
-    const COLOR_FG_LIGHTGRAY = "\033[0;37m";
-    const COLOR_FG_DEFAULT = "\033[0;39m";
 
-    const COLOR_FGL_DARKGRAY = "\033[1;30m";
-    const COLOR_FGL_RED = "\033[1;31m";
-    const COLOR_FGL_GREEN = "\033[1;32m";
-    const COLOR_FGL_YELLOW = "\033[1;33m";
-    const COLOR_FGL_BLUE = "\033[1;34m";
-    const COLOR_FGL_MAGENTA = "\033[1;35m";
-    const COLOR_FGL_CYAN = "\033[1;36m";
-    const COLOR_FGL_WHITE = "\033[1;37m";
+    /**
+     * get theme to be used
+     * @return Theme
+     */
+    public static function getTheme()
+    {
+        if (!isset(self::$theme)) {
+            self::$theme = new K23();
+        }
+        return self::$theme;
+    }
 
-    const COLOR_BG_BLACK = "\033[40m";
-    const COLOR_BG_RED = "\033[41m";
-    const COLOR_BG_GREEN = "\033[42m";
-    const COLOR_BG_YELLOW = "\033[43m";
-    const COLOR_BG_BLUE = "\033[44m";
-    const COLOR_BG_MAGENTA = "\033[45m";
-    const COLOR_BG_CYAN = "\033[46m";
-    const COLOR_BG_LIGHTGRAY = "\033[47m";
-    const COLOR_BG_DEFAULT = "\033[49m";
 
     /**
      * write a string to output, with optional type
@@ -80,30 +67,22 @@ class OutputWriter
      */
     public static function write($message, $type = OutputWriter::TYPE_REGULAR)
     {
-        switch ($type) {
-            case self::TYPE_HEADING:
-                $fg = self::COLOR_FG_DEFAULT.self::FONT_BOLD;
-                $bg = self::COLOR_BG_DEFAULT;
-                break;
-            case self::TYPE_WARNING:
-                $fg = self::COLOR_FG_YELLOW;
-                $bg = self::COLOR_BG_DEFAULT;
-                break;
-            case self::TYPE_ERROR:
-                $fg = self::COLOR_FG_RED;
-                $bg = self::COLOR_BG_DEFAULT;
-                break;
-            case self::TYPE_POSITIVE:
-                $fg = self::COLOR_FG_GREEN;
-                $bg = self::COLOR_BG_DEFAULT;
-                break;
-            default:
-                $fg = self::COLOR_FG_DEFAULT;
-                $bg = self::COLOR_BG_DEFAULT;
-        }
-        $messageout = self::COLOR_FG_LIGHTGRAY;
-        $messageout .= "[".date("Y-m-d H:i:s")."] ".$bg.$fg;
-        $messageout .= $message.self::COLOR_FG_DEFAULT.self::COLOR_BG_DEFAULT."\n";
+        $colors = self::getTheme()->getColorsFor($type);
+
+        // timestamp will always be lightgray no matter the message type
+        $messageout = Colors::COLOR_FG_LIGHTGRAY . "[".date("Y-m-d H:i:s")."] ";
+
+        // set to type colors
+        $messageout .= $colors['bg'] . $colors['fg'];
+
+        // add message
+        $messageout .= $message;
+
+        // reset to default colors
+        $messageout .= Colors::COLOR_FG_DEFAULT . Colors::COLOR_BG_DEFAULT;
+
+        // end of line
+        $messageout .= PHP_EOL;
         echo $messageout;
     }
 }
