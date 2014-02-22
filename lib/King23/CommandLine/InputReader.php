@@ -27,6 +27,23 @@
 */
 namespace King23\CommandLine;
 
-class InputReader {
+/**
+ * Class InputReader
+ * @package King23\CommandLine
+ */
+class InputReader
+{
 
+    /**
+     * @return string|boolean
+     * @throws \RuntimeException
+     */
+    public static function readln()
+    {
+        $string = fgets(STDIN);
+        if (false === $string) {
+            return false;
+        }
+        return trim($string);
+    }
 }

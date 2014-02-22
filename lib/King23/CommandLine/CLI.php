@@ -26,16 +26,18 @@
 
 */
 namespace King23\CommandLine;
+
 use King23\Core\Interfaces\Singleton;
 
 /**
- * conveniance class for output in the King23 CLI
+ * Utility Class for CLI tools
+ * @package King23\CommandLine
  */
 final class CLI implements Singleton
 {
     private static $myInstance = null;
 
-    private function  __construct()
+    private function __construct()
     {
     }
 
@@ -98,5 +100,75 @@ final class CLI implements Singleton
     public function positive($message)
     {
         OutputWriter::writeln($message, OutputWriter::TYPE_POSITIVE);
+    }
+
+
+    /**
+     * @param $question
+     * @return bool|string
+     */
+    public function ask($question)
+    {
+        $question .= "> ";
+        OutputWriter::write($question, OutputWriter::TYPE_REGULAR);
+
+        return InputReader::readln();
+    }
+
+    /**
+     * @param string $question
+     * @param array $answers
+     * @return bool|string
+     */
+    public function askForAnswer($question, $answers)
+    {
+        $question .= ' (' . join(', ', $answers) . ')';
+        while (true) {
+            $result = $this->ask($question);
+
+            // acceptable answer found
+            if (in_array($result, $answers)) {
+                return $result;
+            }
+        }
+    }
+
+    /**
+     * Confirm question through stdin
+     * @param string $question
+     * @param bool $default
+     * @return bool
+     */
+    public function confirm($question, $default = true)
+    {
+        $answers = array(
+            "y",
+            "n",
+            "yes",
+            "no",
+            ""
+        );
+
+        if ($default) {
+            $question .= " (" . Colors::COLOR_FGL_WHITE . "Y". Colors::COLOR_FG_DEFAULT ."/n)";
+        } else {
+            $question .= " (y/" . Colors::COLOR_FGL_WHITE . "N". Colors::COLOR_FG_DEFAULT .")";
+        }
+
+        while (true) {
+            $result = strtolower($this->ask($question));
+
+            // acceptable answer found
+            if (in_array($result, $answers)) {
+
+                $confirmation = in_array($result, array("y", "yes", "Yes", "YES"))
+                    || (empty($result) && ("" === $result) === $default);
+
+                if ($confirmation) {
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }

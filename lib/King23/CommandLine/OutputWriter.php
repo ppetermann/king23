@@ -26,11 +26,13 @@
 
 */
 namespace King23\CommandLine;
+
 use King23\CommandLine\Theme\K23;
 use King23\CommandLine\Theme\Theme;
 
 /**
  * class simplifying the use of color codes on console
+ * @package King23\CommandLine
  */
 class OutputWriter
 {
