@@ -81,8 +81,17 @@ class OutputWriter
         // reset to default colors
         $messageout .= Colors::COLOR_FG_DEFAULT . Colors::COLOR_BG_DEFAULT;
 
-        // end of line
-        $messageout .= PHP_EOL;
         echo $messageout;
+    }
+
+    /**
+     * write a line to output with optional type
+     * @param String $message
+     * @param int $type
+     */
+    public static function writeln($message, $type = OutputWriter::TYPE_REGULAR)
+    {
+        self::write($message, $type);
+        echo PHP_EOL;
     }
 }

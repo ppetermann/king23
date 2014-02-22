@@ -57,7 +57,7 @@ final class CLI implements Singleton
      */
     public function message($message = "")
     {
-        OutputWriter::write($message);
+        OutputWriter::writeln($message);
     }
 
     /**
@@ -67,7 +67,7 @@ final class CLI implements Singleton
      */
     public function error($message)
     {
-        OutputWriter::write($message, OutputWriter::TYPE_ERROR);
+        OutputWriter::writeln($message, OutputWriter::TYPE_ERROR);
     }
 
     /**
@@ -77,7 +77,7 @@ final class CLI implements Singleton
      */
     public function warning($message)
     {
-        OutputWriter::write($message, OutputWriter::TYPE_WARNING);
+        OutputWriter::writeln($message, OutputWriter::TYPE_WARNING);
     }
 
     /**
@@ -87,7 +87,7 @@ final class CLI implements Singleton
      */
     public function header($message)
     {
-        OutputWriter::write($message, OutputWriter::TYPE_HEADING);
+        OutputWriter::writeln($message, OutputWriter::TYPE_HEADING);
     }
 
     /**
@@ -97,6 +97,6 @@ final class CLI implements Singleton
      */
     public function positive($message)
     {
-        OutputWriter::write($message, OutputWriter::TYPE_POSITIVE);
+        OutputWriter::writeln($message, OutputWriter::TYPE_POSITIVE);
     }
 }
