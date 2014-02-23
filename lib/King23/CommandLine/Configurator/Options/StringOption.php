@@ -29,6 +29,10 @@ namespace King23\CommandLine\Configurator\Options;
 
 use King23\CommandLine\CLI;
 
+/**
+ * Class StringOption
+ * @package King23\CommandLine\Configurator\Options
+ */
 class StringOption extends BaseOption implements ConfigurationOption
 {
 

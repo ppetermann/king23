@@ -31,6 +31,10 @@ use King23\CommandLine\CLI;
 use King23\CommandLine\Configurator\Options\ConfigurationOption;
 use King23\Core\Exceptions\Exception;
 
+/**
+ * Class Configurator allowes for simple CLI based configuration questions
+ * @package King23\CommandLine\Configurator
+ */
 class Configurator
 {
     protected $config;
@@ -88,10 +92,13 @@ class Configurator
      */
     public function save()
     {
-        if (file_exists($this->configFile) && !is_writable($this->configFile)) {
-            throw new Exception("config file (". $this->configFile . ") not writable");
+        if (CLI::getInstance()->confirm("do you want to save the configuration?")) {
+            if (file_exists($this->configFile) && !is_writable($this->configFile)) {
+                throw new Exception("config file (". $this->configFile . ") not writable");
+            }
+            file_put_contents($this->configFile, serialize($this->config));
+
         }
-        file_put_contents($this->configFile, serialize($this->config));
     }
 
     /**
@@ -108,6 +115,9 @@ class Configurator
         $cli->header("");
     }
 
+    /**
+     * executes the questioning of the user
+     */
     public function askConfiguration()
     {
         /** @var ConfigurationOption $value */
@@ -116,9 +126,12 @@ class Configurator
         }
     }
 
+    /**
+     * returns an array of config options
+     * @return mixed
+     */
     public function getConfig()
     {
         return $this->config;
     }
-
 }

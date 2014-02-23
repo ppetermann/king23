@@ -29,12 +29,20 @@ namespace King23\CommandLine\Configurator\Options;
 
 use King23\CommandLine\CLI;
 
+/**
+ * Class BooleanOption
+ * @package King23\CommandLine\Configurator\Options
+ */
 class BooleanOption extends BaseOption implements ConfigurationOption
 {
 
+    /**
+     * @return ConfigurationOption
+     */
     public function askForValue()
     {
         $cli = CLI::getInstance();
         $this->value = $cli->confirm($this->question, $this->value);
+        return $this;
     }
 }

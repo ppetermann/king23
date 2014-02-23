@@ -27,6 +27,10 @@
 */
 namespace King23\CommandLine\Configurator\Options;
 
+/**
+ * Class BaseOption
+ * @package King23\CommandLine\Configurator\Options
+ */
 abstract class BaseOption implements ConfigurationOption
 {
 

@@ -27,6 +27,10 @@
 */
 namespace King23\CommandLine\Configurator\Options;
 
+/**
+ * Interface ConfigurationOption
+ * @package King23\CommandLine\Configurator\Options
+ */
 interface ConfigurationOption extends \Serializable
 {
     /**
