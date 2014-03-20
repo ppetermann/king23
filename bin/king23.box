@@ -115,6 +115,6 @@ if ($argc > 1) {
     $cli->message();
 
     $object = new \King23\Tasks\King23Task();
-    $object->list_modules();
+    $object->listModules();
 }
 return 0;
