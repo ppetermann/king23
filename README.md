@@ -2,7 +2,7 @@
 [![Latest Stable Version](https://poser.pugx.org/king23/king23/v/stable.png)](https://packagist.org/packages/king23/king23)
 [![Total Downloads](https://poser.pugx.org/king23/king23/downloads.png)](https://packagist.org/packages/king23/king23)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/ppetermann/king23/badges/quality-score.png?s=46a1e1b22d075da22f7392cf39b88c89ab3e4b55)](https://scrutinizer-ci.com/g/ppetermann/king23/)
-
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/1ecb1847-a15f-4c00-9e80-374a701bc000/mini.png)](https://insight.sensiolabs.com/projects/1ecb1847-a15f-4c00-9e80-374a701bc000)
 # King23 PHP Framework
 
 Copyright (C) 2010 - 2014 by Peter Petermann
