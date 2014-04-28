@@ -53,13 +53,12 @@ abstract class View
     }
 
     /**
-     * redirect by sending a http location header (and die afterwards to stop script execution on redirect)
+     * redirect by sending a http location header
      *
      * @param  $location
      */
     protected function redirect($location)
     {
         header("Location: $location");
-        die();
     }
 }
