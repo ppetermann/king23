@@ -42,6 +42,8 @@ if (file_exists(realpath("./vendor/king23/king23/lib/King23/Core/King23.php")))
     define('KING23_PATH', realpath(dirname(__FILE__) . "/.."));
 }
 
+
+
 // if exists read cli config otherwise, if exists, read config.php, else at least initialize classloader
 if (file_exists("./conf/cli.php"))
 {
@@ -49,9 +51,9 @@ if (file_exists("./conf/cli.php"))
 } else if (file_exists("./conf/config.php")) {
     require_once "./conf/config.php";
 } else {
-    require_once KING23_PATH . "/lib/King23/Core/Classloader.php";
-    King23\Core\Classloader::register();
-    King23\Core\Classloader::init(KING23_PATH . "/lib/");
+//    require_once KING23_PATH . "/lib/King23/Core/Classloader.php";
+//    King23\Core\Classloader::register();
+//    King23\Core\Classloader::init(KING23_PATH . "/lib/");
 }
 
 if (file_exists("./vendor/autoload.php")) {

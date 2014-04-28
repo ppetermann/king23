@@ -44,9 +44,9 @@ if (file_exists("./conf/cli.php")) {
 } else if (file_exists("./conf/config.php")) {
     require_once "./conf/config.php";
 } else {
-    require_once KING23_PATH . "/lib/King23/Core/Classloader.php";
-    King23\Core\Classloader::register();
-    King23\Core\Classloader::init(KING23_PATH . "/lib/");
+//    require_once KING23_PATH . "/lib/King23/Core/Classloader.php";
+//    King23\Core\Classloader::register();
+//    King23\Core\Classloader::init(KING23_PATH . "/lib/");
 }
 
 // it might make sense to load both here
