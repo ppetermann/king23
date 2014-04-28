@@ -1,7 +1,4 @@
-nbproject
-.DS_Store
 docs/
-.idea
 vendor
 build/api/
 build/code-browser/
