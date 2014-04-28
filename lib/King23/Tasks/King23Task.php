@@ -125,7 +125,8 @@ class King23Task extends Task
     public function shell(array $options)
     {
         if (!class_exists('\Boris\Boris', true)) {
-            die("Boris not installed, make sure your composer environment has d11wtq/boris in its list");
+            echo "Boris not installed, make sure your composer environment has d11wtq/boris in its list";
+            return;
         }
         if (defined("KING23_CLI_PROMPT")) {
             $prompt = KING23_CLI_PROMPT;
