@@ -2,6 +2,9 @@
 VERSION 0  CLEANED RELEASE
 ==========================
 
+   Version 0.7 - version bump
+      24/09/2014 15:09  0.7.0  initial release
+
    Version 0.6 - Code Cleanup, bc breaking: no more Classloader (use composers autoloader instead!), removed die on View::redirect(), so make sure you return after redirecting!
       28/04/2014 17:33  0.6.1  Fix for missed calls
       28/04/2014 17:18  0.6.0  initial release
