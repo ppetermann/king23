@@ -1,6 +1,7 @@
 <?php
 namespace King23\Tasks;
 
+use King23\Core\Registry;
 use King23\Core\Router;
 use React\EventLoop\Factory;
 use React\Http\Request;
@@ -71,7 +72,8 @@ class ReactTask extends \King23\CommandLine\Task
         $http->on('request', [$this, 'handleRequest']);
 
         $socket->listen($port,$ip);
-        $this->cli->message("starting server on $ip, $port");
+
+        Registry::getInstance()->getLogger()->info("starting react based server on $ip:$port");
 
         $loop->run();
 
@@ -87,24 +89,33 @@ class ReactTask extends \King23\CommandLine\Task
     {
         $_SERVER = $this->original_Server;
 
-        $this->cli->message('receiving request for "'.$request->getPath().'"');
+        Registry::getInstance()->getLogger()->debug('receiving request for "'.$request->getPath().'"');
+
         ob_start();
         $return = Router::getInstance()->dispatch($request->getPath());
 
         $sobody = ob_get_contents();
         ob_end_clean();
 
-        if (is_string($return) && !empty($return)) {
-            $this->cli->message('string returned, assuming request body');
+        $statusCode = 200;
+
+        $headers = [
+            'Content-Type' => 'text/html'
+        ];
+
+        if (is_array($return)) {
+            Registry::getInstance()->getLogger()->debug('array returned, MistralStaticView style return');
+            $body = $return['data'];
+            $statusCode = (int) $return['status-code'];
+            $headers['Content-Type'] = $return['content-type'];
+        } else if (is_string($return) && !empty($return)) {
+            Registry::getInstance()->getLogger()->debug('string returned, assuming request body');
             $body = $return;
         } else {
-            $this->cli->message('nothing returned, assuming stdout has our contents');
+            Registry::getInstance()->getLogger()->debug('nothing returned, assuming stdout has our contents');
             $body = $sobody;
         }
-        $response->writeHead(200, [
-            'Content-Type' => 'text/html'
-        ]);
-
+        $response->writeHead($statusCode, $headers);
         $response->end($body);
     }
 }
