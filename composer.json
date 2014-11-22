@@ -12,6 +12,7 @@
     },
     "require-dev": {
         "d11wtq/boris": "1.0.*",
+        "react/react": "~0.3",
         "monolog/monolog": "dev-master"
     },
     "bin": ["bin/king23.box", "bin/king23"],
