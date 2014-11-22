@@ -105,8 +105,8 @@ class ReactTask extends \King23\CommandLine\Task
 
         if (is_array($return)) {
             Registry::getInstance()->getLogger()->debug('array returned, MistralStaticView style return');
-            $body = $return['data'];
-            $statusCode = (int) $return['status-code'];
+            $body = $return['body'];
+            $statusCode = (int) $return['status_code'];
             $headers['Content-Type'] = $return['content-type'];
         } else if (is_string($return) && !empty($return)) {
             Registry::getInstance()->getLogger()->debug('string returned, assuming request body');
