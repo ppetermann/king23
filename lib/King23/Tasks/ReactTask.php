@@ -8,7 +8,7 @@ use React\Http\Response;
 use React\Http\Server as HttpServer;
 use React\Socket\Server as SocketServer;
 
-class MistralTask extends \King23\CommandLine\Task
+class ReactTask extends \King23\CommandLine\Task
 {
     /**
      * documentation for the single tasks
