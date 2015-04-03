@@ -1,4 +1,31 @@
 <?php
+/*
+ MIT License
+ Copyright (c) 2010 - 2015 Peter Petermann
+
+ Permission is hereby granted, free of charge, to any person
+ obtaining a copy of this software and associated documentation
+ files (the "Software"), to deal in the Software without
+ restriction, including without limitation the rights to use,
+ copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following
+ conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
 namespace King23\Tasks;
 
 use King23\Core\Registry;
@@ -30,7 +57,7 @@ class ReactTask extends \King23\CommandLine\Task
     // so it can be used as a basis for a new/clean $_SERVER on each request
     // since the php run is not terminated this is the only way to ensure that
     // seperate requests dont interfere with eachother
-    protected $original_Server;
+    protected $originalServer;
 
     /**
      * constructor
@@ -64,7 +91,7 @@ class ReactTask extends \King23\CommandLine\Task
             }
         }
 
-        $this->original_Server = $_SERVER;
+        $this->originalServer = $_SERVER;
 
         $loop = Factory::create();
         $socket = new SocketServer($loop);
@@ -87,7 +114,7 @@ class ReactTask extends \King23\CommandLine\Task
      */
     public function handleRequest(Request $request, Response $response)
     {
-        $_SERVER = $this->original_Server;
+        $_SERVER = $this->originalServer;
 
         Registry::getInstance()->getLogger()->debug('receiving request for "'.$request->getPath().'"');
 

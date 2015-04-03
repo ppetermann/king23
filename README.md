@@ -5,7 +5,7 @@
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/1ecb1847-a15f-4c00-9e80-374a701bc000/mini.png)](https://insight.sensiolabs.com/projects/1ecb1847-a15f-4c00-9e80-374a701bc000)
 # King23 PHP Framework
 
-Copyright (C) 2010 - 2014 by Peter Petermann
+Copyright (C) 2010 - 2015 by Peter Petermann
 All rights reserved.
 
 King23 is a small and simple MVC Framework for PHP
@@ -26,8 +26,8 @@ for further information
 - a simple mongodb layer 
 
 ## REQUIREMENTS
-- PHP 5.3 (might run on earlier versions, untested)
-- APACHE + mod_rewrite (might work on other servers with own rewrite rulesets, untested) (Mistral can be used instead, but thats highly experimental!)
+- PHP 5.6 (might run on earlier versions, untested)
+- a Webserver (nginx recommended, apache possible, mistral / reactphp experimental)
 - LINUX / MAC OS X (might run on windows, untested)
 
 ## INSTALLATION
@@ -41,15 +41,6 @@ use composer:
 2) `php composer.phar create-project king23/project_template DIRNAMEFORYOURNEWPROJECT`
 3) Important: edit DIRNAMEFORYOURNEWPROJECT/composer.json, change projects package name etc.
 
-
-Old style (deprecated):
-the king23 CLI comes with a simple way to create a project: (assuming bin/king23 is in path) and the project_template is installed.
-
-`king23 King23:create_project myproject` 
-
-this will create a folder "myproject" in the current path with a minimal king23 application, that application includes
-a basic example on usage
-
 ## TODO
 - more documentation
 - code generators 
@@ -58,7 +49,7 @@ a basic example on usage
 ## LINKS
 - [Homepage](http://king23.net)
 - [Github](http://github.com/ppetermann/king23)
-- [Twitter](http://twitter.com/King23Framework)
+- [Twitter](http://twitter.com/ppetermann)
 - [IRC](irc://irc.coldfront.net:6667/King23) bot will join and put in commit messages on commits there 
 
 ## CONTACT
