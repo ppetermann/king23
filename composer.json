@@ -7,7 +7,7 @@
     "license": "MIT",
     "authors": [ { "name": "Peter Petermann", "email": "ppetermann80@googlemail.com", "homepage": "http://devedge.eu" }],
     "require": {
-        "twig/twig": "1.16.*",
+        "twig/twig": "1.18.*",
         "psr/log-implementation": "1.0.0"
     },
     "require-dev": {
