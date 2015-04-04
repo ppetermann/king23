@@ -27,6 +27,7 @@
 */
 namespace King23\Tasks;
 
+use King23\Core\Registry;
 use King23\Core\Router;
 
 class MistralTask extends \King23\CommandLine\Task
@@ -83,10 +84,10 @@ class MistralTask extends \King23\CommandLine\Task
                 $port = $details[1];
             }
         }
-        $keepalive = 3;
+
         $this->cli->header("King23 // Mistral Webserver ");
         $this->cli->message("launching server at $ip:$port");
-        mistral_init($ip, $port, $keepalive);
+        mistral_init($ip, $port, 0);
         mistral_register_callback(array($this, 'handleRequest'));
         $this->original_Server = $_SERVER;
         mistral_start();
@@ -102,28 +103,29 @@ class MistralTask extends \King23\CommandLine\Task
     {
         $_SERVER = $this->original_Server;
         $_SERVER = array_merge($_SERVER, $request);
-        $this->cli->message('receiving request for "'.$_SERVER['REQUEST_URI'].'"');
+        Registry::getInstance()->getLogger()->debug('receiving request for "'.$_SERVER['REQUEST_URI'].'"');
         ob_start();
         $return = Router::getInstance()->dispatch($_SERVER["REQUEST_URI"]);
 
         $sobody = ob_get_contents();
         ob_end_clean();
         if (is_array($return)) {
-            $this->cli->message('array returned, assuming request can be answered');
+            Registry::getInstance()->getLogger()->debug('array returned, assuming request can be answered');
             return $return;
         }
 
         if (is_string($return) && !empty($return)) {
-            $this->cli->message('string returned, assuming request body');
+            Registry::getInstance()->getLogger()->debug('string returned, assuming request body');
             $body = $return;
         } else {
-            $this->cli->message('nothing returned, assuming stdout has our contents');
+            Registry::getInstance()->getLogger()->debug('nothing returned, assuming stdout has our contents');
             $body = $sobody;
         }
         return array(
             'status_code' => '200 OK',
             'connection' => 'close',
             'content-type' => 'text/html', // testing purposes
+            'content-length' => strlen($body),
             'body' => $body
         );
     }
