@@ -27,23 +27,21 @@
 */
 namespace King23\Core;
 
+use King23\DI\ContainerInterface;
+use Psr\Log\LoggerInterface;
+
 /**
  * King23_Router class, allowing the matching of URL -> classmethod
  */
-class Router implements Interfaces\Singleton
+class Router
 {
-    /**
-     * Singleton instance
-     *
-     * @var \King23\Core\Router
-     */
-    private static $myInstance;
     /**
      * Array for storing known routes
      *
      * @var array
      */
-    private $routes = array();
+    protected $routes = [];
+
     /**
      * String containing the basis host of the application, if this is set
      * this parameter will be removed from the hostname before hostparameters are extracted,
@@ -51,19 +49,26 @@ class Router implements Interfaces\Singleton
      *
      * @var string
      */
-    private $baseHost = null;
+    protected $baseHost = null;
 
     /**
-     * Singleton Instance
-     *
-     * @return \King23\Core\Router
+     * @var LoggerInterface
      */
-    public static function getInstance()
+    protected $log;
+
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * @param LoggerInterface $log
+     * @param ContainerInterface $container
+     */
+    public function __construct(LoggerInterface $log, ContainerInterface $container)
     {
-        if (is_null(self::$myInstance)) {
-            self::$myInstance = new \King23\Core\Router();
-        }
-        return self::$myInstance;
+        $this->log = $log;
+        $this->container = $container;
     }
 
     /**
@@ -75,18 +80,16 @@ class Router implements Interfaces\Singleton
      * @param string[] $parameters list of parameters that should be retrieved from url
      * @param array $hostparameters - allows to use subdomains as parameters
      */
-    public function addRoute($route, $class, $action, $parameters = array(), $hostparameters = array())
+    public function addRoute($route, $class, $action, $parameters = [], $hostparameters = [])
     {
-        Registry::getInstance()
-            ->getLogger()
-            ->debug('adding route : ' . $route . ' to class ' . $class . ' and action ' . $action);
+        $this->log->debug('adding route : '.$route.' to class '.$class.' and action '.$action);
 
-        $this->routes[$route] = array(
+        $this->routes[$route] = [
             "class" => $class,
             "action" => $action,
             "parameters" => $parameters,
             "hostparameters" => $hostparameters
-        );
+        ];
     }
 
     /**
@@ -97,8 +100,8 @@ class Router implements Interfaces\Singleton
      */
     public function addRouter($route, \King23\Core\Router $router)
     {
-        Registry::getInstance()->getLogger()->debug('Adding Subroute router for ' . $route);
-        $this->routes[$route] = array("router" => $router);
+        $this->log->debug('Adding Subroute router for '.$route);
+        $this->routes[$route] = ["router" => $router];
     }
 
     /**
@@ -109,7 +112,7 @@ class Router implements Interfaces\Singleton
      */
     public function setBaseHost($baseHost = null)
     {
-        Registry::getInstance()->getLogger()->debug('Setting Router baseHost to ' . $baseHost);
+        $this->log->debug('Setting Router baseHost to '.$baseHost);
         $this->baseHost = $baseHost;
     }
 
@@ -121,7 +124,7 @@ class Router implements Interfaces\Singleton
      */
     public function dispatch($request)
     {
-        Registry::getInstance()->getLogger()->debug('Dispatching request for ' . $request);
+        $this->log->debug('Dispatching request for '.$request);
 
         uksort(
             $this->routes,
@@ -133,7 +136,7 @@ class Router implements Interfaces\Singleton
         foreach ($this->routes as $route => $info) {
             // check if route is matched
             if (substr($request, 0, strlen($route)) == $route) {
-                Registry::getInstance()->getLogger()->debug('route ' . $route . ' matches ' . $request);
+                $this->log->debug('route '.$route.' matches '.$request);
 
                 // is this a sub router?
                 if (isset($info["router"])) {
@@ -144,6 +147,7 @@ class Router implements Interfaces\Singleton
                 break;
             }
         }
+
         return "";
     }
 
@@ -173,7 +177,7 @@ class Router implements Interfaces\Singleton
     private function handleRoute($info, $request, $route)
     {
         // prepare parameters
-        $parameters = array();
+        $parameters = [];
         if ($paramstr = substr($request, strlen($route))) {
             $params = explode("/", $paramstr);
             foreach ($info["parameters"] as $key => $value) {
@@ -192,12 +196,14 @@ class Router implements Interfaces\Singleton
         $class = $info["class"];
 
         /** @var \King23\View\View $view */
-        $view = new $class();
+        $view = $this->container->getInstanceOf($class);
+
         return $view->dispatch($info["action"], $parameters);
     }
 
     /**
      * will get hostname, and clean basehost off it
+     *
      * @return string
      */
     private function cleanHostName()
@@ -211,6 +217,7 @@ class Router implements Interfaces\Singleton
         if (substr($hostname, -1) == ".") {
             $hostname = substr($hostname, 0, -1);
         }
+
         return $hostname;
     }
 
@@ -222,12 +229,12 @@ class Router implements Interfaces\Singleton
      */
     private function extractHostParameters($info)
     {
-        $parameters = array();
+        $parameters = [];
 
         $hostname = $this->cleanHostName();
 
         if (empty($hostname)) {
-            $params = array();
+            $params = [];
         } else {
             $params = array_reverse(explode(".", $hostname));
         }
@@ -239,6 +246,7 @@ class Router implements Interfaces\Singleton
                 $parameters[$value] = null;
             }
         }
+
         return $parameters;
     }
 }

@@ -36,6 +36,11 @@ use King23\View\Exceptions\ViewActionDoesNotExistException;
 abstract class View
 {
     /**
+     * @return \Psr\Log\LoggerInterface
+     */
+    abstract protected function getLogger();
+
+    /**
      * function to dispatch requests comming throuh the router
      *
      * @param string $action
@@ -45,7 +50,7 @@ abstract class View
      */
     public function dispatch($action, $request)
     {
-        Registry::getInstance()->getLogger()->debug('dispatching to action: '.$action);
+        $this->getLogger()->debug('dispatching to action: '.$action);
         if (!method_exists($this, $action) && !method_exists($this, '__call')) {
             throw new ViewActionDoesNotExistException();
         }

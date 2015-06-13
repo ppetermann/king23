@@ -34,8 +34,9 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Singleton object to store global data
+ * @deprecated
  */
-class Registry implements Singleton, \ArrayAccess
+class Registry implements \ArrayAccess
 {
     /**
      * Instance for singleton
@@ -56,6 +57,7 @@ class Registry implements Singleton, \ArrayAccess
      */
     private function __construct()
     {
+
     }
 
     /**

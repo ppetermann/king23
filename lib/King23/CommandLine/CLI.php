@@ -27,13 +27,12 @@
 */
 namespace King23\CommandLine;
 
-use King23\Core\Interfaces\Singleton;
 
 /**
  * Utility Class for CLI tools
  * @package King23\CommandLine
  */
-final class CLI implements Singleton
+final class CLI
 {
     private static $myInstance = null;
 

@@ -28,9 +28,19 @@
 namespace King23\View;
 
 use King23\Core\Exceptions\Exception;
+use Psr\Log\LoggerInterface;
 
 class MistralStaticView extends View
 {
+    /**
+     * @var LoggerInterface
+     */
+    private $log;
+
+    public function __construct(LoggerInterface $log)
+    {
+        $this->log = $log;
+    }
 
     /**
      * __call method, should return file with finfo guessed mimetype
@@ -101,5 +111,13 @@ class MistralStaticView extends View
             );
         }
         return array('status_code' => '404 NOT FOUND', 'connection' => 'close');
+    }
+
+    /**
+     * @return \Psr\Log\LoggerInterface
+     */
+    protected function getLogger()
+    {
+        return $this->log;
     }
 }

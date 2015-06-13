@@ -26,7 +26,7 @@
 
 */
 namespace King23\View;
-use King23\Core\Registry;
+use King23\TwigIntegration\TwigInterface;
 
 /**
  * Basic view for all views who need to use the Twig Templates
@@ -47,11 +47,27 @@ abstract class TwigView extends View
     protected $_context = array();
 
     /**
-     * public contructor, call this from all derived classes
+     * @var \Psr\Log\LoggerInterface
      */
-    public function __construct()
+    protected $log;
+
+    /**
+     * public contructor, call this from all derived classes
+     *
+     * @param TwigInterface $twig
+     */
+    public function __construct(TwigInterface $twig, \Psr\Log\LoggerInterface $log)
     {
-        $this->twig = Registry::getInstance()->twig;
+        $this->twig = $twig;
+        $this->log = $log;
+    }
+
+    /**
+     * @return \Psr\Log\LoggerInterface
+     */
+    protected function getLogger()
+    {
+        return $this->log;
     }
 
     /**
@@ -61,6 +77,7 @@ abstract class TwigView extends View
      * @param string $template
      * @param array $context
      * @param bool $silent if set to true the method will not echo out the results
+     * @return string
      */
     protected function render($template, $context = array(), $silent = false)
     {
