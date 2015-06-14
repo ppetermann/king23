@@ -10,7 +10,7 @@ namespace King23\TwigIntegration;
  *
  * @package King23\TwigIntegration
  */
-class TwigWrapper extends \Twig_Environment implements  TwigInterface
+class TwigWrapper extends \Twig_Environment implements TwigInterface
 {
 
 }
