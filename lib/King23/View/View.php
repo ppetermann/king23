@@ -48,17 +48,17 @@ abstract class View
      * @param $action
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
-     * @param array $data
+     * @param array $routeParams
      * @return ResponseInterface
      * @throws ViewActionDoesNotExistException
      */
-    public function dispatch($action, ServerRequestInterface $request, ResponseInterface $response, array $data)
+    public function dispatch($action, ServerRequestInterface $request, ResponseInterface $response, array $routeParams)
     {
         $this->getLogger()->debug('dispatching to action: '.$action);
         if (!method_exists($this, $action) && !method_exists($this, '__call')) {
             throw new ViewActionDoesNotExistException();
         }
-        $response = $this->$action($data, $request, $response);
+        $response = $this->$action($routeParams, $request, $response);
         return $response;
     }
 

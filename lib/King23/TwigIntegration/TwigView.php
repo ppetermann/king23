@@ -25,9 +25,9 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-namespace King23\View;
+namespace King23\TwigIntegration;
 
-use King23\TwigIntegration\TwigInterface;
+use King23\View\View;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
