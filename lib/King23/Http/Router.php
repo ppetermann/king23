@@ -97,20 +97,6 @@ class Router implements RouterInterface
     }
 
     /**
-     * Add a router for subroutes
-     *
-     * @param string $route the route used to trigger usage of subrouter
-     * @param \King23\Http\RouterInterface $router the router object
-     * @return void|static
-     */
-    public function addRouter($route, \King23\Http\RouterInterface $router)
-    {
-        $this->log->debug('Adding Subroute router for '.$route);
-        $this->routes[$route] = ["router" => $router];
-        return $this;
-    }
-
-    /**
      * method to set the basicHost for hostparameters in routing
      *
      * @see King23_Router::$basicHost
@@ -122,22 +108,6 @@ class Router implements RouterInterface
         $this->log->debug('Setting Router baseHost to '.$baseHost);
         $this->baseHost = $baseHost;
         return $this;
-    }
-
-    /**
-     * @param $info
-     * @param string $request
-     * @param $route
-     * @return mixed
-     */
-    private function handleSubRoute($info, $request, $route)
-    {
-        throw Exception("not working atm");
-        if ($paramstr = substr($request, strlen($route))) {
-            return $info["router"]->dispatch($paramstr);
-        } else { // if after the match nothing is left, lets call default route..
-            return $info["router"]->dispatch("/");
-        }
     }
 
     /**
@@ -253,14 +223,7 @@ class Router implements RouterInterface
             // check if route is matched
             if (substr($request->getUri()->getPath(), 0, strlen($route)) == $route) {
                 $this->log->debug('route '.$route.' matches '.$request ->getUri()->getPath());
-
-                // is this a sub router?
-                if (isset($info["router"])) {
-                    $response = $this->handleSubRoute($info, $request->getUri(), $route);
-                } else {
-                    $response = $this->handleRoute($info, $request, $response, $route);
-                }
-                break;
+                $response = $this->handleRoute($info, $request, $response, $route);
             }
         }
         return $next($request, $response);

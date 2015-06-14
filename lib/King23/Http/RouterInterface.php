@@ -14,16 +14,6 @@ interface RouterInterface
     public function addRoute($route, $class, $action, $parameters = [], $hostparameters = []);
 
     /**
-     * this methods allows to register sub-routers if needed
-     *
-     * @param string $route
-     * @param RouterInterface $router
-     * @return static
-     */
-    public function addRouter($route, RouterInterface $router);
-
-    /**
-     * @deprecated
      * @param string $baseHost
      * @return static
      */
