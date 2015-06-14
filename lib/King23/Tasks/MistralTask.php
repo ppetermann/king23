@@ -28,7 +28,7 @@
 namespace King23\Tasks;
 
 use King23\Core\Registry;
-use King23\Core\Router;
+use King23\Http\Router;
 
 class MistralTask extends \King23\CommandLine\Task
 {

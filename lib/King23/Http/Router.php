@@ -25,15 +25,17 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-namespace King23\Core;
+namespace King23\Http;
 
 use King23\DI\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 
 /**
  * King23_Router class, allowing the matching of URL -> classmethod
  */
-class Router
+class Router implements RouterInterface
 {
     /**
      * Array for storing known routes
@@ -79,6 +81,7 @@ class Router
      * @param String $action method to be called
      * @param string[] $parameters list of parameters that should be retrieved from url
      * @param array $hostparameters - allows to use subdomains as parameters
+     * @return void|static
      */
     public function addRoute($route, $class, $action, $parameters = [], $hostparameters = [])
     {
@@ -90,18 +93,21 @@ class Router
             "parameters" => $parameters,
             "hostparameters" => $hostparameters
         ];
+        return $this;
     }
 
     /**
      * Add a router for subroutes
      *
      * @param string $route the route used to trigger usage of subrouter
-     * @param \King23\Core\Router $router the router object
+     * @param \King23\Http\RouterInterface $router the router object
+     * @return void|static
      */
-    public function addRouter($route, \King23\Core\Router $router)
+    public function addRouter($route, \King23\Http\RouterInterface $router)
     {
         $this->log->debug('Adding Subroute router for '.$route);
         $this->routes[$route] = ["router" => $router];
+        return $this;
     }
 
     /**
@@ -109,46 +115,13 @@ class Router
      *
      * @see King23_Router::$basicHost
      * @param String $baseHost
+     * @return void|static
      */
     public function setBaseHost($baseHost = null)
     {
         $this->log->debug('Setting Router baseHost to '.$baseHost);
         $this->baseHost = $baseHost;
-    }
-
-    /**
-     * execute url request to method or subouter call
-     *
-     * @param string $request
-     * @return string
-     */
-    public function dispatch($request)
-    {
-        $this->log->debug('Dispatching request for '.$request);
-
-        uksort(
-            $this->routes,
-            function ($a, $b) {
-                return strlen($a) < strlen($b);
-            }
-        );
-
-        foreach ($this->routes as $route => $info) {
-            // check if route is matched
-            if (substr($request, 0, strlen($route)) == $route) {
-                $this->log->debug('route '.$route.' matches '.$request);
-
-                // is this a sub router?
-                if (isset($info["router"])) {
-                    return $this->handleSubRoute($info, $request, $route);
-                } else {
-                    return $this->handleRoute($info, $request, $route);
-                }
-                break;
-            }
-        }
-
-        return "";
+        return $this;
     }
 
     /**
@@ -159,6 +132,7 @@ class Router
      */
     private function handleSubRoute($info, $request, $route)
     {
+        throw Exception("not working atm");
         if ($paramstr = substr($request, strlen($route))) {
             return $info["router"]->dispatch($paramstr);
         } else { // if after the match nothing is left, lets call default route..
@@ -167,18 +141,42 @@ class Router
     }
 
     /**
+     * will get hostname, and clean basehost off it
+     *
+     * @param ServerRequestInterface $request
+     * @return string
+     */
+    private function cleanHostName(ServerRequestInterface $request)
+    {
+
+        if (is_null($this->baseHost)) {
+            $hostname = $request->getUri()->getHost();
+        } else {
+            $hostname = str_replace($this->baseHost, "", $request->getUri()->getHost());
+        }
+
+        if (substr($hostname, -1) == ".") {
+            $hostname = substr($hostname, 0, -1);
+        }
+
+        return $hostname;
+    }
+
+    /**
      * Handle a regular route
      *
      * @param array $info
-     * @param string $request
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
      * @param string $route
-     * @return mixed
+     * @return ResponseInterface
+     * @throws \King23\View\Exceptions\ViewActionDoesNotExistException
      */
-    private function handleRoute($info, $request, $route)
+    private function handleRoute($info, ServerRequestInterface $request, ResponseInterface $response, $route)
     {
         // prepare parameters
         $parameters = [];
-        if ($paramstr = substr($request, strlen($route))) {
+        if ($paramstr = substr($request->getUri()->getPath(), strlen($route))) {
             $params = explode("/", $paramstr);
             foreach ($info["parameters"] as $key => $value) {
                 if (isset($params[$key])) {
@@ -191,47 +189,28 @@ class Router
 
         // check host parameters
         if (count($info["hostparameters"]) > 0) {
-            $parameters = array_merge($parameters, $this->extractHostParameters($info));
+            $parameters = array_merge($parameters, $this->extractHostParameters($request, $info));
         }
         $class = $info["class"];
 
         /** @var \King23\View\View $view */
         $view = $this->container->getInstanceOf($class);
 
-        return $view->dispatch($info["action"], $parameters);
-    }
-
-    /**
-     * will get hostname, and clean basehost off it
-     *
-     * @return string
-     */
-    private function cleanHostName()
-    {
-        if (is_null($this->baseHost)) {
-            $hostname = $_SERVER["SERVER_NAME"];
-        } else {
-            $hostname = str_replace($this->baseHost, "", $_SERVER["SERVER_NAME"]);
-        }
-
-        if (substr($hostname, -1) == ".") {
-            $hostname = substr($hostname, 0, -1);
-        }
-
-        return $hostname;
+        return $view->dispatch($info["action"], $request, $response, $parameters);
     }
 
     /**
      * extract parameters from hostname
      *
+     * @param ServerRequestInterface $request
      * @param array $info
      * @return array
      */
-    private function extractHostParameters($info)
+    private function extractHostParameters($request, $info)
     {
         $parameters = [];
 
-        $hostname = $this->cleanHostName();
+        $hostname = $this->cleanHostName($request);
 
         if (empty($hostname)) {
             $params = [];
@@ -248,5 +227,42 @@ class Router
         }
 
         return $parameters;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param callable $next
+     * @return mixed
+     */
+    public function __invoke(
+        ServerRequestInterface $request,
+        ResponseInterface $response,
+        callable $next
+    ) {
+        $this->log->debug('Dispatching request for '. $request->getUri()->getPath());
+
+        // sort routes
+        uksort(
+            $this->routes,
+            function ($a, $b) {
+                return strlen($a) < strlen($b);
+            }
+        );
+        foreach ($this->routes as $route => $info) {
+            // check if route is matched
+            if (substr($request->getUri()->getPath(), 0, strlen($route)) == $route) {
+                $this->log->debug('route '.$route.' matches '.$request ->getUri()->getPath());
+
+                // is this a sub router?
+                if (isset($info["router"])) {
+                    $response = $this->handleSubRoute($info, $request->getUri(), $route);
+                } else {
+                    $response = $this->handleRoute($info, $request, $response, $route);
+                }
+                break;
+            }
+        }
+        return $next($request, $response);
     }
 }

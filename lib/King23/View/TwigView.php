@@ -26,7 +26,10 @@
 
 */
 namespace King23\View;
+
 use King23\TwigIntegration\TwigInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Basic view for all views who need to use the Twig Templates
@@ -47,23 +50,33 @@ abstract class TwigView extends View
     protected $_context = array();
 
     /**
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     protected $log;
+    /**
+     * @var ResponseInterface
+     */
+    private $response;
 
     /**
      * public contructor, call this from all derived classes
      *
      * @param TwigInterface $twig
+     * @param LoggerInterface $log
+     * @param ResponseInterface $response
      */
-    public function __construct(TwigInterface $twig, \Psr\Log\LoggerInterface $log)
-    {
+    public function __construct(
+        TwigInterface $twig,
+        LoggerInterface $log,
+        ResponseInterface $response
+    ) {
         $this->twig = $twig;
         $this->log = $log;
+        $this->response = $response;
     }
 
     /**
-     * @return \Psr\Log\LoggerInterface
+     * @return LoggerInterface
      */
     protected function getLogger()
     {
@@ -76,16 +89,13 @@ abstract class TwigView extends View
      *
      * @param string $template
      * @param array $context
-     * @param bool $silent if set to true the method will not echo out the results
-     * @return string
+     * @return ResponseInterface
      */
-    protected function render($template, $context = array(), $silent = false)
+    protected function render($template, $context = [])
     {
         $context = array_merge($this->_context, $context);
         $body = $this->twig->render($template, $context);
-        if (!$silent) {
-            echo $body;
-        }
-        return $body;
+        $this->response->getBody()->write($body);
+        return $this->response;
     }
 }
