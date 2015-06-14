@@ -11,11 +11,8 @@
         "psr/log-implementation": "1.0.0"
     },
     "require-dev": {
-        "d11wtq/boris": "1.0.*",
-        "react/react": "~0.4",
-        "monolog/monolog": "dev-master"
+        "devedge/stubs": "~2.0.0"
     },
-    "bin": ["bin/king23.box", "bin/king23"],
     "autoload": {
         "psr-0": { "King23": "lib/" }
     }
