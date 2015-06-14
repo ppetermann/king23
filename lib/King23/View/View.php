@@ -27,7 +27,6 @@
 */
 namespace King23\View;
 
-use King23\Core\Registry;
 use King23\View\Exceptions\ViewActionDoesNotExistException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
