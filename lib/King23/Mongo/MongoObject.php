@@ -44,7 +44,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * __wakeup to ensure the right collection is loaded,
      * use with care.
      *
-     * @param $collectioName
+     * @param string $collectioName
      */
     public function setCollection($collectioName)
     {
