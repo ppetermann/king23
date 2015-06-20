@@ -144,27 +144,22 @@ class Router implements RouterInterface
      */
     private function handleRoute($info, ServerRequestInterface $request, ResponseInterface $response, $route)
     {
-        // prepare parameters
+        // initialize
         $parameters = [];
+
+        // prepare parameters
         if ($paramstr = substr($request->getUri()->getPath(), strlen($route))) {
             $params = explode("/", $paramstr);
-            foreach ($info["parameters"] as $key => $value) {
-                if (isset($params[$key])) {
-                    $parameters[$value] = urldecode($params[$key]);
-                } else {
-                    $parameters[$value] = null;
-                }
-            }
+            $parameters = $this->filterParameters($info, $params);
         }
 
         // check host parameters
         if (count($info["hostparameters"]) > 0) {
             $parameters = array_merge($parameters, $this->extractHostParameters($request, $info));
         }
-        $class = $info["class"];
 
         /** @var \King23\View\View $view */
-        $view = $this->container->getInstanceOf($class);
+        $view = $this->container->getInstanceOf($info["class"]);
 
         return $view->dispatch($info["action"], $request, $response, $parameters);
     }
@@ -227,5 +222,23 @@ class Router implements RouterInterface
             }
         }
         return $next($request, $response);
+    }
+
+    /**
+     * @param array $info
+     * @param array $params
+     * @return array
+     */
+    private function filterParameters($info, $params)
+    {
+        $parameters = [];
+        foreach ($info["parameters"] as $key => $value) {
+            if (isset($params[$key])) {
+                $parameters[$value] = urldecode($params[$key]);
+            } else {
+                $parameters[$value] = null;
+            }
+        }
+        return $parameters;
     }
 }
