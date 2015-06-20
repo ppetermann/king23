@@ -2,8 +2,6 @@
 
 namespace King23\Mongo;
 
-use Exception;
-
 /**
  * Base class to handle objects stored in MongoDB
  *
@@ -92,7 +90,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      */
     public function refresh()
     {
-        if ($data = $this->myCollection->findOne(['_id' => $this->_id])) {
+        if ($data = $this->myCollection->findOne(['_id' => $this->myData['_id']])) {
             $this->myData = $data;
         }
     }
@@ -167,7 +165,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
     /**
      * Magic wakeup method, will reconnect object on unserialze
      *
-     * @throws Exception
+     * @throws \MongoException
      * @return void
      */
     public function __wakeup()
