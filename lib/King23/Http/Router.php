@@ -150,7 +150,7 @@ class Router implements RouterInterface
         // prepare parameters
         if ($paramstr = substr($request->getUri()->getPath(), strlen($route))) {
             $params = explode("/", $paramstr);
-            $parameters = $this->filterParameters($info, $params);
+            $parameters = $this->filterParameters($info['parameters'], $params);
         }
 
         // check host parameters
@@ -173,8 +173,6 @@ class Router implements RouterInterface
      */
     private function extractHostParameters($request, $info)
     {
-        $parameters = [];
-
         $hostname = $this->cleanHostName($request);
 
         if (empty($hostname)) {
@@ -183,14 +181,7 @@ class Router implements RouterInterface
             $params = array_reverse(explode(".", $hostname));
         }
 
-        foreach ($info["hostparameters"] as $key => $value) {
-            if (isset($params[$key]) && !empty($params[$key])) {
-                $parameters[$value] = $params[$key];
-            } else {
-                $parameters[$value] = null;
-            }
-        }
-
+        $parameters = $this->filterParameters($info['hostparameters'], $params);
         return $parameters;
     }
 
@@ -232,7 +223,7 @@ class Router implements RouterInterface
     private function filterParameters($info, $params)
     {
         $parameters = [];
-        foreach ($info["parameters"] as $key => $value) {
+        foreach ($info as $key => $value) {
             if (isset($params[$key])) {
                 $parameters[$value] = urldecode($params[$key]);
             } else {
