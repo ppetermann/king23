@@ -53,26 +53,19 @@ abstract class TwigView extends View
      * @var LoggerInterface
      */
     protected $log;
-    /**
-     * @var ResponseInterface
-     */
-    private $response;
 
     /**
      * public contructor, call this from all derived classes
      *
      * @param TwigInterface $twig
      * @param LoggerInterface $log
-     * @param ResponseInterface $response
      */
     public function __construct(
         TwigInterface $twig,
-        LoggerInterface $log,
-        ResponseInterface $response
+        LoggerInterface $log
     ) {
         $this->twig = $twig;
         $this->log = $log;
-        $this->response = $response;
     }
 
     /**
@@ -89,13 +82,12 @@ abstract class TwigView extends View
      *
      * @param string $template
      * @param array $context
-     * @return ResponseInterface
+     * @return string
      */
     protected function render($template, $context = [])
     {
         $context = array_merge($this->_context, $context);
         $body = $this->twig->render($template, $context);
-        $this->response->getBody()->write($body);
-        return $this->response;
+        return $body;
     }
 }
