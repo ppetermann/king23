@@ -26,7 +26,7 @@ class Whoops
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response,callable $next)
     {
         try {
-            $next($request, $response);
+            $response = $next($request, $response);
         } catch (\Exception $e){
             $whoops = $this->getWhoops();
             $body = $whoops->handleException($e);
