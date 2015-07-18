@@ -210,6 +210,7 @@ class Router implements RouterInterface
             if (substr($request->getUri()->getPath(), 0, strlen($route)) == $route) {
                 $this->log->debug('route '.$route.' matches '.$request ->getUri()->getPath());
                 $response = $this->handleRoute($info, $request, $response, $route);
+                break;
             }
         }
         return $next($request, $response);
