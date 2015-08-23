@@ -36,3 +36,17 @@ master:
         update-version-class: 
             class: src/King23/Core/King23.php
         vcs-commit: ~              # Commit the CHANGELOG
+
+develop:
+    version-generator:
+        semantic: # More complex versionning (semantic)
+            allow-label: true
+    version-persister:
+        vcs-tag:
+            tag-prefix: ''         # No more prefix for tags
+    pre-release-actions:
+        changelog-update:          # Update a CHANGELOG file before the release
+            format: semantic
+        update-version-class:
+            class: src/King23/Core/King23.php
+        vcs-commit: ~              # Commit the CHANGELOG
