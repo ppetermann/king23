@@ -25,7 +25,7 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-namespace King23\View;
+namespace King23\Controller;
 
 use King23\Controller\Exceptions\ActionDoesNotExistException;
 use Psr\Http\Message\ResponseInterface;

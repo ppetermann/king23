@@ -27,8 +27,7 @@
 */
 namespace King23\TwigIntegration;
 
-use King23\View\Controller;
-use Psr\Http\Message\ResponseInterface;
+use King23\Controller\Controller;
 use Psr\Log\LoggerInterface;
 
 /**
