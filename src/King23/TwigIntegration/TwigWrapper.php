@@ -12,5 +12,4 @@ namespace King23\TwigIntegration;
  */
 class TwigWrapper extends \Twig_Environment implements TwigInterface
 {
-
 }

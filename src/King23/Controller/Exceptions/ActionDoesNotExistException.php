@@ -25,8 +25,8 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-namespace King23\View\Exceptions;
+namespace King23\Controller\Exceptions;
 
-class ViewException extends \King23\Core\Exceptions\Exception
+class ActionDoesNotExistException extends ControllerException
 {
 }

@@ -1,6 +1,9 @@
 <?php
 namespace King23\Http;
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
 interface RouterInterface
 {
     /**
@@ -20,14 +23,14 @@ interface RouterInterface
     public function setBaseHost($baseHost = null);
 
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
      * @param callable $next
      * @return mixed
      */
     public function __invoke(
-        \Psr\Http\Message\ServerRequestInterface $request,
-        \Psr\Http\Message\ResponseInterface $response,
+        ServerRequestInterface $request,
+        ResponseInterface $response,
         callable $next
     );
 }

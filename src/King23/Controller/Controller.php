@@ -27,14 +27,14 @@
 */
 namespace King23\View;
 
-use King23\View\Exceptions\ViewActionDoesNotExistException;
+use King23\Controller\Exceptions\ActionDoesNotExistException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * base for all views
  */
-abstract class View
+abstract class Controller
 {
     /**
      * @return \Psr\Log\LoggerInterface
@@ -49,13 +49,13 @@ abstract class View
      * @param ResponseInterface $response
      * @param array $routeParams
      * @return ResponseInterface
-     * @throws ViewActionDoesNotExistException
+     * @throws ActionDoesNotExistException
      */
     public function dispatch($action, ServerRequestInterface $request, ResponseInterface $response, array $routeParams)
     {
         $this->getLogger()->debug('dispatching to action: '.$action);
         if (!method_exists($this, $action) && !method_exists($this, '__call')) {
-            throw new ViewActionDoesNotExistException();
+            throw new ActionDoesNotExistException();
         }
         $response = $this->$action($routeParams, $request, $response);
         return $response;

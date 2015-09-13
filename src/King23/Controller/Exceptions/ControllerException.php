@@ -25,8 +25,10 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-namespace King23\View\Exceptions;
+namespace King23\Controller\Exceptions;
 
-class ViewActionDoesNotExistException extends ViewException
+use King23\Core\Exceptions\Exception;
+
+class ControllerException extends Exception
 {
 }

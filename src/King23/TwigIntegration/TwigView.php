@@ -27,7 +27,7 @@
 */
 namespace King23\TwigIntegration;
 
-use King23\View\View;
+use King23\View\Controller;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
@@ -35,7 +35,7 @@ use Psr\Log\LoggerInterface;
  * Basic view for all views who need to use the Twig Templates
  * all templated views should be derived from this
  */
-abstract class TwigView extends View
+abstract class TwigController extends Controller
 {
     /**
      * twig environment object, pulled from registry->twig

@@ -1,6 +1,9 @@
 <?php
 namespace King23\Http;
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
 interface MiddlewareQueueInterface
 {
 
@@ -15,12 +18,12 @@ interface MiddlewareQueueInterface
     /**
      * execute the queue
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
      */
     public function run(
-        \Psr\Http\Message\ServerRequestInterface $request,
-        \Psr\Http\Message\ResponseInterface $response
+        ServerRequestInterface $request,
+        ResponseInterface $response
     );
 }

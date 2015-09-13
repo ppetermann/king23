@@ -140,7 +140,7 @@ class Router implements RouterInterface
      * @param ResponseInterface $response
      * @param string $route
      * @return ResponseInterface
-     * @throws \King23\View\Exceptions\ViewActionDoesNotExistException
+     * @throws \King23\Controller\Exceptions\ActionDoesNotExistException
      */
     private function handleRoute($info, ServerRequestInterface $request, ResponseInterface $response, $route)
     {
@@ -158,7 +158,7 @@ class Router implements RouterInterface
             $parameters = array_merge($parameters, $this->extractHostParameters($request, $info));
         }
 
-        /** @var \King23\View\View $view */
+        /** @var \King23\View\Controller $view */
         $view = $this->container->getInstanceOf($info["class"]);
 
         return $view->dispatch($info["action"], $request, $response, $parameters);
