@@ -158,7 +158,7 @@ class Router implements RouterInterface
             $parameters = array_merge($parameters, $this->extractHostParameters($request, $info));
         }
 
-        /** @var \King23\View\Controller $view */
+        /** @var \King23\Controller\Controller $view */
         $view = $this->container->getInstanceOf($info["class"]);
 
         return $view->dispatch($info["action"], $request, $response, $parameters);
