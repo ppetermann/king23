@@ -21,7 +21,6 @@ for further information
 ## FEATURES
 - automated class loading
 - url router
-- extendable command line task system
 - ideas borrowed from better known mvc frameworks (not really a feature i guess ;)
 - a simple mongodb layer 
 
