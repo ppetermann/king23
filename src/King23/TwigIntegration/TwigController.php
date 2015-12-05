@@ -31,8 +31,7 @@ use King23\Controller\Controller;
 use Psr\Log\LoggerInterface;
 
 /**
- * Basic view for all views who need to use the Twig Templates
- * all templated views should be derived from this
+ * Base controller for all controllers which need to use the Twig Templates
  */
 abstract class TwigController extends Controller
 {

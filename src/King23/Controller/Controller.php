@@ -32,7 +32,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * base for all views
+ * base for all controllers
  */
 abstract class Controller
 {
