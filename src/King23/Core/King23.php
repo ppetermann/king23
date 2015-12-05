@@ -32,7 +32,7 @@ namespace King23\Core;
  */
 abstract class King23
 {
-    const VERSION = "1.0.0-alpha3";
+    const VERSION = "1.0.0-alpha4";
     const DESCRIPTION = "King23 is a lightweight MVC Framework";
     const AUTHORS = "Peter Petermann <ppeterman80@googlemail.com>";
 }
