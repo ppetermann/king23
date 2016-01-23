@@ -3,6 +3,7 @@ VERSION 1  FIRST ALPHA
 ======================
 
    Version 1.0 - first alpha
+      23/01/2016 23:33  1.0.0-alpha5  dependencies
       05/12/2015 22:27  1.0.0-alpha4  cleanup
       13/09/2015 16:00  1.0.0-alpha3  hopefully the last bigger breaks
       23/08/2015 12:21  1.0.0-alpha2  security fix
