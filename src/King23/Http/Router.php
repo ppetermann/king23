@@ -85,7 +85,7 @@ class Router implements RouterInterface
      */
     public function addRoute($route, $class, $action, $parameters = [], $hostparameters = [])
     {
-        $this->log->debug('adding route : '.$route.' to class '.$class.' and action '.$action);
+        $this->log->debug('adding route : ' . $route . ' to class ' . $class . ' and action ' . $action);
 
         $this->routes[$route] = [
             "class" => $class,
@@ -105,31 +105,40 @@ class Router implements RouterInterface
      */
     public function setBaseHost($baseHost = null)
     {
-        $this->log->debug('Setting Router baseHost to '.$baseHost);
+        $this->log->debug('Setting Router baseHost to ' . $baseHost);
         $this->baseHost = $baseHost;
         return $this;
     }
 
     /**
-     * will get hostname, and clean basehost off it
-     *
      * @param ServerRequestInterface $request
-     * @return string
+     * @param ResponseInterface $response
+     * @param callable $next
+     * @return mixed
      */
-    private function cleanHostName(ServerRequestInterface $request)
-    {
+    public function __invoke(
+        ServerRequestInterface $request,
+        ResponseInterface $response,
+        callable $next
+    ) {
+        $this->log->debug('Dispatching request for ' . $request->getUri()->getPath());
 
-        if (is_null($this->baseHost)) {
-            $hostname = $request->getUri()->getHost();
-        } else {
-            $hostname = str_replace($this->baseHost, "", $request->getUri()->getHost());
+        // sort routes
+        uksort(
+            $this->routes,
+            function ($a, $b) {
+                return strlen($a) < strlen($b);
+            }
+        );
+        foreach ($this->routes as $route => $info) {
+            // check if route is matched
+            if (substr($request->getUri()->getPath(), 0, strlen($route)) == $route) {
+                $this->log->debug('route ' . $route . ' matches ' . $request->getUri()->getPath());
+                $response = $this->handleRoute($info, $request, $response, $route);
+                break;
+            }
         }
-
-        if (substr($hostname, -1) == ".") {
-            $hostname = substr($hostname, 0, -1);
-        }
-
-        return $hostname;
+        return $next($request, $response);
     }
 
     /**
@@ -144,24 +153,49 @@ class Router implements RouterInterface
      */
     private function handleRoute($info, ServerRequestInterface $request, ResponseInterface $response, $route)
     {
-        // initialize
-        $parameters = [];
+        // initialize router attributes for the request
+        $attributes = [
+            'params' => [
+                'url' => [],
+                'host' => []
+            ]
+        ];
 
         // prepare parameters
         if ($paramstr = substr($request->getUri()->getPath(), strlen($route))) {
-            $params = explode("/", $paramstr);
-            $parameters = $this->filterParameters($info['parameters'], $params);
+            $attributes['params']['url'] = $this->filterParameters($info['parameters'], explode("/", $paramstr));
         }
 
         // check host parameters
         if (count($info["hostparameters"]) > 0) {
-            $parameters = array_merge($parameters, $this->extractHostParameters($request, $info));
+            $attributes['params']['host'] = $this->extractHostParameters($request, $info);
         }
+
+        // put route parameters into king23.router.parameters attribute
+        $request = $request->withAttribute('king23.router', $attributes);
 
         /** @var \King23\Controller\Controller $controller */
         $controller = $this->container->getInstanceOf($info["class"]);
 
-        return $controller->dispatch($info["action"], $request, $response, $parameters);
+        return $controller->dispatch($info["action"], $request, $response);
+    }
+
+    /**
+     * @param array $info
+     * @param array $params
+     * @return array
+     */
+    private function filterParameters($info, $params)
+    {
+        $parameters = [];
+        foreach ($info as $key => $value) {
+            if (isset($params[$key])) {
+                $parameters[$value] = urldecode($params[$key]);
+            } else {
+                $parameters[$value] = null;
+            }
+        }
+        return $parameters;
     }
 
     /**
@@ -186,51 +220,24 @@ class Router implements RouterInterface
     }
 
     /**
+     * will get hostname, and clean basehost off it
+     *
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @param callable $next
-     * @return mixed
+     * @return string
      */
-    public function __invoke(
-        ServerRequestInterface $request,
-        ResponseInterface $response,
-        callable $next
-    ) {
-        $this->log->debug('Dispatching request for '. $request->getUri()->getPath());
-
-        // sort routes
-        uksort(
-            $this->routes,
-            function ($a, $b) {
-                return strlen($a) < strlen($b);
-            }
-        );
-        foreach ($this->routes as $route => $info) {
-            // check if route is matched
-            if (substr($request->getUri()->getPath(), 0, strlen($route)) == $route) {
-                $this->log->debug('route '.$route.' matches '.$request ->getUri()->getPath());
-                $response = $this->handleRoute($info, $request, $response, $route);
-                break;
-            }
-        }
-        return $next($request, $response);
-    }
-
-    /**
-     * @param array $info
-     * @param array $params
-     * @return array
-     */
-    private function filterParameters($info, $params)
+    private function cleanHostName(ServerRequestInterface $request)
     {
-        $parameters = [];
-        foreach ($info as $key => $value) {
-            if (isset($params[$key])) {
-                $parameters[$value] = urldecode($params[$key]);
-            } else {
-                $parameters[$value] = null;
-            }
+
+        if (is_null($this->baseHost)) {
+            $hostname = $request->getUri()->getHost();
+        } else {
+            $hostname = str_replace($this->baseHost, "", $request->getUri()->getHost());
         }
-        return $parameters;
+
+        if (substr($hostname, -1) == ".") {
+            $hostname = substr($hostname, 0, -1);
+        }
+
+        return $hostname;
     }
 }
