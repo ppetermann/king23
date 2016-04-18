@@ -47,17 +47,17 @@ abstract class Controller
      * @param $action
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
-     * @param array $routeParams
      * @return ResponseInterface
      * @throws ActionDoesNotExistException
      */
-    public function dispatch($action, ServerRequestInterface $request, ResponseInterface $response, array $routeParams)
+    public function dispatch($action, ServerRequestInterface $request, ResponseInterface $response)
     {
         $this->getLogger()->debug('dispatching to action: '.$action);
         if (!method_exists($this, $action) && !method_exists($this, '__call')) {
             throw new ActionDoesNotExistException();
         }
-        $response = $this->$action($routeParams, $request, $response);
+
+        $response = $this->$action($request, $response);
         return $response;
     }
 
