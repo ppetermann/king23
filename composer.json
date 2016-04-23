@@ -14,7 +14,7 @@
         "king23/di": "~1.0"
     },
     "require-dev": {
-        "devedge/stubs": "~2.0.0",
+        "devedge/stubs": "~3.0.0",
         "zendframework/zend-diactoros": "~1.1"
     },
     "autoload": {

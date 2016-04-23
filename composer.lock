@@ -4,38 +4,36 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2b9642068c6b0cb89dae8b833329fa59",
-    "content-hash": "3129b9002451c1bc2d09293e40198123",
+    "hash": "e48cc2b70156a6557c92cb366d23d817",
+    "content-hash": "937a2030d5bd7b1d6d303e0e11404059",
     "packages": [
         {
             "name": "devedge/stubs",
-            "version": "2.0.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ppetermann/devedge-stubs.git",
-                "reference": "df138c3c05fda9c0bf9949e91d0dce2da0133eaa"
+                "reference": "6f840ff1017e15b58c1dc582c7c56298814a3434"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ppetermann/devedge-stubs/zipball/df138c3c05fda9c0bf9949e91d0dce2da0133eaa",
-                "reference": "df138c3c05fda9c0bf9949e91d0dce2da0133eaa",
+                "url": "https://api.github.com/repos/ppetermann/devedge-stubs/zipball/6f840ff1017e15b58c1dc582c7c56298814a3434",
+                "reference": "6f840ff1017e15b58c1dc582c7c56298814a3434",
                 "shasum": ""
             },
             "require": {
-                "psr/log": "1.0.0"
+                "php": ">= 5.4",
+                "psr/cache": "~1.0",
+                "psr/log": "~1.0"
             },
             "provide": {
                 "psr/cache-implementation": "1.0.0",
                 "psr/log-implementation": "1.0.0"
             },
-            "replace": {
-                "psr/cache": "1.0.0"
-            },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Devedge\\": "src/Devedge/",
-                    "Psr\\": "src/Psr/"
+                    "Devedge\\": "src/Devedge/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -49,7 +47,7 @@
                 }
             ],
             "description": "A PHP Library that contains Null-Implementations for various PSRs",
-            "time": "2015-06-10 13:01:20"
+            "time": "2016-04-08 13:32:15"
         },
         {
             "name": "king23/di",
@@ -89,6 +87,52 @@
             ],
             "description": "king23 dependency injector",
             "time": "2015-08-16 10:49:22"
+        },
+        {
+            "name": "psr/cache",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/cache.git",
+                "reference": "9e66031f41fbbdda45ee11e93c45d480ccba3eb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/9e66031f41fbbdda45ee11e93c45d480ccba3eb3",
+                "reference": "9e66031f41fbbdda45ee11e93c45d480ccba3eb3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for caching libraries",
+            "keywords": [
+                "cache",
+                "psr",
+                "psr-6"
+            ],
+            "time": "2015-12-11 02:52:07"
         },
         {
             "name": "psr/http-message",
