@@ -1,7 +1,10 @@
 _default:
 
     # VCS CONFIG
-    vcs: git
+    vcs: 
+      name: git
+      sign-tag: true
+      sign-commit: true
 
     # PREREQUISITES
     #  Actions executed before any questions get asked to the user.
