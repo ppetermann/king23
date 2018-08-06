@@ -5,7 +5,7 @@
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/1ecb1847-a15f-4c00-9e80-374a701bc000/mini.png)](https://insight.sensiolabs.com/projects/1ecb1847-a15f-4c00-9e80-374a701bc000)
 # King23 PHP Framework
 
-Copyright (C) 2010 - 2017 by Peter Petermann
+Copyright (C) 2010 - 2018 by Peter Petermann
 All rights reserved.
 
 King23 is a small and simple MVC Framework for PHP
