@@ -28,6 +28,7 @@
 namespace King23\Http;
 
 use King23\DI\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -52,20 +53,20 @@ class MiddlewareQueue implements MiddlewareQueueInterface, RequestHandlerInterfa
     protected $container;
 
     /**
-     * @var ResponseInterface
+     * @var ResponseFactoryInterface
      */
-    private $response;
+    private $responseFactory;
 
     /**
      * @param LoggerInterface $log
      * @param ContainerInterface $container
      * @param ResponseInterface $response
      */
-    public function __construct(LoggerInterface $log, ContainerInterface $container, ResponseInterface $response)
+    public function __construct(LoggerInterface $log, ContainerInterface $container, ResponseFactoryInterface $response)
     {
         $this->log = $log;
         $this->container = $container;
-        $this->response = $response;
+        $this->responseFactory = $response;
     }
 
     /**
@@ -102,8 +103,7 @@ class MiddlewareQueue implements MiddlewareQueueInterface, RequestHandlerInterfa
     ) {
         // if the queue is empty, we have reached the lowest level
         if(count($this->queue) == 0) {
-            // @todo check if we need a default error response here
-            return $this->response;
+            return $this->responseFactory->createResponse();
         }
 
         /** @var MiddlewareInterface $middleware */
