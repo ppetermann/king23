@@ -37,7 +37,7 @@ master:
         changelog-update:          # Update a CHANGELOG file before the release
             format: semantic
         update-version-class: 
-            class: src/King23/Core/King23.php
+            class: src/Core/King23.php
         vcs-commit: ~              # Commit the CHANGELOG
 
 develop:
@@ -51,5 +51,5 @@ develop:
         changelog-update:          # Update a CHANGELOG file before the release
             format: semantic
         update-version-class:
-            class: src/King23/Core/King23.php
+            class: src/Core/King23.php
         vcs-commit: ~              # Commit the CHANGELOG
