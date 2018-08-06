@@ -27,13 +27,9 @@
 */
 namespace King23\Http;
 
-interface MiddlewareQueueInterface
+use King23\Core\Exceptions\Exception as K23Exception;
+
+class MiddlewareDoesNotImplementInterfaceException extends K23Exception
 {
-    /**
-     * register a classname as part of the middleware queue
-     *
-     * @param string $className
-     * @return void
-     */
-    public function addMiddleware($className);
+
 }

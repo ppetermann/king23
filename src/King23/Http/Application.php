@@ -29,6 +29,7 @@ namespace King23\Http;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Class Application
@@ -43,27 +44,19 @@ class Application implements ApplicationInterface
     private $request;
 
     /**
-     * @var ResponseInterface
-     */
-    private $response;
-    /**
-     * @var MiddlewareQueueInterface
+     * @var RequestHandlerInterface
      */
     private $queue;
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @param MiddlewareQueueInterface $queue
+     * @param RequestHandlerInterface $queue
      */
     public function __construct(
         ServerRequestInterface $request,
-        ResponseInterface $response,
-        MiddlewareQueueInterface $queue
+        RequestHandlerInterface $queue
     ) {
-
         $this->request = $request;
-        $this->response = $response;
         $this->queue = $queue;
     }
 
@@ -73,7 +66,7 @@ class Application implements ApplicationInterface
     public function run()
     {
         /** @var ResponseInterface $response */
-        $response = $this->queue->run($this->request, $this->response);
+        $response = $this->queue->handle($this->request);
 
         // http status
         $reasonPhrase = $response->getReasonPhrase();

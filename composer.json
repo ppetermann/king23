@@ -7,17 +7,19 @@
     "license": "MIT",
     "authors": [ { "name": "Peter Petermann", "email": "ppetermann80@googlemail.com", "homepage": "https://devedge.eu" }],
     "require": {
-        "twig/twig": "~2.0",
-        "psr/log-implementation": "1.0.0",
-        "psr/http-message-implementation": "1.0.0",
+        "twig/twig": "~2.5",
+        "psr/log-implementation": "~1.0",
+        "psr/http-message-implementation": "~1.0",
         "psr/http-message": "~1.0",
+        "psr/http-server-handler": "~1.0",
+        "psr/http-server-middleware": "~1.0",
         "king23/di": "~1.0"
     },
     "require-dev": {
-        "devedge/stubs": "~3.0.0",
+        "devedge/stubs": "~3.0",
         "zendframework/zend-diactoros": "~1.1"
     },
     "autoload": {
-        "psr-0": { "King23": "src/"}
+        "psr-4": { "King23\\": "src/"}
     }
 }

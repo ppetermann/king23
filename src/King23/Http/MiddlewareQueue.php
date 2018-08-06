@@ -30,9 +30,11 @@ namespace King23\Http;
 use King23\DI\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 
-class MiddlewareQueue implements MiddlewareQueueInterface
+class MiddlewareQueue implements MiddlewareQueueInterface, RequestHandlerInterface
 {
     /**
      * @var LoggerInterface
@@ -50,13 +52,20 @@ class MiddlewareQueue implements MiddlewareQueueInterface
     protected $container;
 
     /**
+     * @var ResponseInterface
+     */
+    private $response;
+
+    /**
      * @param LoggerInterface $log
      * @param ContainerInterface $container
+     * @param ResponseInterface $response
      */
-    public function __construct(LoggerInterface $log, ContainerInterface $container)
+    public function __construct(LoggerInterface $log, ContainerInterface $container, ResponseInterface $response)
     {
         $this->log = $log;
         $this->container = $container;
+        $this->response = $response;
     }
 
     /**
@@ -74,32 +83,36 @@ class MiddlewareQueue implements MiddlewareQueueInterface
      * execute the queue
      *
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
      * @return ResponseInterface
+     * @throws \King23\DI\Exception\NotFoundException
+     * @throws MiddlewareDoesNotImplementInterfaceException
      */
-    public function run(
-        ServerRequestInterface $request,
-        ResponseInterface $response
-    ) {
-        return $this($request, $response);
+    public function handle(ServerRequestInterface $request) : ResponseInterface {
+        return $this($request);
     }
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
      * @return ResponseInterface
+     * @throws \King23\DI\Exception\NotFoundException
+     * @throws MiddlewareDoesNotImplementInterfaceException
      */
     public function __invoke(
-        ServerRequestInterface $request,
-        ResponseInterface $response
+        ServerRequestInterface $request
     ) {
         // if the queue is empty, we have reached the lowest level
         if(count($this->queue) == 0) {
-            return $response;
+            // @todo check if we need a default error response here
+            return $this->response;
         }
 
-        /** @var callable $middleware */
+        /** @var MiddlewareInterface $middleware */
         $middleware = $this->container->getInstanceOf(array_shift($this->queue));
-        return $middleware($request, $response, $this);
+
+        if (!($middleware instanceof MiddlewareInterface)) {
+            throw new MiddlewareDoesNotImplementInterfaceException();
+        }
+
+        return $middleware->process($request, $this);
     }
 }

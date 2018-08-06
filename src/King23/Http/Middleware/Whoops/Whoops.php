@@ -29,6 +29,8 @@ namespace King23\Http\Middleware\Whoops;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
@@ -41,24 +43,32 @@ use Whoops\Run;
  *
  * @package King23\Whoops
  */
-class Whoops
+class Whoops implements MiddlewareInterface
 {
     /**
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @param callable $next
-     * @return ResponseInterface
+     * @var ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response,callable $next)
+    private $response;
+
+    /**
+     * Whoops constructor.
+     * @param ResponseInterface $response
+     */
+    public function __construct(ResponseInterface $response)
+    {
+        $this->response = $response;
+    }
+
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $next) : ResponseInterface
     {
         try {
-            $response = $next($request, $response);
+            $response = $next->handle($request);
         } catch (\Exception $e){
             $whoops = $this->getWhoops();
             $body = $whoops->handleException($e);
 
-            $response->getBody()->write($body);
-            return $response->withStatus(500);
+            $this->response->getBody()->write($body);
+            return $this->response->withStatus(500);
         }
         return $response;
     }

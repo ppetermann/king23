@@ -42,22 +42,21 @@ abstract class Controller
     abstract protected function getLogger();
 
     /**
-     * function to dispatch requests comming throuh the router
+     * function to dispatch requests coming through the router
      *
      * @param $action
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
      * @return ResponseInterface
      * @throws ActionDoesNotExistException
      */
-    public function dispatch($action, ServerRequestInterface $request, ResponseInterface $response)
+    public function dispatch($action, ServerRequestInterface $request) : ResponseInterface
     {
         $this->getLogger()->debug('dispatching to action: '.$action);
         if (!method_exists($this, $action) && !method_exists($this, '__call')) {
             throw new ActionDoesNotExistException();
         }
 
-        $response = $this->$action($request, $response);
+        $response = $this->$action($request);
         return $response;
     }
 

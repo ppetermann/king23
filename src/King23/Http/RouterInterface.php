@@ -29,8 +29,9 @@ namespace King23\Http;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 
-interface RouterInterface
+interface RouterInterface extends MiddlewareInterface
 {
     /**
      * @param string $route
@@ -47,16 +48,4 @@ interface RouterInterface
      * @return static
      */
     public function setBaseHost($baseHost = null);
-
-    /**
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @param callable $next
-     * @return mixed
-     */
-    public function __invoke(
-        ServerRequestInterface $request,
-        ResponseInterface $response,
-        callable $next
-    );
 }

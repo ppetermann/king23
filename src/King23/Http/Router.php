@@ -30,6 +30,7 @@ namespace King23\Http;
 use King23\DI\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -81,7 +82,7 @@ class Router implements RouterInterface
      * @param String $action method to be called
      * @param string[] $parameters list of parameters that should be retrieved from url
      * @param array $hostparameters - allows to use subdomains as parameters
-     * @return void|static
+     * @return self
      */
     public function addRoute($route, $class, $action, $parameters = [], $hostparameters = [])
     {
@@ -101,7 +102,7 @@ class Router implements RouterInterface
      *
      * @see King23_Router::$basicHost
      * @param String $baseHost
-     * @return void|static
+     * @return self
      */
     public function setBaseHost($baseHost = null)
     {
@@ -112,15 +113,12 @@ class Router implements RouterInterface
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @param callable $next
-     * @return mixed
+     * @param RequestHandlerInterface $next
+     * @return ResponseInterface
+     * @throws \King23\Controller\Exceptions\ActionDoesNotExistException
+     * @throws \King23\DI\Exception\NotFoundException
      */
-    public function __invoke(
-        ServerRequestInterface $request,
-        ResponseInterface $response,
-        callable $next
-    ) {
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $next) : ResponseInterface {
         $this->log->debug('Dispatching request for ' . $request->getUri()->getPath());
 
         // sort routes
@@ -134,11 +132,10 @@ class Router implements RouterInterface
             // check if route is matched
             if (substr($request->getUri()->getPath(), 0, strlen($route)) == $route) {
                 $this->log->debug('route ' . $route . ' matches ' . $request->getUri()->getPath());
-                $response = $this->handleRoute($info, $request, $response, $route);
-                break;
+                return $this->handleRoute($info, $request, $route);
             }
         }
-        return $next($request, $response);
+        return $next->handle($request);
     }
 
     /**
@@ -146,12 +143,12 @@ class Router implements RouterInterface
      *
      * @param array $info
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
      * @param string $route
      * @return ResponseInterface
      * @throws \King23\Controller\Exceptions\ActionDoesNotExistException
+     * @throws \King23\DI\Exception\NotFoundException
      */
-    private function handleRoute($info, ServerRequestInterface $request, ResponseInterface $response, $route)
+    private function handleRoute($info, ServerRequestInterface $request, $route) : ResponseInterface
     {
         // initialize router attributes for the request
         $attributes = [
@@ -177,7 +174,7 @@ class Router implements RouterInterface
         /** @var \King23\Controller\Controller $controller */
         $controller = $this->container->getInstanceOf($info["class"]);
 
-        return $controller->dispatch($info["action"], $request, $response);
+        return $controller->dispatch($info["action"], $request);
     }
 
     /**

@@ -30,6 +30,8 @@ namespace King23\Http\Middleware;
 use King23\Core\SettingsInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Class BasePathStripper
@@ -38,7 +40,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @package King23\Http\Middleware
  */
-class BasePathStripper
+class BasePathStripper implements MiddlewareInterface
 {
     /**
      * @var string
@@ -59,11 +61,10 @@ class BasePathStripper
      * strip away the basePath
      *
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @param callable $next
-     * @return mixed
+     * @param RequestHandlerInterface $next
+     * @return ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $next) : ResponseInterface
     {
         $path = $request->getUri()->getPath();
         if (!empty($this->basePath) && 0 === strpos($path, $this->basePath)) {
@@ -75,6 +76,6 @@ class BasePathStripper
 
             $request = $request->withUri($request->getUri()->withPath($cleanPath));
         }
-        return $next($request, $response);
+        return $next->handle($request);
     }
 }
