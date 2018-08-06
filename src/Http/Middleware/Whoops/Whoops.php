@@ -68,7 +68,8 @@ class Whoops implements MiddlewareInterface
             $whoops = $this->getWhoops();
             $body = $whoops->handleException($e);
 
-            $response = $this->response->createResponse(500)->getBody()->write($body);
+            $response = $this->response->createResponse(500);
+            $response->getBody()->write($body);
         }
         return $response;
     }
