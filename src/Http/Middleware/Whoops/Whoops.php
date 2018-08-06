@@ -47,9 +47,9 @@ use Whoops\Run;
 class Whoops implements MiddlewareInterface
 {
     /**
-     * @var ResponseInterface
+     * @var ResponseFactoryInterface
      */
-    private $response;
+    private $responseFactory;
 
     /**
      * Whoops constructor.
@@ -57,7 +57,7 @@ class Whoops implements MiddlewareInterface
      */
     public function __construct(ResponseFactoryInterface $response)
     {
-        $this->response = $response;
+        $this->responseFactory = $response;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $next) : ResponseInterface
@@ -68,7 +68,7 @@ class Whoops implements MiddlewareInterface
             $whoops = $this->getWhoops();
             $body = $whoops->handleException($e);
 
-            $response = $this->response->createResponse(500);
+            $response = $this->responseFactory->createResponse(500);
             $response->getBody()->write($body);
         }
         return $response;
