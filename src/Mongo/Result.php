@@ -37,11 +37,6 @@ class Result implements \Iterator, \Countable
     protected $myResultCursor = null;
 
     /**
-     * @var MongoServiceInterface
-     */
-    private $factory;
-
-    /**
      * @var string
      */
     private $collection;
@@ -55,16 +50,13 @@ class Result implements \Iterator, \Countable
     private $classMapInterface;
 
     /**
-     * @param MongoServiceInterface $factory
      * @param ContainerInterface $container
      * @param ClassMapInterface $classMapInterface
      */
     public function __construct(
-        MongoServiceInterface $factory,
         ContainerInterface $container,
         ClassMapInterface $classMapInterface
     ) {
-        $this->factory = $factory;
         $this->container = $container;
         $this->classMapInterface = $classMapInterface;
     }
