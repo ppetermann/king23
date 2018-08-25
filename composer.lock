@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c191a11f15b3a42337dffac54acdb9c",
+    "content-hash": "3d7915eb6e2c7a8f9a1727351f618355",
     "packages": [
         {
             "name": "devedge/stubs",
