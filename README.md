@@ -25,19 +25,15 @@ for further information
 - a simple mongodb layer 
 
 ## REQUIREMENTS
-- PHP 5.6 (might run on earlier versions, untested)
+- PHP 7.2 (might run on earlier versions, untested)
 - a Webserver (nginx recommended, apache possible, mistral / reactphp experimental)
 - LINUX / MAC OS X (might run on windows, untested)
-
-## INSTALLATION
-1. `git clone git://github.com/ppetermann/king23.git`
-2. add bin/king23 to your path (hint `sudo ln -s /path/to/king23/bin/king23 /bin/king23`)
 
 ## USAGE
 New Style (recommended):
 use composer:
 1) http://getcomposer.org
-2) `php composer.phar create-project king23/project_template DIRNAMEFORYOURNEWPROJECT`
+2) `php composer.phar create-project king23/skeleton DIRNAMEFORYOURNEWPROJECT`
 3) Important: edit DIRNAMEFORYOURNEWPROJECT/composer.json, change projects package name etc.
 
 ## TODO
