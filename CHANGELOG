@@ -3,6 +3,7 @@ VERSION 3  PREPARING FOR 3.0 (PSR 15 + PSR 17)
 ==============================================
 
    Version 3.0 - preparing for 3.0 (psr 15 + psr 17)
+      25/08/2018 18:10  3.0.0-alpha2  psr-11
       06/08/2018 14:25  3.0.0-alpha  initial release
 
 VERSION 2  BC BREAKING DEPENDENCY UPDATE
