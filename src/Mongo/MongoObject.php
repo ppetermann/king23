@@ -70,6 +70,7 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * use with care.
      *
      * @param string $collectioName
+     * @throws \MongoException
      */
     public function setCollection($collectioName)
     {
@@ -92,6 +93,8 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * remove the instance from the mongodb - this will not kill the object in local space however
      *
      * @return void
+     * @throws \MongoCursorException
+     * @throws \MongoCursorTimeoutException
      */
     public function delete()
     {
@@ -102,6 +105,9 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
      * save the object in the mongodb, will insert on new object, or update if _id is set
      *
      * @return void
+     * @throws \MongoCursorException
+     * @throws \MongoCursorTimeoutException
+     * @throws \MongoException
      */
     public function save()
     {
@@ -187,10 +193,12 @@ abstract class MongoObject implements \IteratorAggregate, \ArrayAccess
         return null;
     }
     // --------------------- unserialize
+
     /**
      * Magic wakeup method, will reconnect object on unserialze
      *
      * @throws \MongoException
+     * @throws \Exception
      * @return void
      */
     public function __wakeup()

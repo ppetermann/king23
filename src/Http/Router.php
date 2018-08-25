@@ -116,7 +116,6 @@ class Router implements RouterInterface
      * @param RequestHandlerInterface $next
      * @return ResponseInterface
      * @throws \King23\Controller\Exceptions\ActionDoesNotExistException
-     * @throws \King23\DI\Exception\NotFoundException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $next) : ResponseInterface {
         $this->log->debug('Dispatching request for ' . $request->getUri()->getPath());
@@ -146,7 +145,6 @@ class Router implements RouterInterface
      * @param string $route
      * @return ResponseInterface
      * @throws \King23\Controller\Exceptions\ActionDoesNotExistException
-     * @throws \King23\DI\Exception\NotFoundException
      */
     private function handleRoute($info, ServerRequestInterface $request, $route) : ResponseInterface
     {

@@ -85,7 +85,6 @@ class MiddlewareQueue implements MiddlewareQueueInterface, RequestHandlerInterfa
      *
      * @param ServerRequestInterface $request
      * @return ResponseInterface
-     * @throws \King23\DI\Exception\NotFoundException
      * @throws MiddlewareDoesNotImplementInterfaceException
      */
     public function handle(ServerRequestInterface $request) : ResponseInterface {
@@ -95,7 +94,6 @@ class MiddlewareQueue implements MiddlewareQueueInterface, RequestHandlerInterfa
     /**
      * @param ServerRequestInterface $request
      * @return ResponseInterface
-     * @throws \King23\DI\Exception\NotFoundException
      * @throws MiddlewareDoesNotImplementInterfaceException
      */
     public function __invoke(

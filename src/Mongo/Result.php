@@ -127,6 +127,7 @@ class Result implements \Iterator, \Countable
      *
      * @return MongoObject
      * @throws Exception
+     * @throws \MongoException
      */
     public function current()
     {

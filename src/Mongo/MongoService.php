@@ -73,7 +73,7 @@ class MongoService implements MongoServiceInterface
      * @param string $collection
      * @param string $mongoId
      * @return MongoObject
-     * @throws Exception
+     * @throws \MongoException
      */
     public function getById($collection, $mongoId)
     {
@@ -87,6 +87,7 @@ class MongoService implements MongoServiceInterface
      * @param string $collection
      * @param  array $criteria
      * @return MongoObject
+     * @throws \MongoException
      */
     public function getByCriteria($collection, $criteria)
     {
@@ -173,6 +174,7 @@ class MongoService implements MongoServiceInterface
      * conveniant method to create new instances
      * @param string $collection
      * @return MongoObject
+     * @throws \MongoException
      */
     public function newObject($collection)
     {
