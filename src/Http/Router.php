@@ -27,7 +27,7 @@
 */
 namespace King23\Http;
 
-use King23\DI\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -172,7 +172,7 @@ class Router implements RouterInterface
         $request = $request->withAttribute('king23.router', $attributes);
 
         /** @var \King23\Controller\Controller $controller */
-        $controller = $this->container->getInstanceOf($info["class"]);
+        $controller = $this->container->get($info["class"]);
 
         return $controller->dispatch($info["action"], $request);
     }

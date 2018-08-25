@@ -27,7 +27,7 @@
 */
 namespace King23\Http;
 
-use King23\DI\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -60,7 +60,7 @@ class MiddlewareQueue implements MiddlewareQueueInterface, RequestHandlerInterfa
     /**
      * @param LoggerInterface $log
      * @param ContainerInterface $container
-     * @param ResponseInterface $response
+     * @param ResponseFactoryInterface $response
      */
     public function __construct(LoggerInterface $log, ContainerInterface $container, ResponseFactoryInterface $response)
     {
@@ -107,7 +107,7 @@ class MiddlewareQueue implements MiddlewareQueueInterface, RequestHandlerInterfa
         }
 
         /** @var MiddlewareInterface $middleware */
-        $middleware = $this->container->getInstanceOf(array_shift($this->queue));
+        $middleware = $this->container->get(array_shift($this->queue));
 
         if (!($middleware instanceof MiddlewareInterface)) {
             throw new MiddlewareDoesNotImplementInterfaceException();

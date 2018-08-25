@@ -27,7 +27,7 @@
 */
 namespace King23\Mongo;
 
-use King23\DI\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class Result implements \Iterator, \Countable
 {
@@ -133,7 +133,7 @@ class Result implements \Iterator, \Countable
         $documentData = $this->myResultCursor->current();
 
         /** @var MongoObject $document */
-        $document = $this->container->getInstanceOf(
+        $document = $this->container->get(
             $this->classMapInterface->getClassForResult($this->collection, $documentData)
         );
 
@@ -158,6 +158,7 @@ class Result implements \Iterator, \Countable
      * @return Result a sort on the cursor
      * @param array $sortoptions
      * @returns Result
+     * @throws \MongoCursorException
      */
     public function sort(array $sortoptions)
     {
@@ -168,7 +169,8 @@ class Result implements \Iterator, \Countable
 
     /**
      * @param array $hintoptions
-     * @returns Result
+     * @return Result
+     * @throws \MongoCursorException
      */
     public function hint(array $hintoptions)
     {
@@ -181,6 +183,7 @@ class Result implements \Iterator, \Countable
      * @param  $amount
      * @return Result
      *
+     * @throws \MongoCursorException
      */
     public function limit($amount)
     {
@@ -194,6 +197,7 @@ class Result implements \Iterator, \Countable
      *
      * @param integer $num
      * @return Result
+     * @throws \MongoCursorException
      */
     public function skip($num)
     {

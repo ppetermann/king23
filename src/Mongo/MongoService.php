@@ -27,7 +27,7 @@
 */
 namespace King23\Mongo;
 
-use King23\DI\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class MongoService implements MongoServiceInterface
 {
@@ -73,6 +73,7 @@ class MongoService implements MongoServiceInterface
      * @param string $collection
      * @param string $mongoId
      * @return MongoObject
+     * @throws Exception
      */
     public function getById($collection, $mongoId)
     {
@@ -86,14 +87,13 @@ class MongoService implements MongoServiceInterface
      * @param string $collection
      * @param  array $criteria
      * @return MongoObject
-     * @throws Exception
      */
     public function getByCriteria($collection, $criteria)
     {
         if ($data = $this->findOne($collection, $criteria)) {
 
             /** @var MongoObject $obj */
-            $obj = $this->container->getInstanceOf(
+            $obj = $this->container->get(
                 $this->classMap->getClassForResult($collection, $data)
             );
             $obj->setCollection($collection);
@@ -110,14 +110,14 @@ class MongoService implements MongoServiceInterface
      * @param array $criteria
      * @param array $fields
      * @return Result
-     * @throws Exception
+     * @throws \Exception
      */
     public function find($collection, array $criteria, array $fields = [])
     {
         $data = $this->dbConnection->selectCollection($collection)->find($criteria, $fields);
 
         /** @var Result $result */
-        $result = $this->container->getInstanceOf(Result::class);
+        $result = $this->container->get(Result::class);
         $result->setCollection($collection);
         $result->setCursor($data);
 
@@ -148,6 +148,7 @@ class MongoService implements MongoServiceInterface
      * @param string $fieldname
      * @param array $criteria
      * @return array
+     * @throws \Exception
      */
     public function distinct($collection, $fieldname, array $criteria = [])
     {
@@ -161,6 +162,7 @@ class MongoService implements MongoServiceInterface
      * @param array $criteria
      * @param array $fields
      * @return array
+     * @throws \Exception
      */
     public function findOne($collection, array $criteria, array $fields = [])
     {
@@ -175,7 +177,7 @@ class MongoService implements MongoServiceInterface
     public function newObject($collection)
     {
         /** @var MongoObject $obj */
-        $obj =$this->container->getInstanceOf($this->classMap->getClassForResult($collection, []));
+        $obj =$this->container->get($this->classMap->getClassForResult($collection, []));
         $obj->setCollection($collection);
 
         return $obj;

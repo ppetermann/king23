@@ -15,7 +15,7 @@
         "psr/http-server-middleware": "~1.0",
         "psr/http-factory": "~1.0",
         "psr/http-factory-implementation": "~1.0",
-        "king23/di": "~1.0"
+        "king23/di": "~2.0"
     },
     "require-dev": {
         "devedge/stubs": "~3.0",
