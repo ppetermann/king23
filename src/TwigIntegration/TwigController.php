@@ -28,6 +28,8 @@
 namespace King23\TwigIntegration;
 
 use King23\Controller\Controller;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -53,17 +55,25 @@ abstract class TwigController extends Controller
     protected $log;
 
     /**
+     * @var ResponseFactoryInterface
+     */
+    protected $responseFactory;
+
+    /**
      * public contructor, call this from all derived classes
      *
      * @param TwigInterface $twig
      * @param LoggerInterface $log
+     * @param ResponseFactoryInterface $responseFactory
      */
     public function __construct(
         TwigInterface $twig,
-        LoggerInterface $log
+        LoggerInterface $log,
+        ResponseFactoryInterface $responseFactory
     ) {
         $this->twig = $twig;
         $this->log = $log;
+        $this->responseFactory = $responseFactory;
     }
 
     /**
@@ -87,5 +97,18 @@ abstract class TwigController extends Controller
         $context = array_merge($this->_context, $context);
         $body = $this->twig->render($template, $context);
         return $body;
+    }
+
+    /**
+     * @param string $template
+     * @param array $context
+     * @return ResponseInterface
+     */
+    protected function renderResponse(string $template, array $context = []) : ResponseInterface
+    {
+        $body = $this->render($template, $context);
+        $response = $this->responseFactory->createResponse();
+        $response->getBody()->write($body);
+        return $response;
     }
 }
