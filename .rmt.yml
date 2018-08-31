@@ -35,7 +35,8 @@ master:
             tag-prefix: ''         # No more prefix for tags
     pre-release-actions:
         changelog-update:          # Update a CHANGELOG file before the release
-            format: semantic
+            file: CHANGELOG.md
+            format: markdown
         update-version-class: 
             class: src/Core/King23.php
         vcs-commit: ~              # Commit the CHANGELOG
@@ -49,7 +50,8 @@ develop:
             tag-prefix: ''         # No more prefix for tags
     pre-release-actions:
         changelog-update:          # Update a CHANGELOG file before the release
-            format: semantic
+            file: CHANGELOG.md 
+            format: markdown
         update-version-class:
             class: src/Core/King23.php
         vcs-commit: ~              # Commit the CHANGELOG
