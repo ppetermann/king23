@@ -20,9 +20,16 @@
     "require-dev": {
         "devedge/stubs": "~3.0",
         "nyholm/psr7": "~1.0",
-        "king23/di": "~2.0"
+        "king23/di": "~2.0",
+        "filp/whoops": "~1.1",
+        "alcaeus/mongo-php-adapter": "^1.1"
     },
     "autoload": {
         "psr-4": { "King23\\": "src/"}
+    },
+    "config": {
+        "platform": {
+            "ext-mongo": "1.6.16"
+        }
     }
 }
