@@ -49,9 +49,11 @@ class JsonSettings implements SettingsInterface
     {
 
         // @todo remove once minimum is php 7.3
-        if (!defined("JSON_THROW_ON_ERROR")) define("JSON_THROW_ON_ERROR", 4194304);
+        if (!defined("JSON_THROW_ON_ERROR")) {
+            define("JSON_THROW_ON_ERROR", 4194304);
+        }
         $settings = new JsonSettings();
-        $settings->data = json_decode($string, true, 512, JSON_THROW_ON_ERROR);
+        $settings->data = (array) json_decode($string, true, 512, JSON_THROW_ON_ERROR);
         return $settings;
     }
 
