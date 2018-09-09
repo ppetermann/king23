@@ -25,18 +25,20 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-
-namespace King23\Core;
-
-use King23\Settings\SettingsInterface as ActualSettingsInterface;
+namespace King23\Settings;
 
 /**
  * Interface SettingsInterface
  *
  * @package Core
- * @deprecated use King23\Settings\SettingsInterface instead!
- * @todo remove with next Major (BC break)
  */
-interface SettingsInterface extends ActualSettingsInterface
-{
+interface SettingsInterface {
+
+    /**
+     * retrieve a settings value, will return $default if none is found
+     * @param string $key
+     * @param null|mixed $default
+     * @return mixed
+     */
+    public function get($key, $default=null);
 }

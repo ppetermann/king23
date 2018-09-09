@@ -27,37 +27,15 @@
 */
 namespace King23\Core;
 
-class Settings implements SettingsInterface
+use King23\Settings\SimpleSettings;
+
+/**
+ * Class Settings
+ * @package King23\Core
+ *
+ * @deprecated use King23\Settings\SettingsInterface instead!
+ * @todo remove with next Major (BC break)
+ */
+class Settings extends SimpleSettings
 {
-    /**
-     * @var array
-     */
-    protected $data;
-
-    /**
-     * retrieve a settings value, will return $default if none is found
-     *
-     * @param string $key
-     * @param null|mixed $default
-     * @return mixed
-     */
-    public function get($key, $default = null)
-    {
-        if (!isset($this->data[$key])) {
-            return $default;
-        }
-        return $this->data[$key];
-    }
-
-    /**
-     * set a settings value
-     *
-     * @param string $key
-     * @param mixed $value
-     * @return mixed
-     */
-    public function set($key, $value)
-    {
-        $this->data[$key] = $value;
-    }
 }

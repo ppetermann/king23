@@ -25,18 +25,39 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
+namespace King23\Settings;
 
-namespace King23\Core;
-
-use King23\Settings\SettingsInterface as ActualSettingsInterface;
-
-/**
- * Interface SettingsInterface
- *
- * @package Core
- * @deprecated use King23\Settings\SettingsInterface instead!
- * @todo remove with next Major (BC break)
- */
-interface SettingsInterface extends ActualSettingsInterface
+class SimpleSettings implements SettingsInterface
 {
+    /**
+     * @var array
+     */
+    protected $data;
+
+    /**
+     * retrieve a settings value, will return $default if none is found
+     *
+     * @param string $key
+     * @param null|mixed $default
+     * @return mixed
+     */
+    public function get($key, $default = null)
+    {
+        if (!isset($this->data[$key])) {
+            return $default;
+        }
+        return $this->data[$key];
+    }
+
+    /**
+     * set a settings value
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return mixed
+     */
+    public function set($key, $value)
+    {
+        $this->data[$key] = $value;
+    }
 }

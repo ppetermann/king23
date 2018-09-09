@@ -27,7 +27,7 @@
 */
 namespace King23\Http\Middleware;
 
-use King23\Core\SettingsInterface;
+use King23\Settings\SettingsInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
