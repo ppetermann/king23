@@ -124,7 +124,9 @@ class Result implements \Iterator, \Countable
     public function current()
     {
         $documentData = $this->myResultCursor->current();
-
+        if (is_null($documentData)) {
+            return null; 
+        }
         /** @var MongoObject $document */
         $document = $this->container->get(
             $this->classMapInterface->getClassForResult($this->collection, $documentData)
