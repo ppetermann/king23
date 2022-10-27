@@ -54,27 +54,27 @@
         },
         {
             "name": "king23/di",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ppetermann/king23-di.git",
-                "reference": "9c80c33650ef34b97b57ea9938b1a3cb303b0ac4"
+                "reference": "f99c161a4ee912a1fb323a233e24b8f7eba3cabc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ppetermann/king23-di/zipball/9c80c33650ef34b97b57ea9938b1a3cb303b0ac4",
-                "reference": "9c80c33650ef34b97b57ea9938b1a3cb303b0ac4",
+                "url": "https://api.github.com/repos/ppetermann/king23-di/zipball/f99c161a4ee912a1fb323a233e24b8f7eba3cabc",
+                "reference": "f99c161a4ee912a1fb323a233e24b8f7eba3cabc",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.0",
+                "php": ">=8",
                 "psr/container": "~1.0"
             },
             "provide": {
                 "psr/container-implementation": "1.0.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.6.9"
+                "phpunit/phpunit": "~8"
             },
             "type": "lib",
             "autoload": {
@@ -95,9 +95,9 @@
             "description": "king23 dependency injector",
             "support": {
                 "issues": "https://github.com/ppetermann/king23-di/issues",
-                "source": "https://github.com/ppetermann/king23-di/tree/2.0.1"
+                "source": "https://github.com/ppetermann/king23-di/tree/2.0.2"
             },
-            "time": "2018-08-25T16:24:46+00:00"
+            "time": "2022-10-27T14:33:59+00:00"
         },
         {
             "name": "nyholm/psr7",
